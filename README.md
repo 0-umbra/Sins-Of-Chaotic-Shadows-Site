@@ -24,7 +24,7 @@ No game source code, no private configuration, no signing material ever belongs 
 ├── js/main.js            release-manifest loader, gallery lightbox, nav, reveal animations
 ├── img/                  approved public assets (emblem, screenshots, og image, favicon)
 ├── data/release.json     ★ release manifest — the download button's single source of truth
-├── scripts/publish-release.py   publishes a verified APK to this repo's Releases + updates the manifest
+├── scripts/publish-release.py   publishes a signed APK to this repo's Releases + updates the manifest
 ├── vercel.json           deployment config (security headers, cache rules)
 └── docs/                 deployment, release flow, and repo-split/privacy runbooks
 ```
@@ -40,9 +40,18 @@ No game source code, no private configuration, no signing material ever belongs 
   being prepared" state instead of a broken button.
 
 A new release can never silently break the site: the manifest keeps the previous valid
-release listed in `history`, and updates only flow through
-`scripts/publish-release.py`, which refuses anything that didn't come from the game
-repo's signature-verifying workflow. See **docs/RELEASE-FLOW.md**.
+release listed in `history`, and updates only flow through `scripts/publish-release.py`.
+It publishes in one of two modes, and says in the release notes which one was used:
+
+- **workflow artifact** (default) — only the file produced by the game repo's
+  signature-verifying CI, matched against that run's `SHA256SUMS.txt`;
+- **`--local-apk`** — a signed APK that did not go through that CI; the script requires
+  the package id, version, version code and checksum the Android tools report, records
+  the signing-certificate digest, and labels the release plainly as not CI-verified.
+
+Neither mode fabricates a fact: version, size and SHA-256 are computed from the file
+being published, and nothing is written to `data/release.json` until the uploaded asset
+has been read back from the release. See **docs/RELEASE-FLOW.md**.
 
 ## Local development
 
