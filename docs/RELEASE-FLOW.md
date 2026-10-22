@@ -155,10 +155,13 @@ Release asset.
    `keytool -printcert -jarfile SCS.apk`, which prints the same SHA-256 line —
    it only sees the v1 (JAR) signature, so it can say "not a signed jar" for a
    v2/v3-only APK.
-4. Log in `gh` and clone the site repo:
+4. Log in `gh` and clone the site repo. The publisher commits the manifest update,
+   so git needs an identity:
    ```bash
    gh auth login
    gh auth setup-git
+   git config --global user.name  "your name"
+   git config --global user.email "you@example.com"
    git clone https://github.com/0-umbra/Sins-Of-Chaotic-Shadows-Site.git
    cd Sins-Of-Chaotic-Shadows-Site
    ```
