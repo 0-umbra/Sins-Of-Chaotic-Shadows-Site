@@ -1,13 +1,14 @@
 {
-  "available": false,
-  "version": null,
-  "versionCode": null,
-  "releaseDate": null,
-  "fileSizeBytes": null,
-  "sha256": null,
+  "available": true,
+  "version": "0.22.1",
+  "versionCode": "3",
+  "releaseDate": "2026-10-22",
+  "fileSizeBytes": 5851613,
+  "sha256": "da487b1657b3c2d5ac3f8f6340de9b11eb45de55d55899e631d2ac0ddb907280",
   "packageName": "com.sinsofchaoticshadow.game",
-  "downloadUrl": null,
+  "downloadUrl": "https://github.com/0-umbra/Sins-Of-Chaotic-Shadows-Site/releases/download/v0.22.1/SCS.apk",
   "updated": "2026-10-22",
-  "note": "No signed APK has been published yet. When the first verified signed release is published (see docs/RELEASE-FLOW.md), scripts/publish-release.py fills this manifest; the website picks it up automatically.",
-  "history": []
+  "note": "",
+  "history": [],
+  "certSha256": "2e868ac5056906ddfddf8be00bdc1a89629cbec335a38d5cb621f638b1a28018"
 }
