@@ -14,3 +14,7 @@ Thumbs.db
 *.keystore
 node_modules/
 dist/
+
+# python bytecode (scripts/)
+__pycache__/
+*.pyc
