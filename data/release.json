@@ -1,0 +1,13 @@
+{
+  "available": false,
+  "version": null,
+  "versionCode": null,
+  "releaseDate": null,
+  "fileSizeBytes": null,
+  "sha256": null,
+  "packageName": "com.sinsofchaoticshadow.game",
+  "downloadUrl": null,
+  "updated": "2026-10-22",
+  "note": "No signed APK has been published yet. When the first verified signed release is published (see docs/RELEASE-FLOW.md), scripts/publish-release.py fills this manifest; the website picks it up automatically.",
+  "history": []
+}

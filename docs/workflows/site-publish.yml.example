@@ -1,0 +1,55 @@
+# OPTIONAL AUTOMATION — copy this file into the PRIVATE GAME repository as
+# .github/workflows/site-publish.yml, then create the secret SCS_SITE_PUBLISH_TOKEN
+# there (fine-grained PAT: only the site repo, Contents read/write).
+# Never put this workflow or the token in the public site repo.
+#
+# It runs after the signed-release workflow has published a release, downloads the
+# verified APK asset, publishes it on the public site repo, and updates the manifest.
+
+name: Publish release to public site
+
+on:
+  release:
+    types: [published]
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: "Release tag to publish (e.g. v0.21.0)"
+        required: true
+
+permissions:
+  contents: read
+
+jobs:
+  publish:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - name: Check out the site repository
+        uses: actions/checkout@v7
+        with:
+          repository: 0-umbra/Sins-Of-Chaotic-Shadows-Site
+          token: ${{ secrets.SCS_SITE_PUBLISH_TOKEN }}
+
+      - name: Download the verified APK from this repo's release
+        env:
+          GH_TOKEN: ${{ github.token }}
+          TAG: ${{ github.event.release.tag_name || inputs.tag }}
+        run: |
+          set -euo pipefail
+          gh release download "$TAG" --repo "$GITHUB_REPOSITORY" --dir dist \
+            --pattern '*.apk' --pattern 'SHA256SUMS.txt' --clobber
+          ls -lh dist
+          [ -f dist/SHA256SUMS.txt ] || echo "::warning::SHA256SUMS.txt missing from release"
+
+      - name: Publish to the public site repo and update the manifest
+        env:
+          GH_TOKEN: ${{ secrets.SCS_SITE_PUBLISH_TOKEN }}
+          TAG: ${{ github.event.release.tag_name || inputs.tag }}
+        run: |
+          set -euo pipefail
+          git config user.name "scs-release-bot"
+          git config user.email "actions@users.noreply.github.com"
+          python3 scripts/publish-release.py --tag "$TAG" \
+            --apk "$(ls dist/*.apk | head -1)" \
+            --checksums dist/SHA256SUMS.txt

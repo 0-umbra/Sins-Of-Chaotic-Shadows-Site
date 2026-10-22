@@ -1,0 +1,16 @@
+# OS / editor noise
+.DS_Store
+Thumbs.db
+*.swp
+.idea/
+.vscode/
+
+# never allow local secrets or build artifacts into this repo
+.env
+.env.*
+*.pem
+*.key
+*.jks
+*.keystore
+node_modules/
+dist/
