@@ -1,7 +1,10 @@
 /* SCS official site — release manifest, gallery, nav, reveal.
    The single source of truth for downloads is data/release.json (kept in this repo).
-   If the manifest is unavailable or says available:false, the site shows a clean
-   "not available yet" state and never links a broken or unverified download. */
+   Its downloadUrl points at the APK hosted by this site itself (/apk/SCS.apk,
+   served as a static file by Vercel) — no GitHub Release is involved.
+   If the manifest is unavailable, says available:false, or the APK file is not
+   actually being served yet, the site shows a clean "not available yet" state
+   and never links a broken or unverified download. */
 (() => {
   'use strict';
 
@@ -60,13 +63,29 @@
       return;
     }
 
+    const notYet = 'NO PUBLIC RELEASE YET — THE FIRST SIGNED BUILD IS BEING PREPARED.<br>THE DOWNLOAD GOES LIVE HERE THE MOMENT IT PASSES VERIFICATION.';
     if (!manifest || !manifest.available || !manifest.downloadUrl) {
-      status.innerHTML = 'NO PUBLIC RELEASE YET — THE FIRST SIGNED BUILD IS BEING PREPARED.<br>THE DOWNLOAD GOES LIVE HERE THE MOMENT IT PASSES VERIFICATION.';
+      status.innerHTML = notYet;
+      return;
+    }
+
+    // The APK is a static file on this same site (/apk/SCS.apk). A manifest
+    // entry alone must never present a download that would 404: only enable
+    // the button once the file is really being served. (A missing file 404s;
+    // a text/html reply would mean a fallback page, not the APK.)
+    try {
+      const head = await fetch(manifest.downloadUrl, { method: 'HEAD', cache: 'no-store' });
+      const type = head.headers.get('content-type') || '';
+      if (!head.ok || type.includes('text/html')) throw new Error(`APK probe: HTTP ${head.status} ${type}`);
+    } catch (err) {
+      status.innerHTML = notYet;
+      console.warn('APK not available yet:', err);
       return;
     }
 
     // verified release present
     btn.setAttribute('href', manifest.downloadUrl);
+    btn.setAttribute('download', '');
     btn.removeAttribute('aria-disabled');
     status.textContent = 'VERIFIED SIGNED RELEASE — SHA-256 CHECKSUM PUBLISHED BELOW.';
     status.className = 'dl-status mono ok';
