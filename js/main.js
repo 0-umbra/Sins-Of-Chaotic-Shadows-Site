@@ -1,10 +1,10 @@
 /* SCS official site — release manifest, gallery, nav, reveal.
-   The single source of truth for downloads is data/release.json (kept in this repo).
-   Its downloadUrl points at the APK hosted by this site itself (/apk/SCS.apk,
-   served as a static file by Vercel) — no GitHub Release is involved.
-   If the manifest is unavailable, says available:false, or the APK file is not
-   actually being served yet, the site shows a clean "not available yet" state
-   and never links a broken or unverified download. */
+   The Download Latest APK button links directly to /apk/SCS.apk in the HTML:
+   the signed APK committed in this repo, served as a static file by Vercel
+   (no GitHub Release is involved), so the download works even without JS.
+   data/release.json (kept in this repo) supplies the displayed version facts
+   and history; if it ever says available:false, the button is disabled and
+   the site shows a clean "not available yet" state instead. */
 (() => {
   'use strict';
 
@@ -57,6 +57,8 @@
       if (!r.ok) throw new Error(`HTTP ${r.status}`);
       manifest = await r.json();
     } catch (err) {
+      // Only the version facts are unavailable; the button's direct static
+      // link to /apk/SCS.apk in the HTML does not depend on this fetch.
       status.textContent = 'RELEASE INFO UNAVAILABLE RIGHT NOW — PLEASE RETRY LATER.';
       status.className = 'dl-status mono err';
       console.warn('release manifest fetch failed:', err);
@@ -65,25 +67,16 @@
 
     const notYet = 'NO PUBLIC RELEASE YET — THE FIRST SIGNED BUILD IS BEING PREPARED.<br>THE DOWNLOAD GOES LIVE HERE THE MOMENT IT PASSES VERIFICATION.';
     if (!manifest || !manifest.available || !manifest.downloadUrl) {
+      // Manifest kill-switch: no public release, so disable the direct link.
+      btn.setAttribute('href', '#download');
+      btn.removeAttribute('download');
+      btn.setAttribute('aria-disabled', 'true');
       status.innerHTML = notYet;
       return;
     }
 
-    // The APK is a static file on this same site (/apk/SCS.apk). A manifest
-    // entry alone must never present a download that would 404: only enable
-    // the button once the file is really being served. (A missing file 404s;
-    // a text/html reply would mean a fallback page, not the APK.)
-    try {
-      const head = await fetch(manifest.downloadUrl, { method: 'HEAD', cache: 'no-store' });
-      const type = head.headers.get('content-type') || '';
-      if (!head.ok || type.includes('text/html')) throw new Error(`APK probe: HTTP ${head.status} ${type}`);
-    } catch (err) {
-      status.innerHTML = notYet;
-      console.warn('APK not available yet:', err);
-      return;
-    }
-
-    // verified release present
+    // Verified release present. The button already links to /apk/SCS.apk in
+    // the HTML; keep it in sync with the manifest and show the release facts.
     btn.setAttribute('href', manifest.downloadUrl);
     btn.setAttribute('download', '');
     btn.removeAttribute('aria-disabled');
