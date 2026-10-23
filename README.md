@@ -11,21 +11,30 @@ No game source code, no private configuration, and no signing material ever belo
 ## What's on the site
 
 1. **Cinematic Homepage (`#top`, `#trailer`)** — Atmospheric dark/crimson FPS theme, distortion-free
-   SCS emblem (`<picture>` WebP + PNG fallback), direct working APK download button with verified
-   version (`0.22.1`) and actual file size (`5.58 MB` / `5,851,613` bytes), subtle motion, and an
-   in-build gameplay showcase trailer (`media/scs-gameplay-trailer.mp4`) with chapter controls.
+   SCS emblem (`<picture>` responsive WebP + PNG fallback), direct working APK download button with
+   verified version (`0.22.1`) and actual file size (`5.58 MB` / `5,851,613` bytes), subtle motion,
+   and an in-build gameplay showcase trailer (`media/scs-gameplay-trailer.mp4`, `object-fit: contain`)
+   with chapter controls.
 2. **Updates & Patch Notes (`#updates`)** — Filterable newest-first version history (`0.23.0` down
    to `0.20.0`), new features, maps, arsenal, performance passes, bug fixes, known issues, and
    individual release download links.
 3. **Game Showcase (`#showcase`, `#maps`, `#modes`, `#weapons`, `#abilities`, `#gallery`)** —
-   Interactive maps gallery featuring the **Sunken Meridian** planned-arena spotlight alongside the
-   4 playable `v0.22.1` daylight arenas (**Umbra Crossing**, **Neon Veil**, **Foundry Siege**,
-   **Ironfall Industries**); interactive 15-firearm & 11-blade arsenal browser; interactive
-   3-Resonator / 9-ability kit viewer (**Vex**, **Aura**, **Rift**); TDM, FFA, and competitive-format
-   **5v5 Shadow Core** mode cards; and filterable WebP build screenshots with keyboard lightbox.
-4. **News & Community (`#community`)** — Development announcements, explicitly labeled planned
-   feature previews, one-click diagnostic bug-report template generator, Discord contact
-   (`0_umbra`), and configurable social/support channels via `data/community.json`.
+   - **Tactical Maps (`#maps`)**: Filterable across all 5 maps (**Umbra Crossing**, **Neon Veil**,
+     **Foundry Siege**, **Ironfall Industries**, and planned future arena **Sunken Meridian**). Each
+     map shows only its own authentic capture (`object-fit: contain`) or a clearly labelled 16:9
+     placeholder — never reusing another map's screenshot.
+   - **Interactive Arsenal (`#weapons`)**: 15 verified firearms across 5 classes plus the **11-Blade
+     Melee Collection** (`Lv 1`–`Lv 27`) with an honest dedicated placeholder while public melee
+     captures are pending.
+   - **Tactical Abilities (`#abilities`)**: Interactive 3-Resonator / 9-ability kit viewer (**Vex**,
+     **Aura**, **Rift**).
+   - **Gameplay Screenshots (`#gallery`)**: Full 16:9 uncropped build captures (`800w` + `1600w`
+     responsive WebP with JPG fallback, `object-fit: contain`) and keyboard/touch-swipe lightbox.
+4. **News & Community (`#community`)** — Development announcements, planned roadmap items,
+   **Issue Reporting — Under Development** status notice (no nonfunctional submission form),
+   planned community channels (**Discord Server**, **Instagram**, **YouTube** marked *Coming Soon*),
+   and direct clickable [Contact the Developer on Discord](https://discord.com/users/1341279384535044097)
+   links.
 5. **Android Compatibility & Performance (`#compatibility`)** — Manifest-verified Android
    requirements (`minSdkVersion 24` / Android 7.0+, `targetSdkVersion 36` / Android 16, WebGL,
    Sensor Landscape), in-game Render Control options, low-end GPU optimization profile, and
@@ -35,14 +44,14 @@ No game source code, no private configuration, and no signing material ever belo
 
 ```
 ├── index.html                  single-page site (no framework, no CDN — fully self-contained)
-├── css/style.css               dark/crimson tactical FPS design system (responsive, reduced-motion aware)
+├── css/style.css               dark/crimson tactical FPS design system (aspect-ratio safe, responsive)
 ├── js/main.js                  release & community loaders, trailer chapters, interactive tabs, lightbox
 ├── apk/SCS.apk                 verified signed Android APK served directly at /apk/SCS.apk
 ├── data/release.json           ★ release manifest — single source of truth for APK metadata & kill-switch
-├── data/community.json         configurable social channels, support links & external trailer URL
-├── img/                        approved public assets (WebP + PNG/JPG fallbacks, OG card, favicon)
+├── data/community.json         developer Discord contact URL, coming-soon channels & trailer config
+├── img/                        approved public assets (800w/1600w WebP + PNG/JPG fallbacks, OG, favicon)
 ├── media/                      self-contained in-build gameplay showcase reel (MP4)
-├── scripts/check-site.py       dependency-free structural, asset, manifest & content integrity suite
+├── scripts/check-site.py       dependency-free structural, image, map, manifest & content integrity suite
 ├── scripts/check-responsive.cjs optional Playwright multi-viewport browser regression suite
 ├── vercel.json                 Vercel static deployment config (security headers, APK headers, cache rules)
 └── docs/                       deployment, release flow, changelog provenance & privacy runbooks
@@ -59,16 +68,16 @@ No game source code, no private configuration, and no signing material ever belo
 
 ## Configuring social & community links
 
-Edit `data/community.json` to publish official social or tracker URLs (`channels[].url`,
-`support.bugReportUrl`, `support.feedbackUrl`, `trailer.externalUrl`). Empty strings (`""`) keep
-unconfigured channels transparently labeled rather than exposing broken or placeholder links.
+Edit `data/community.json` to update `developerDiscordUrl` or publish official community URLs for
+`discord`, `instagram`, or `youtube` once live. Empty strings (`""`) keep planned channels marked
+`COMING SOON` rather than exposing broken or premature links.
 
 ## Local development & testing
 
 No build step — static by design.
 
 ```bash
-python3 scripts/check-site.py          # structural, asset, checksum & content verification
+python3 scripts/check-site.py          # structural, image, map, checksum & content verification
 node --check js/main.js                # JS syntax check
 python3 -m http.server 8080            # preview locally at http://localhost:8080
 ```
@@ -83,4 +92,4 @@ There are no environment variables, secrets, or serverless functions required.
 Site code: MIT (see `LICENSE`). Game name, logo, screenshots and media:
 © 2026 SCS project (`0-umbra`), all rights reserved.
 
-Support: open an issue on this repository, or reach developer `0_umbra` on Discord.
+Support: [Contact the Developer on Discord](https://discord.com/users/1341279384535044097).

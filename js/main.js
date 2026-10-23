@@ -55,7 +55,7 @@
         if (t.getAttribute('role') === 'tab') t.setAttribute('aria-selected', String(active));
       });
       if (moveFocus) btn.focus();
-      onSelect(val);
+      onSelect(val, btn);
     };
     bar.addEventListener('click', e => {
       const btn = e.target.closest(`[${attrName}]`);
@@ -71,17 +71,39 @@
     });
   }
 
-  // Maps showcase filter
-  bindFilterGroup('mapFilters', 'data-map-filter', val => {
-    document.querySelectorAll('#mapsGrid [data-map-cat]').forEach(card => {
-      card.hidden = val !== 'all' && card.dataset.mapCat !== val;
+  // Maps showcase filter (supports 'all', 'active', 'planned', and individual map IDs)
+  bindFilterGroup('mapFilters', 'data-map-filter', (val, btn) => {
+    const cards = [...document.querySelectorAll('#mapsGrid .map-card')];
+    let shown = 0;
+    cards.forEach(card => {
+      const show = val === 'all'
+        || card.dataset.mapStatus === val
+        || card.dataset.mapId === val;
+      card.hidden = !show;
+      if (show) {
+        card.classList.add('in');
+        shown++;
+      }
     });
+    const countEl = $('mapFilterCount');
+    if (countEl) {
+      if (val === 'all') {
+        countEl.textContent = 'Showing all 5 maps (4 playable in v0.22.1 APK · 1 planned future arena)';
+      } else if (val === 'active') {
+        countEl.textContent = 'Showing 4 arenas playable in signed APK v0.22.1';
+      } else {
+        const title = cards.find(c => !c.hidden)?.querySelector('h3')?.textContent || btn?.textContent || val;
+        countEl.textContent = `Showing ${shown} map: ${title}`;
+      }
+    }
   });
 
   // Arsenal weapon filter
   bindFilterGroup('weaponFilters', 'data-wfilter', val => {
     document.querySelectorAll('#weaponGrid [data-wcat]').forEach(card => {
-      card.hidden = val !== 'all' && card.dataset.wcat !== val;
+      const show = val === 'all' || card.dataset.wcat === val;
+      card.hidden = !show;
+      if (show) card.classList.add('in');
     });
   });
 
@@ -97,7 +119,9 @@
   // Screenshots gallery filter
   bindFilterGroup('galFilters', 'data-gfilter', val => {
     document.querySelectorAll('#gal .gitem').forEach(item => {
-      item.hidden = val !== 'all' && item.dataset.gcat !== val;
+      const show = val === 'all' || item.dataset.gcat === val;
+      item.hidden = !show;
+      if (show) item.classList.add('in');
     });
   });
 
@@ -105,7 +129,8 @@
   bindFilterGroup('updateFilters', 'data-ufilter', val => {
     document.querySelectorAll('#updatesList > li').forEach(li => {
       const cats = (li.dataset.ucats || '').split(/\s+/);
-      li.hidden = val !== 'all' && !cats.includes(val);
+      const show = val === 'all' || cats.includes(val);
+      li.hidden = !show;
     });
   });
 
@@ -141,14 +166,14 @@
     });
   }
 
-  /* ---------- accessible gallery lightbox & legal dialogs ---------- */
+  /* ---------- accessible gallery lightbox (keyboard + Android touch swipe) & legal dialogs ---------- */
   const lb = $('lightbox'), lbImg = $('lbImg'), lbCap = $('lbCap');
   const lbPrevBtn = $('lbPrev'), lbNextBtn = $('lbNext');
   let activeDialog = null, dialogTrigger = null;
-  let lbItems = [], lbIndex = -1;
+  let lbItems = [], lbIndex = -1, touchStartX = null;
 
   const renderLightboxSlide = idx => {
-    if (!lbItems.length) return;
+    if (!lbItems.length || !lbImg) return;
     lbIndex = (idx + lbItems.length) % lbItems.length;
     const item = lbItems[lbIndex];
     const imgEl = item.querySelector('img');
@@ -158,7 +183,7 @@
     };
     lbImg.src = src;
     lbImg.alt = imgEl?.alt || 'Screenshot full view';
-    const label = item.querySelector('span')?.textContent || imgEl?.alt || '';
+    const label = item.querySelector('.gitem-cap')?.textContent || imgEl?.alt || '';
     if (lbCap) {
       lbCap.textContent = lbItems.length > 1 ? `${lbIndex + 1} / ${lbItems.length} · ${label}` : label;
     }
@@ -170,7 +195,7 @@
   const closeDialog = () => {
     if (!activeDialog) return;
     activeDialog.hidden = true;
-    if (activeDialog === lb) {
+    if (activeDialog === lb && lbImg) {
       lbImg.onerror = null;
       lbImg.removeAttribute('src');
     }
@@ -180,6 +205,7 @@
   };
 
   const openDialog = (dialog, trigger) => {
+    if (!dialog) return;
     closeMenu();
     dialogTrigger = trigger;
     activeDialog = dialog;
@@ -188,7 +214,7 @@
     dialog.querySelector('button')?.focus();
   };
 
-  document.getElementById('gal')?.addEventListener('click', e => {
+  $('gal')?.addEventListener('click', e => {
     const b = e.target.closest('.gitem');
     if (!b) return;
     lbItems = [...document.querySelectorAll('#gal .gitem')].filter(el => !el.hidden);
@@ -206,6 +232,16 @@
 
   lbPrevBtn?.addEventListener('click', () => renderLightboxSlide(lbIndex - 1));
   lbNextBtn?.addEventListener('click', () => renderLightboxSlide(lbIndex + 1));
+
+  lb?.addEventListener('touchstart', e => {
+    if (e.changedTouches?.length === 1) touchStartX = e.changedTouches[0].clientX;
+  }, { passive: true });
+  lb?.addEventListener('touchend', e => {
+    if (touchStartX === null || lbItems.length <= 1 || !e.changedTouches?.length) return;
+    const dx = e.changedTouches[0].clientX - touchStartX;
+    touchStartX = null;
+    if (Math.abs(dx) > 45) renderLightboxSlide(lbIndex + (dx < 0 ? 1 : -1));
+  }, { passive: true });
 
   document.querySelectorAll('[data-modal]').forEach(b => b.addEventListener('click', () => {
     const m = $(b.dataset.modal);
@@ -237,7 +273,7 @@
     }
   });
 
-  /* ---------- clipboard helper ---------- */
+  /* ---------- clipboard helper for SHA-256 ---------- */
   async function copyText(text) {
     if (navigator.clipboard?.writeText) {
       try { await navigator.clipboard.writeText(text); return true; } catch { /* fallback below */ }
@@ -255,8 +291,6 @@
     return ok;
   }
 
-  let currentReleaseVersion = '0.22.1';
-
   const copyShaBtn = $('copyShaBtn');
   copyShaBtn?.addEventListener('click', async () => {
     const sha = copyShaBtn.dataset.copySha || $('fSha')?.textContent?.trim() || '';
@@ -265,36 +299,6 @@
     const orig = copyShaBtn.textContent;
     copyShaBtn.textContent = ok ? 'Copied SHA-256 ✓' : 'Select SHA-256 below';
     setTimeout(() => { copyShaBtn.textContent = orig; }, 2200);
-  });
-
-  const copyDiscordBtn = $('copyDiscordBtn');
-  copyDiscordBtn?.addEventListener('click', async () => {
-    const handle = copyDiscordBtn.dataset.discord || '0_umbra';
-    const ok = await copyText(handle);
-    const orig = copyDiscordBtn.textContent;
-    copyDiscordBtn.textContent = ok ? `Copied: ${handle} ✓` : `Discord: ${handle}`;
-    setTimeout(() => { copyDiscordBtn.textContent = orig; }, 2200);
-  });
-
-  const copyBugBtn = $('copyBugTemplateBtn');
-  copyBugBtn?.addEventListener('click', async () => {
-    const cat = $('bugCategory')?.value || 'Bug Report';
-    const tpl = [
-      `[SCS ${cat}]`,
-      `APK Version: ${currentReleaseVersion} (com.sinsofchaoticshadow.game)`,
-      `Device Model: <enter phone model>`,
-      `Android Version: <e.g. Android 13>`,
-      `Quality / Render Preset: <Low / Medium / High>`,
-      `Mode & Map: <e.g. TDM - Umbra Crossing>`,
-      `Steps / Details: <describe what happened>`
-    ].join('\n');
-    const ok = await copyText(tpl);
-    const st = $('bugCopyStatus');
-    if (st) {
-      st.textContent = ok
-        ? `Copied "${cat}" template ✓ — paste into Discord (0_umbra) or a repository issue.`
-        : 'Clipboard blocked by browser — message 0_umbra directly on Discord with your device & Android version.';
-    }
   });
 
   /* ---------- release manifest ---------- */
@@ -321,7 +325,6 @@
       if (!r.ok) throw new Error(`HTTP ${r.status}`);
       manifest = await r.json();
     } catch (err) {
-      // Static HTML fallback remains active so /apk/SCS.apk downloads still work.
       if (status) {
         status.textContent = 'RELEASE INFO UNAVAILABLE RIGHT NOW — DIRECT APK LINK REMAINS ACTIVE.';
         status.className = 'dl-status mono err';
@@ -346,7 +349,6 @@
       return;
     }
 
-    currentReleaseVersion = manifest.version || '0.22.1';
     const shortSize = manifest.fileSizeBytes ? fmtSize(manifest.fileSizeBytes) : '—';
     const fullSize = manifest.fileSizeBytes ? `${shortSize} (${Number(manifest.fileSizeBytes).toLocaleString()} B)` : '—';
     const formattedDate = manifest.releaseDate ? fmtDate(manifest.releaseDate) : '—';
@@ -404,6 +406,7 @@
 
   /* ---------- configurable community & trailer manifest ---------- */
   const safeExternalUrl = u => (typeof u === 'string' && /^https?:\/\/\S+$/i.test(u.trim())) ? u.trim() : '';
+  const ALLOWED_CHANNEL_IDS = new Set(['discord', 'instagram', 'youtube']);
 
   async function loadCommunity() {
     let cfg = null;
@@ -414,51 +417,48 @@
     } catch { return; }
     if (!cfg || typeof cfg !== 'object') return;
 
-    // Configurable social channels (never renders invented or broken links)
-    const list = $('socialLinksList');
-    if (list && Array.isArray(cfg.channels) && cfg.channels.length) {
-      list.innerHTML = '';
-      cfg.channels.forEach(ch => {
-        if (!ch || !ch.label) return;
-        const li = document.createElement('li');
-        li.className = 'social-item';
-        const info = document.createElement('div');
-        const title = document.createElement('strong');
-        title.textContent = ch.label;
-        const note = document.createElement('span');
-        note.className = 'block small dim';
-        const url = safeExternalUrl(ch.url);
-        note.textContent = url ? url.replace(/^https?:\/\//i, '') : (ch.note || 'Official URL not yet configured');
-        info.append(title, note);
-
-        if (url) {
-          const a = document.createElement('a');
-          a.className = 'btn btn-sm btn-ghost';
-          a.href = url;
-          a.target = '_blank';
-          a.rel = 'noopener noreferrer';
-          a.textContent = 'Open ↗';
-          li.append(info, a);
-        } else {
-          const badge = document.createElement('span');
-          badge.className = ch.id === 'discord' && cfg.discordHandle ? 'mono badge badge-ok' : 'mono badge';
-          badge.textContent = ch.id === 'discord' && cfg.discordHandle ? `@${cfg.discordHandle}` : 'UNCONFIGURED';
-          li.append(info, badge);
-        }
-        list.appendChild(li);
+    // Sync developer Discord profile links
+    const devDiscordUrl = safeExternalUrl(cfg.developerDiscordUrl);
+    if (devDiscordUrl) {
+      document.querySelectorAll('[data-dev-discord]').forEach(a => {
+        a.href = devDiscordUrl;
       });
     }
 
-    // Support / bug-report / feedback links
-    if (cfg.support) {
-      const bugUrl = safeExternalUrl(cfg.support.bugReportUrl);
-      const fbUrl = safeExternalUrl(cfg.support.feedbackUrl);
-      const bugBtn = $('bugReportExtBtn'), fbBtn = $('feedbackExtBtn');
-      if (bugBtn && bugUrl) { bugBtn.href = bugUrl; bugBtn.hidden = false; }
-      if (fbBtn && fbUrl) { fbBtn.href = fbUrl; fbBtn.hidden = false; }
-      if (cfg.discordHandle && copyDiscordBtn) {
-        copyDiscordBtn.dataset.discord = cfg.discordHandle;
-        copyDiscordBtn.textContent = `Copy Discord: ${cfg.discordHandle}`;
+    // Planned / live community channels (Discord, Instagram, YouTube)
+    const list = $('socialLinksList');
+    if (list && Array.isArray(cfg.channels)) {
+      const validChannels = cfg.channels.filter(ch => ch && ch.label && ALLOWED_CHANNEL_IDS.has(String(ch.id).toLowerCase()));
+      if (validChannels.length) {
+        list.innerHTML = '';
+        validChannels.forEach(ch => {
+          const li = document.createElement('li');
+          li.className = 'social-item';
+          const info = document.createElement('div');
+          const title = document.createElement('strong');
+          title.textContent = ch.label;
+          const note = document.createElement('span');
+          note.className = 'block small dim';
+          const url = safeExternalUrl(ch.url);
+          note.textContent = url ? url.replace(/^https?:\/\//i, '') : (ch.note || 'Planned for a future update');
+          info.append(title, note);
+
+          if (url) {
+            const a = document.createElement('a');
+            a.className = 'btn btn-sm btn-ghost';
+            a.href = url;
+            a.target = '_blank';
+            a.rel = 'noopener noreferrer';
+            a.textContent = 'Visit ↗';
+            li.append(info, a);
+          } else {
+            const badge = document.createElement('span');
+            badge.className = 'mono badge badge-planned';
+            badge.textContent = 'COMING SOON';
+            li.append(info, badge);
+          }
+          list.appendChild(li);
+        });
       }
     }
 
