@@ -13,35 +13,76 @@
   addEventListener('scroll', () => nav.classList.toggle('scrolled', scrollY > 8), { passive: true });
   const burger = document.getElementById('burger');
   const links = document.getElementById('navLinks');
+  const closeMenu = (restoreFocus = false) => {
+    links.classList.remove('open');
+    burger.setAttribute('aria-expanded', 'false');
+    if (restoreFocus) burger.focus();
+  };
   burger?.addEventListener('click', () => {
     const open = links.classList.toggle('open');
     burger.setAttribute('aria-expanded', String(open));
   });
-  links?.addEventListener('click', e => { if (e.target.tagName === 'A') links.classList.remove('open'); });
+  links?.addEventListener('click', e => { if (e.target.closest('a')) closeMenu(); });
+  document.addEventListener('click', e => { if (!nav.contains(e.target)) closeMenu(); });
+  nav.addEventListener('focusout', e => { if (!nav.contains(e.relatedTarget)) closeMenu(); });
+  matchMedia('(max-width:1100px)').addEventListener('change', () => closeMenu());
+  addEventListener('keydown', e => {
+    if (e.key === 'Escape' && links.classList.contains('open')) closeMenu(true);
+  });
 
-  /* ---------- reveal on scroll ---------- */
-  const io = new IntersectionObserver(es => es.forEach(e => {
-    if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
-  }), { threshold: 0.12 });
-  document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+  /* ---------- reveal on scroll (content stays visible without support) ---------- */
+  if ('IntersectionObserver' in window) {
+    const io = new IntersectionObserver(es => es.forEach(e => {
+      if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
+    }), { threshold: 0 });
+    document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+  } else document.querySelectorAll('.reveal').forEach(el => el.classList.add('in'));
 
-  /* ---------- gallery lightbox ---------- */
+  /* ---------- accessible gallery and legal dialogs ---------- */
   const lb = document.getElementById('lightbox'), lbImg = document.getElementById('lbImg');
+  let activeDialog = null, dialogTrigger = null;
+  const closeDialog = () => {
+    if (!activeDialog) return;
+    activeDialog.hidden = true;
+    if (activeDialog === lb) lbImg.removeAttribute('src');
+    activeDialog = null;
+    document.body.style.overflow = '';
+    dialogTrigger?.focus();
+  };
+  const openDialog = (dialog, trigger) => {
+    closeMenu();
+    dialogTrigger = trigger;
+    activeDialog = dialog;
+    dialog.hidden = false;
+    document.body.style.overflow = 'hidden';
+    dialog.querySelector('button').focus();
+  };
   document.getElementById('gal')?.addEventListener('click', e => {
     const b = e.target.closest('.gitem'); if (!b) return;
-    lbImg.src = b.dataset.full; lb.hidden = false; document.body.style.overflow = 'hidden';
+    lbImg.src = b.dataset.full;
+    lbImg.alt = b.querySelector('img').alt;
+    openDialog(lb, b);
   });
-  const lbClose = () => { lb.hidden = true; lbImg.src = ''; document.body.style.overflow = ''; };
-  document.getElementById('lbClose')?.addEventListener('click', lbClose);
-  lb?.addEventListener('click', e => { if (e.target === lb) lbClose(); });
-  addEventListener('keydown', e => { if (e.key === 'Escape' && !lb.hidden) lbClose(); });
-
-  /* ---------- modals ---------- */
   document.querySelectorAll('[data-modal]').forEach(b => b.addEventListener('click', () => {
-    const m = document.getElementById(b.dataset.modal); if (m) { m.hidden = false; document.body.style.overflow = 'hidden'; }
+    const m = document.getElementById(b.dataset.modal); if (m) openDialog(m, b);
   }));
-  document.querySelectorAll('.modal').forEach(m => {
-    m.addEventListener('click', e => { if (e.target === m || e.target.closest('[data-close]')) { m.hidden = true; document.body.style.overflow = ''; } });
+  document.querySelectorAll('.modal,.lightbox').forEach(m => {
+    m.setAttribute('role', 'dialog');
+    m.setAttribute('aria-modal', 'true');
+    m.setAttribute('aria-label', m.querySelector('h3')?.textContent || 'Screenshot full view');
+    m.addEventListener('click', e => {
+      if (e.target === m || e.target.closest('[data-close],.lb-close')) closeDialog();
+    });
+  });
+  addEventListener('keydown', e => {
+    if (!activeDialog) return;
+    if (e.key === 'Escape') { e.preventDefault(); closeDialog(); }
+    if (e.key === 'Tab') {
+      const controls = [...activeDialog.querySelectorAll('button,a[href],[tabindex="0"]')];
+      const first = controls[0], last = controls[controls.length - 1];
+      if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+      else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+    }
   });
 
   /* ---------- release manifest ---------- */

@@ -1,0 +1,68 @@
+# Responsive UI changes and validation
+
+## Scope and diagnosis
+
+This checkout is a static, single-page site with shared CSS and vanilla JavaScript,
+not the game application. All sections, media, release data and download behavior
+are retained. No forms or tables exist in this checkout.
+
+Root causes found by code inspection:
+- Full desktop navigation stayed active down to 781px despite its combined intrinsic width.
+- Fractional grid tracks and grid children retained content-driven minimum sizes.
+- The nonbreaking hero title, package identifier and nowrap APK button forced overflow.
+- Body horizontal clipping concealed overflow rather than fixing its source.
+- Mobile navigation had no short-viewport scroll limit; anchors lacked header clearance.
+- Modal/gallery keyboard focus and Escape behavior were incomplete.
+
+## Changes
+
+- `css/style.css`: collapse navigation at 1100px, scroll long menus, keep the download
+  shortcut visible, preserve compact mobile styling, use shrinkable grids, wrap
+  metadata/buttons/headings, constrain overlays, account for safe areas, improve focus
+  and reduced-motion support, prevent decorative layers intercepting clicks.
+- `index.html`: progressive-enhancement class, breakable hero title, menu aria-controls.
+- `js/main.js`: synchronized menu state and dismissal, focus management/trapping,
+  Escape and focus restoration for legal dialogs and screenshots, reveal fallback.
+- `scripts/check-site.py`: dependency-free asset/anchor/download integrity regression check.
+- `scripts/check-responsive.cjs`: optional Playwright browser regression suite.
+
+## Checks completed
+
+- `python3 scripts/check-site.py`: PASS, 33 unique IDs; local assets/anchors resolve;
+  original `/apk/SCS.apk` URL, download attribute, manifest size and SHA-256 verified.
+- `node --check js/main.js`: PASS.
+- `git diff --check`: PASS.
+- No package manifest, build step, existing lint, type-check or test runner exists.
+
+## Browser validation: still required
+
+No viewport has been successfully browser-tested in this environment. Playwright's
+browser download was blocked by network restrictions. A Chromium binary obtained
+through npm could not launch because `libnspr4.so` is missing. Consequently screenshots,
+console/network checks and visual acceptance remain unverified.
+
+The optional suite targets 320×740, 375×812, 430×932, 600×960, 768×1024,
+820×1180, 1024×768, 1180×820, 1280×800, 1440×900 and 1920×1080.
+It checks overflow, all section anchors, navigation state, legal dialog keyboard
+focus/Escape, gallery dismissal, resource errors and served APK checksum.
+
+Run with Playwright and Chromium available in the Node environment:
+
+```
+python3 -m http.server 8080 --bind 0.0.0.0
+# In another shell:
+node scripts/check-responsive.cjs
+```
+
+Also manually review each section at those widths, tablet portrait/landscape,
+short-height menus/dialogs, touch navigation, zoom, reduced motion and no-JS fallback.
+External browser-game and GitHub destinations are preserved, not network-validated.
+
+## Branch / PR prerequisite
+
+Work remains on the fixed session feature branch
+`arena/dc51d80c-sins-of-chaotic-shadows-site`. Remote branch discovery found no
+`android-capacitor` branch in this repository, so that requested base cannot be
+used and no correctly targeted PR can yet be created. No substitute base branch
+was created, no main branch modified, and nothing merged. Confirm the intended
+repository/base before integration.
