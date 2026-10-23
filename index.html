@@ -21,7 +21,7 @@
 <header class="nav" id="nav">
   <div class="wrap nav-in">
     <a class="brand" href="#top" aria-label="SCS home">
-      <picture class="logo-pic">
+      <picture class="logo-pic nav-logo-pic">
         <source srcset="img/scs-logo-160.webp" type="image/webp">
         <img src="img/scs-logo.png" alt="Sins of Chaotic Shadows logo" width="1024" height="809" decoding="async">
       </picture>
@@ -38,7 +38,7 @@
       <a href="#faq">FAQ</a>
     </nav>
     <a class="btn btn-sm btn-primary nav-cta" href="#download">Download APK</a>
-    <button class="burger" id="burger" aria-label="Menu" aria-controls="navLinks" aria-expanded="false"><span></span><span></span><span></span></button>
+    <button type="button" class="burger" id="burger" aria-label="Menu" aria-controls="navLinks" aria-expanded="false"><span></span><span></span><span></span></button>
   </div>
 </header>
 
@@ -85,8 +85,8 @@
     <figure class="hero-art reveal">
       <div class="hero-halo" aria-hidden="true"></div>
       <picture class="logo-pic hero-logo-pic">
-        <source srcset="img/scs-logo-640.webp 640w, img/scs-logo.webp 1024w" sizes="(max-width: 780px) 62vw, 460px" type="image/webp">
-        <img src="img/scs-logo.png" alt="Sins of Chaotic Shadows logo" width="1024" height="809" id="heroEmblem" fetchpriority="high">
+        <source srcset="img/scs-logo-160.webp 160w, img/scs-logo-640.webp 640w, img/scs-logo.webp 1024w" sizes="(max-width: 520px) 195px, (max-width: 780px) 235px, 380px" type="image/webp">
+        <img src="img/scs-logo.png" alt="Sins of Chaotic Shadows logo" width="1024" height="809" id="heroEmblem" fetchpriority="high" decoding="async">
       </picture>
       <figcaption class="hero-caption mono">OFFICIAL BUILD · <span class="wrapany">com.sinsofchaoticshadow.game</span></figcaption>
     </figure>
@@ -108,7 +108,7 @@
         <span id="trailerCaptionMeta">SOURCE: VERIFIED BUILD CAPTURES</span>
       </div>
       <div class="trailer-stage">
-        <video id="trailerVideo" controls playsinline preload="metadata" poster="img/screen-combat.webp" aria-label="Sins of Chaotic Shadow in-build gameplay showcase reel">
+        <video id="trailerVideo" width="1280" height="720" controls playsinline preload="metadata" poster="img/screen-combat.webp" aria-label="Sins of Chaotic Shadow in-build gameplay showcase reel">
           <source id="trailerSource" src="media/scs-gameplay-trailer.mp4" type="video/mp4">
           Your browser does not support embedded HTML5 video. View the real gameplay screenshots below.
         </video>
@@ -125,7 +125,7 @@
           <button type="button" class="chip" data-seek="9.9">00:10 · Combat &amp; Abilities</button>
           <button type="button" class="chip" data-seek="13.5">00:13 · Android APK</button>
         </div>
-        <a class="btn btn-sm btn-ghost" id="trailerExtLink" href="#gallery" hidden rel="noopener" target="_blank">Watch Full External Trailer ↗</a>
+        <a class="btn btn-sm btn-ghost" id="trailerExtLink" href="#gallery" hidden rel="noopener noreferrer" target="_blank">Watch Full External Trailer ↗</a>
       </div>
     </div>
   </div>
@@ -186,99 +186,85 @@
   </div>
 </section>
 
-<!-- ===== 3A. INTERACTIVE MAPS GALLERY (SUNKEN MERIDIAN SPOTLIGHT) ===== -->
+<!-- ===== 3A. INTERACTIVE MAPS GALLERY ===== -->
 <section class="sec alt" id="maps" aria-labelledby="mapsTitle">
   <div class="wrap">
     <div class="sec-head center reveal">
       <p class="kicker">ARENA ROTATION &amp; PREVIEWS</p>
       <h2 id="mapsTitle">Tactical Maps</h2>
-      <p class="sub">Inspect the four daylight-converted arenas playable today in Android APK <span class="mono">v0.22.1</span>, plus our upcoming map spotlight: <b>Sunken Meridian</b>.</p>
+      <p class="sub">Explore every map in Sins of Chaotic Shadow — the four daylight arenas playable in signed APK <span class="mono">v0.22.1</span> plus upcoming arena <b>Sunken Meridian</b>. Each map uses only its own authentic capture or a clearly labelled placeholder until dedicated captures are published.</p>
     </div>
 
     <div class="filter-bar reveal" role="tablist" aria-label="Filter maps" id="mapFilters">
       <button type="button" class="chip active" data-map-filter="all" role="tab" aria-selected="true">All Maps (5)</button>
-      <button type="button" class="chip" data-map-filter="spotlight" role="tab" aria-selected="false">★ Sunken Meridian Spotlight</button>
-      <button type="button" class="chip" data-map-filter="active" role="tab" aria-selected="false">Playable in v0.22.1 APK (4)</button>
+      <button type="button" class="chip" data-map-filter="active" role="tab" aria-selected="false">Playable in v0.22.1 (4)</button>
+      <button type="button" class="chip" data-map-filter="umbra-crossing" role="tab" aria-selected="false">Umbra Crossing</button>
+      <button type="button" class="chip" data-map-filter="neon-veil" role="tab" aria-selected="false">Neon Veil</button>
+      <button type="button" class="chip" data-map-filter="foundry-siege" role="tab" aria-selected="false">Foundry Siege</button>
+      <button type="button" class="chip" data-map-filter="ironfall-industries" role="tab" aria-selected="false">Ironfall Industries</button>
+      <button type="button" class="chip" data-map-filter="sunken-meridian" role="tab" aria-selected="false">Sunken Meridian · Planned</button>
     </div>
 
-    <div class="maps-grid" id="mapsGrid">
-      <!-- Featured Spotlight: Sunken Meridian -->
-      <article class="map-card map-spotlight reveal" data-map-cat="spotlight">
-        <div class="map-visual map-visual-planned">
-          <div class="map-grid-art" aria-hidden="true"></div>
-          <div class="map-spotlight-overlay">
-            <span class="badge badge-planned">PLANNED MAP PREVIEW · NOT IN v0.22.1 APK</span>
-            <p class="mono small">ARENA TELEMETRY PENDING PUBLIC BUILD</p>
-          </div>
-        </div>
-        <div class="map-body">
-          <header class="map-head">
-            <div>
-              <p class="kicker">FEATURED UPCOMING ARENA</p>
-              <h3>Sunken Meridian</h3>
-            </div>
-            <span class="badge badge-planned">PLANNED / IN DEVELOPMENT</span>
-          </header>
-          <p><b>Sunken Meridian</b> is an upcoming SCS tactical arena currently in development and <b>not yet bundled</b> in the downloadable <span class="mono">v0.22.1</span> signed Android APK (<span class="mono">/apk/SCS.apk</span>). Per project honesty rules, unshipped lane callouts, spawn counts, and concept renders are never fabricated ahead of release — verified screenshots and mode compatibility will be published here once Sunken Meridian ships in a signed Android update.</p>
-          <ul class="map-tags mono">
-            <li>STATUS: PLANNED FUTURE RELEASE</li>
-            <li>CURRENT APK FALLBACK: 4 DAYLIGHT ARENAS BELOW</li>
-          </ul>
-        </div>
-      </article>
+    <p class="filter-status mono small dim center" id="mapFilterCount" role="status" aria-live="polite">Showing all 5 maps (4 playable in v0.22.1 APK · 1 planned future arena)</p>
 
-      <!-- Active Map 1: Umbra Crossing -->
-      <article class="map-card reveal" data-map-cat="active">
-        <button type="button" class="map-thumb gitem-trigger" data-full="img/screen-combat.jpg" aria-label="View Umbra Crossing live combat screenshot">
-          <picture>
-            <source srcset="img/screen-combat.webp" type="image/webp">
-            <img src="img/screen-combat.jpg" alt="Umbra Crossing arena in live combat view with minimap and central objective lane" width="1600" height="900" loading="lazy">
+    <div class="maps-grid" id="mapsGrid">
+      <!-- Active Map 1: Umbra Crossing (has verified combat screenshot) -->
+      <article class="map-card reveal" data-map-id="umbra-crossing" data-map-status="active">
+        <button type="button" class="map-thumb gitem-trigger" data-full="img/screen-combat.jpg" data-webp="img/screen-combat.webp" aria-label="Enlarge Umbra Crossing arena screenshot">
+          <picture class="shot-frame">
+            <source srcset="img/screen-combat-800.webp 800w, img/screen-combat.webp 1600w" sizes="(max-width: 780px) 92vw, 540px" type="image/webp">
+            <img src="img/screen-combat.jpg" alt="Umbra Crossing arena in live combat view with minimap, central objective lane, and HUD" width="1600" height="900" loading="lazy" decoding="async">
           </picture>
-          <span class="map-thumb-tag mono">IN-BUILD CAPTURE · CLICK TO ENLARGE</span>
+          <span class="map-thumb-tag mono">UMBRA CROSSING CAPTURE · TAP TO ENLARGE</span>
         </button>
         <div class="map-body">
           <header class="map-head">
             <h3>Umbra Crossing</h3>
             <span class="badge badge-ok">IN v0.22.1 APK · DEFAULT</span>
           </header>
-          <p>Core symmetrical multi-lane arena built around a central core objective, flanking corridors, and hard-angle pillar cover. Upgraded with procedural daytime sky lighting and sun-matched shadows in <span class="mono">0.22.0</span>; also serves as the automatic fallback for retired map selections.</p>
+          <p>Symmetrical multi-lane tactical arena built around a central Shadow Core objective zone, flank corridors, and hard-angle pillar cover. Upgraded with procedural daytime skies and sun-matched shadows in <span class="mono">0.22.0</span>; also serves as the automatic fallback for retired map selections.</p>
           <ul class="map-tags mono">
             <li>TDM</li><li>FFA</li><li>5V5 SHADOW CORE</li><li>PRIVATE MAP VOTE</li>
           </ul>
         </div>
       </article>
 
-      <!-- Active Map 2: Neon Veil -->
-      <article class="map-card reveal" data-map-cat="active">
-        <button type="button" class="map-thumb gitem-trigger" data-full="img/screen-modes.jpg" aria-label="View mode and map selector screenshot">
-          <picture>
-            <source srcset="img/screen-modes.webp" type="image/webp">
-            <img src="img/screen-modes.jpg" alt="Game mode and map picker showing active SCS map selection" width="1600" height="900" loading="lazy">
-          </picture>
-          <span class="map-thumb-tag mono">MODE &amp; MAP SELECTOR</span>
-        </button>
+      <!-- Active Map 2: Neon Veil (own labelled placeholder — never reuses Umbra Crossing) -->
+      <article class="map-card reveal" data-map-id="neon-veil" data-map-status="active">
+        <div class="media-placeholder" role="img" aria-label="Neon Veil map screenshot unavailable — placeholder preview">
+          <div class="placeholder-grid" aria-hidden="true"></div>
+          <div class="placeholder-inner">
+            <span class="badge">SCREENSHOT UNAVAILABLE</span>
+            <strong class="placeholder-title">Neon Veil</strong>
+            <span class="mono small dim">Playable in v0.22.1 APK · Dedicated arena capture pending upload</span>
+          </div>
+        </div>
         <div class="map-body">
           <header class="map-head">
             <h3>Neon Veil</h3>
             <span class="badge badge-ok">IN v0.22.1 APK</span>
           </header>
-          <p>High-contrast neon-accented combat arena converted to crisp blue-zenith daylight skies and cool atmospheric haze in <span class="mono">0.22.0</span> while preserving its original collision, sightlines, and spawn geometry.</p>
+          <p>Urban-neon combat arena converted to crisp blue-zenith daylight skies and cool atmospheric haze in <span class="mono">0.22.0</span> while preserving its exact original wall collision, sightlines, and spawn geometry.</p>
           <ul class="map-tags mono">
             <li>TDM</li><li>FFA</li><li>5V5 SHADOW CORE</li><li>PRIVATE MAP VOTE</li>
           </ul>
         </div>
       </article>
 
-      <!-- Active Map 3: Foundry Siege -->
-      <article class="map-card reveal" data-map-cat="active">
-        <div class="map-visual">
-          <div class="map-grid-art" aria-hidden="true"></div>
-          <span class="mono small">DAYLIGHT ARENA · ATTACK &amp; DESTROY</span>
+      <!-- Active Map 3: Foundry Siege (own labelled placeholder) -->
+      <article class="map-card reveal" data-map-id="foundry-siege" data-map-status="active">
+        <div class="media-placeholder" role="img" aria-label="Foundry Siege map screenshot unavailable — placeholder preview">
+          <div class="placeholder-grid" aria-hidden="true"></div>
+          <div class="placeholder-inner">
+            <span class="badge">SCREENSHOT UNAVAILABLE</span>
+            <strong class="placeholder-title">Foundry Siege</strong>
+            <span class="mono small dim">Playable in v0.22.1 APK · Attack &amp; Destroy arena capture pending upload</span>
+          </div>
         </div>
         <div class="map-body">
           <header class="map-head">
             <h3>Foundry Siege</h3>
-            <span class="badge badge-ok">IN v0.22.1 APK</span>
+            <span class="badge badge-ok">IN v0.22.1 APK · ATTACK &amp; DESTROY</span>
           </header>
           <p>Designated <b>Attack &amp; Destroy</b> objective arena engineered for plant, defuse, and breach rotations, featuring dedicated AI bot patrol nodes and full daytime sky &amp; shadow integration.</p>
           <ul class="map-tags mono">
@@ -287,11 +273,15 @@
         </div>
       </article>
 
-      <!-- Active Map 4: Ironfall Industries -->
-      <article class="map-card reveal" data-map-cat="active">
-        <div class="map-visual">
-          <div class="map-grid-art" aria-hidden="true"></div>
-          <span class="mono small">DAYLIGHT ARENA · INDUSTRIAL SECTOR</span>
+      <!-- Active Map 4: Ironfall Industries (own labelled placeholder) -->
+      <article class="map-card reveal" data-map-id="ironfall-industries" data-map-status="active">
+        <div class="media-placeholder" role="img" aria-label="Ironfall Industries map screenshot unavailable — placeholder preview">
+          <div class="placeholder-grid" aria-hidden="true"></div>
+          <div class="placeholder-inner">
+            <span class="badge">SCREENSHOT UNAVAILABLE</span>
+            <strong class="placeholder-title">Ironfall Industries</strong>
+            <span class="mono small dim">Playable in v0.22.1 APK · Industrial sector capture pending upload</span>
+          </div>
         </div>
         <div class="map-body">
           <header class="map-head">
@@ -301,6 +291,32 @@
           <p>Industrial tactical complex featuring warm daylight atmospheric haze, sun-matched shadows, and structured mid-to-long sightlines across solo bot modes and peer-to-peer private lobbies.</p>
           <ul class="map-tags mono">
             <li>TDM</li><li>FFA</li><li>5V5 SHADOW CORE</li><li>PRIVATE MAP VOTE</li>
+          </ul>
+        </div>
+      </article>
+
+      <!-- Planned Map 5: Sunken Meridian (own clearly labelled planned placeholder) -->
+      <article class="map-card map-card-planned reveal" data-map-id="sunken-meridian" data-map-status="planned">
+        <div class="media-placeholder media-placeholder-planned" role="img" aria-label="Sunken Meridian map preview unavailable — planned future arena">
+          <div class="placeholder-grid" aria-hidden="true"></div>
+          <div class="placeholder-inner">
+            <span class="badge badge-planned">PREVIEW UNAVAILABLE · PLANNED ARENA</span>
+            <strong class="placeholder-title">Sunken Meridian</strong>
+            <span class="mono small dim">In development · Not yet bundled in v0.22.1 APK</span>
+          </div>
+        </div>
+        <div class="map-body">
+          <header class="map-head">
+            <div>
+              <p class="kicker">UPCOMING ARENA PREVIEW</p>
+              <h3>Sunken Meridian</h3>
+            </div>
+            <span class="badge badge-planned">PLANNED / IN DEVELOPMENT</span>
+          </header>
+          <p><b>Sunken Meridian</b> is an upcoming SCS tactical arena planned for a future update and is <b>not yet included</b> in the current <span class="mono">v0.22.1</span> signed Android APK (<span class="mono">/apk/SCS.apk</span>). Authentic screenshots and mode details will be published here once Sunken Meridian ships in a public release.</p>
+          <ul class="map-tags mono">
+            <li>STATUS: PLANNED FUTURE RELEASE</li>
+            <li>SCREENSHOT: PENDING PUBLIC BUILD</li>
           </ul>
         </div>
       </article>
@@ -391,11 +407,12 @@
       <article class="wcard" data-wcat="pistol"><header><span class="wclass mono">REVOLVER</span><span class="wcost mono">$1,700</span></header><h3>Bulwark .50</h3><p class="wsub">High-caliber 6-shot revolver punishing wide peeks.</p><dl class="wstats mono"><div><dt>DMG</dt><dd>78</dd></div><div><dt>MAG</dt><dd>6</dd></div><div><dt>CLASS</dt><dd>Sidearm</dd></div></dl></article>
     </div>
 
-    <div class="wmelee reveal">
+    <!-- 11-Blade Melee Collection (Dedicated Honest Placeholder — No Unrelated Buy Phase Screenshot) -->
+    <div class="wmelee reveal" id="meleeCollection">
       <div class="wmelee-copy">
         <p class="kicker">LEVEL-GATED PROGRESSION · ZERO MICROTRANSACTIONS</p>
         <h3>The 11-Blade Melee Collection</h3>
-        <p>Every blade has its own 3D viewmodel, equip flourish, inspect choreography, and neon slash trail — unlocked strictly by player level in <b>Collection → Melee</b>:</p>
+        <p>Every blade has its own procedural 3D viewmodel, equip flourish, inspect choreography, and neon slash trail — unlocked strictly by player level in <b>Collection → Melee</b>:</p>
         <ul class="blade-pills mono">
           <li>Neon Karambit <b>Lv 1</b></li>
           <li>Shadow Dagger <b>Lv 3</b></li>
@@ -410,12 +427,19 @@
           <li>Rift Cleaver <b>Lv 27</b></li>
         </ul>
       </div>
-      <figure>
-        <picture>
-          <source srcset="img/screen-arsenal.webp" type="image/webp">
-          <img src="img/screen-arsenal.jpg" alt="Weapon cards with stats in the in-game arsenal" width="1600" height="900" loading="lazy">
-        </picture>
-      </figure>
+      <div class="media-placeholder melee-placeholder" role="img" aria-label="11-Blade Melee Collection preview image unavailable">
+        <div class="placeholder-grid" aria-hidden="true"></div>
+        <div class="placeholder-inner">
+          <span class="badge">MELEE PREVIEW UNAVAILABLE</span>
+          <strong class="placeholder-title">Collection → Melee (11 Blades)</strong>
+          <span class="small dim">Dedicated melee showcase captures are not yet included in public website assets. Inspect all 7 single blades and 4 akimbo pairs in 3D inside the Android game.</span>
+          <div class="melee-meta mono small">
+            <span>7 SINGLE BLADES</span>
+            <span>4 AKIMBO PAIRS</span>
+            <span>LV 1 – LV 27</span>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </section>
@@ -494,7 +518,7 @@
     <div class="sec-head center reveal">
       <p class="kicker">STRAIGHT FROM THE BUILD</p>
       <h2 id="galleryTitle">Gameplay Screenshots</h2>
-      <p class="sub">Captured directly from the real build — zero mockups or bullshots. Filter by category or click any frame to inspect full screen.</p>
+      <p class="sub">Captured directly from the real build at full 16:9 proportions (<span class="mono">object-fit: contain</span>) so every HUD indicator remains visible. Filter by category or tap any capture to view full screen.</p>
     </div>
 
     <div class="filter-bar reveal" role="tablist" aria-label="Filter screenshots" id="galFilters">
@@ -506,28 +530,46 @@
 
     <div class="gal reveal" id="gal">
       <button type="button" class="gitem" data-gcat="menus" data-full="img/screen-lobby.jpg" data-webp="img/screen-lobby.webp">
-        <picture><source srcset="img/screen-lobby.webp" type="image/webp"><img src="img/screen-lobby.jpg" alt="SCS main menu with Resonator lobby and career card" width="1600" height="900" loading="lazy"></picture>
-        <span>Main menu &amp; Resonator</span>
+        <picture class="shot-frame">
+          <source srcset="img/screen-lobby-800.webp 800w, img/screen-lobby.webp 1600w" sizes="(max-width: 780px) 92vw, (max-width: 1020px) 46vw, 370px" type="image/webp">
+          <img src="img/screen-lobby.jpg" alt="SCS main menu with Resonator lobby and career card" width="1600" height="900" loading="lazy" decoding="async">
+        </picture>
+        <span class="gitem-cap mono">Main menu &amp; Resonator</span>
       </button>
       <button type="button" class="gitem" data-gcat="menus" data-full="img/screen-play.jpg" data-webp="img/screen-play.webp">
-        <picture><source srcset="img/screen-play.webp" type="image/webp"><img src="img/screen-play.jpg" alt="Play hub with mode selection cards" width="1600" height="900" loading="lazy"></picture>
-        <span>Play hub</span>
+        <picture class="shot-frame">
+          <source srcset="img/screen-play-800.webp 800w, img/screen-play.webp 1600w" sizes="(max-width: 780px) 92vw, (max-width: 1020px) 46vw, 370px" type="image/webp">
+          <img src="img/screen-play.jpg" alt="Play hub with mode selection cards" width="1600" height="900" loading="lazy" decoding="async">
+        </picture>
+        <span class="gitem-cap mono">Play hub</span>
       </button>
       <button type="button" class="gitem" data-gcat="menus" data-full="img/screen-modes.jpg" data-webp="img/screen-modes.webp">
-        <picture><source srcset="img/screen-modes.webp" type="image/webp"><img src="img/screen-modes.jpg" alt="Game mode picker: TDM, FFA, 5v5 Shadow Core and map select" width="1600" height="900" loading="lazy"></picture>
-        <span>Mode picker &amp; maps</span>
+        <picture class="shot-frame">
+          <source srcset="img/screen-modes-800.webp 800w, img/screen-modes.webp 1600w" sizes="(max-width: 780px) 92vw, (max-width: 1020px) 46vw, 370px" type="image/webp">
+          <img src="img/screen-modes.jpg" alt="Game mode picker: TDM, FFA, 5v5 Shadow Core and map select" width="1600" height="900" loading="lazy" decoding="async">
+        </picture>
+        <span class="gitem-cap mono">Mode picker &amp; maps</span>
       </button>
       <button type="button" class="gitem" data-gcat="arsenal" data-full="img/screen-arsenal.jpg" data-webp="img/screen-arsenal.webp">
-        <picture><source srcset="img/screen-arsenal.webp" type="image/webp"><img src="img/screen-arsenal.jpg" alt="Buy phase weapon shop with AR, SMG, shotgun, sniper and pistol classes" width="1600" height="900" loading="lazy"></picture>
-        <span>Buy phase / Arsenal</span>
+        <picture class="shot-frame">
+          <source srcset="img/screen-arsenal-800.webp 800w, img/screen-arsenal.webp 1600w" sizes="(max-width: 780px) 92vw, (max-width: 1020px) 46vw, 370px" type="image/webp">
+          <img src="img/screen-arsenal.jpg" alt="Buy phase weapon shop with AR, SMG, shotgun, sniper and pistol classes" width="1600" height="900" loading="lazy" decoding="async">
+        </picture>
+        <span class="gitem-cap mono">Buy phase / Firearm shop</span>
       </button>
       <button type="button" class="gitem" data-gcat="combat" data-full="img/screen-combat.jpg" data-webp="img/screen-combat.webp">
-        <picture><source srcset="img/screen-combat.webp" type="image/webp"><img src="img/screen-combat.jpg" alt="Live TDM match in the neon arena with HUD and viewmodel" width="1600" height="900" loading="lazy"></picture>
-        <span>Live TDM match</span>
+        <picture class="shot-frame">
+          <source srcset="img/screen-combat-800.webp 800w, img/screen-combat.webp 1600w" sizes="(max-width: 780px) 92vw, (max-width: 1020px) 46vw, 370px" type="image/webp">
+          <img src="img/screen-combat.jpg" alt="Live TDM match in Umbra Crossing with HUD and viewmodel" width="1600" height="900" loading="lazy" decoding="async">
+        </picture>
+        <span class="gitem-cap mono">Live TDM match (Umbra Crossing)</span>
       </button>
       <button type="button" class="gitem" data-gcat="arsenal" data-full="img/screen-pause.jpg" data-webp="img/screen-pause.webp">
-        <picture><source srcset="img/screen-pause.webp" type="image/webp"><img src="img/screen-pause.jpg" alt="In-match pause menu with resume, settings and quit" width="1600" height="900" loading="lazy"></picture>
-        <span>Pause &amp; settings</span>
+        <picture class="shot-frame">
+          <source srcset="img/screen-pause-800.webp 800w, img/screen-pause.webp 1600w" sizes="(max-width: 780px) 92vw, (max-width: 1020px) 46vw, 370px" type="image/webp">
+          <img src="img/screen-pause.jpg" alt="In-match pause menu with resume, settings and quit" width="1600" height="900" loading="lazy" decoding="async">
+        </picture>
+        <span class="gitem-cap mono">Pause &amp; settings</span>
       </button>
     </div>
   </div>
@@ -655,7 +697,7 @@
     <div class="sec-head center reveal">
       <p class="kicker">DEV DISPATCHES &amp; PLAYER HUB</p>
       <h2 id="communityTitle">News &amp; Community</h2>
-      <p class="sub">Official development announcements, clearly labeled upcoming previews, real in-build captures, bug reporting, and configurable community channels.</p>
+      <p class="sub">Official development announcements, clearly labelled upcoming previews, issue-reporting status, and community channels.</p>
     </div>
 
     <div class="news-grid">
@@ -683,62 +725,55 @@
     </div>
 
     <div class="community-split reveal">
-      <!-- Feedback & Diagnostic Bug Report Helper -->
-      <div class="comm-panel">
-        <p class="kicker">FEEDBACK &amp; BUG REPORTS</p>
-        <h3>Report an Issue or Share Tactical Feedback</h3>
-        <p class="comm-desc" id="commSupportSummary">Reach developer <span class="mono">0_umbra</span> directly on Discord or open an issue on the public site repository. Use the quick template generator below to copy clean device diagnostics for faster fixes.</p>
-
-        <div class="bug-builder">
-          <label for="bugCategory" class="mono small">ISSUE / FEEDBACK CATEGORY</label>
-          <div class="bug-row">
-            <select id="bugCategory" class="tactical-select">
-              <option value="Performance / FPS Lag">Performance / FPS Lag</option>
-              <option value="Crash or Freeze on Android">Crash or Freeze on Android</option>
-              <option value="APK Installation / Update">APK Installation / Update</option>
-              <option value="Weapon / Resonator / Map Bug">Weapon / Resonator / Map Bug</option>
-              <option value="Feature Request / Balance Feedback">Feature Request / Balance Feedback</option>
-            </select>
-            <button type="button" class="btn btn-sm btn-primary" id="copyBugTemplateBtn">Copy Report Template</button>
+      <!-- Issue Reporting Section — Under Development (No Nonfunctional Report Form) -->
+      <div class="comm-panel" id="reportIssue">
+        <p class="kicker">REPORT AN ISSUE</p>
+        <h3>Issue Reporting</h3>
+        <div class="dev-notice-card" role="status">
+          <div class="notice-head">
+            <span class="badge badge-planned">UNDER DEVELOPMENT</span>
+            <strong>Web Issue Reporting — Coming in a Future Update</strong>
           </div>
-          <p class="mono small dim" id="bugCopyStatus" role="status" aria-live="polite">Copies a structured v0.22.1 report template to your clipboard.</p>
+          <p id="issueReportNotice">Our dedicated issue and bug reporting system is currently <b>under development</b> and will become available in a future website update. No web submission form is active yet so reports are never silently lost.</p>
         </div>
-
+        <p class="comm-desc">Need to share feedback, report a bug, or ask a question right now?</p>
         <div class="comm-actions">
-          <button type="button" class="btn btn-sm btn-ghost" id="copyDiscordBtn" data-discord="0_umbra">Copy Discord: 0_umbra</button>
-          <a class="btn btn-sm btn-ghost" id="bugReportExtBtn" href="#faq" hidden rel="noopener" target="_blank">Open Bug Tracker ↗</a>
-          <a class="btn btn-sm btn-ghost" id="feedbackExtBtn" href="#faq" hidden rel="noopener" target="_blank">Submit Feedback ↗</a>
+          <a class="btn btn-sm btn-primary" href="https://discord.com/users/1341279384535044097" target="_blank" rel="noopener noreferrer" data-dev-discord>Contact the Developer on Discord ↗</a>
         </div>
       </div>
 
-      <!-- Configurable Social Links & Community Captures -->
+      <!-- Planned Community Channels & Build Captures -->
       <div class="comm-panel">
         <p class="kicker">COMMUNITY CHANNELS &amp; CAPTURES</p>
-        <h3>Official Channels</h3>
-        <p class="comm-desc">Social destinations are loaded from <span class="mono">data/community.json</span>. Unconfigured channels are shown transparently rather than linking to placeholder pages.</p>
+        <h3>Social &amp; Community Channels</h3>
+        <p class="comm-desc">Official community spaces are planned for future launches and marked honestly until live. Direct developer contact is available now via <a href="https://discord.com/users/1341279384535044097" target="_blank" rel="noopener noreferrer" data-dev-discord>Contact the Developer on Discord</a>.</p>
 
         <ul class="social-list" id="socialLinksList">
           <li class="social-item">
-            <div><strong>Discord Developer Contact</strong><span class="block small dim">Direct handle verified — public server invite not yet published</span></div>
-            <span class="mono badge badge-ok">@0_umbra</span>
+            <div><strong>Discord Server</strong><span class="block small dim">Official community server planned for a future update</span></div>
+            <span class="mono badge badge-planned">COMING SOON</span>
           </li>
           <li class="social-item">
-            <div><strong>YouTube / X / Instagram</strong><span class="block small dim">Configurable in data/community.json when official pages go live</span></div>
-            <span class="mono badge">NOT YET CONFIGURED</span>
+            <div><strong>Instagram</strong><span class="block small dim">Official page planned for a future update</span></div>
+            <span class="mono badge badge-planned">COMING SOON</span>
+          </li>
+          <li class="social-item">
+            <div><strong>YouTube</strong><span class="block small dim">Official channel planned for a future update</span></div>
+            <span class="mono badge badge-planned">COMING SOON</span>
           </li>
         </ul>
 
         <div class="comm-shots">
-          <p class="mono small dim">FEATURED BUILD CAPTURES — SHARE YOUR MATCH SCREENSHOTS VIA DISCORD (<span class="mono">0_umbra</span>)</p>
+          <p class="mono small dim">FEATURED BUILD CAPTURES — <a href="https://discord.com/users/1341279384535044097" target="_blank" rel="noopener noreferrer" data-dev-discord>Contact the Developer on Discord</a> TO SHARE SCREENSHOTS</p>
           <div class="comm-shot-strip">
-            <button type="button" class="comm-shot gitem-trigger" data-full="img/screen-combat.jpg" aria-label="Open combat capture">
-              <picture><source srcset="img/screen-combat.webp" type="image/webp"><img src="img/screen-combat.jpg" alt="In-build combat capture on Umbra Crossing" width="1600" height="900" loading="lazy"></picture>
+            <button type="button" class="comm-shot gitem-trigger" data-full="img/screen-combat.jpg" data-webp="img/screen-combat.webp" aria-label="Open Umbra Crossing combat capture">
+              <picture class="shot-frame"><source srcset="img/screen-combat-800.webp 800w, img/screen-combat.webp 1600w" sizes="(max-width: 780px) 30vw, 170px" type="image/webp"><img src="img/screen-combat.jpg" alt="In-build combat capture on Umbra Crossing" width="1600" height="900" loading="lazy" decoding="async"></picture>
             </button>
-            <button type="button" class="comm-shot gitem-trigger" data-full="img/screen-arsenal.jpg" aria-label="Open buy phase capture">
-              <picture><source srcset="img/screen-arsenal.webp" type="image/webp"><img src="img/screen-arsenal.jpg" alt="In-build buy phase arsenal capture" width="1600" height="900" loading="lazy"></picture>
+            <button type="button" class="comm-shot gitem-trigger" data-full="img/screen-arsenal.jpg" data-webp="img/screen-arsenal.webp" aria-label="Open buy phase capture">
+              <picture class="shot-frame"><source srcset="img/screen-arsenal-800.webp 800w, img/screen-arsenal.webp 1600w" sizes="(max-width: 780px) 30vw, 170px" type="image/webp"><img src="img/screen-arsenal.jpg" alt="In-build buy phase firearm shop capture" width="1600" height="900" loading="lazy" decoding="async"></picture>
             </button>
-            <button type="button" class="comm-shot gitem-trigger" data-full="img/screen-lobby.jpg" aria-label="Open Resonator lobby capture">
-              <picture><source srcset="img/screen-lobby.webp" type="image/webp"><img src="img/screen-lobby.jpg" alt="In-build Resonator lobby capture" width="1600" height="900" loading="lazy"></picture>
+            <button type="button" class="comm-shot gitem-trigger" data-full="img/screen-lobby.jpg" data-webp="img/screen-lobby.webp" aria-label="Open Resonator lobby capture">
+              <picture class="shot-frame"><source srcset="img/screen-lobby-800.webp 800w, img/screen-lobby.webp 1600w" sizes="(max-width: 780px) 30vw, 170px" type="image/webp"><img src="img/screen-lobby.jpg" alt="In-build Resonator lobby capture" width="1600" height="900" loading="lazy" decoding="async"></picture>
             </button>
           </div>
         </div>
@@ -841,7 +876,7 @@
       <details><summary>How do I verify my download?</summary><p>Every release publishes a SHA-256 checksum (shown in the Download section). On desktop: <span class="mono">sha256sum file.apk</span> (Linux/macOS) or <span class="mono">certutil -hashfile file.apk SHA256</span> (Windows) and compare.</p></details>
       <details><summary>Why does Android warn me when installing?</summary><p>SCS is distributed directly by the developer rather than through an app store, so Android asks you to allow installs from your browser once. That prompt is standard for sideloaded APKs.</p></details>
       <details><summary>Does the game collect my data?</summary><p>The game itself has no ads and no analytics. When you use an SCS account, your profile, unlocks and settings are stored in the developer's Supabase project under row-level security — see the Privacy summary in the footer.</p></details>
-      <details><summary>Where can I report a bug or request a feature?</summary><p>Open an issue on the public site repository or reach the developer on Discord: <span class="mono">0_umbra</span>.</p></details>
+      <details><summary>Where can I report a bug or request a feature?</summary><p>Website issue reporting is currently under development and will be available in a future update. For now, please <a href="https://discord.com/users/1341279384535044097" target="_blank" rel="noopener noreferrer" data-dev-discord>Contact the Developer on Discord</a>.</p></details>
     </div>
   </div>
 </section>
@@ -867,9 +902,9 @@
 <footer class="foot">
   <div class="wrap foot-in">
     <div class="foot-brand">
-      <picture class="logo-pic">
+      <picture class="logo-pic foot-logo-pic">
         <source srcset="img/scs-logo-160.webp" type="image/webp">
-        <img src="img/scs-logo.png" alt="Sins of Chaotic Shadows logo" width="1024" height="809" loading="lazy">
+        <img src="img/scs-logo.png" alt="Sins of Chaotic Shadows logo" width="1024" height="809" loading="lazy" decoding="async">
       </picture>
       <div>
         <p class="brand-t">SINS<b>OF</b>CHAOTIC&nbsp;SHADOW</p>
@@ -929,8 +964,7 @@
   <p>This website itself collects nothing: no cookies, no analytics, no ads, no tracking pixels. Offline gameplay is planned for a future update. If you create an optional SCS account, the
   developer's Supabase project stores your email, chosen callsign, avatar, and gameplay progression (level, unlocks,
   stats, settings) protected by row-level security, used only to provide your account and cloud save. No third-party
-  ad or analytics SDKs are embedded in the game. You can request deletion of your account data via the support
-  contact below. Children under 13 should not create accounts.</p></div>
+  ad or analytics SDKs are embedded in the game. You can request deletion of your account data by <a href="https://discord.com/users/1341279384535044097" target="_blank" rel="noopener noreferrer" data-dev-discord>Contacting the Developer on Discord</a>. Children under 13 should not create accounts.</p></div>
 </div>
 
 <script src="js/main.js"></script>

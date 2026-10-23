@@ -1,37 +1,29 @@
 {
-  "discordHandle": "0_umbra",
+  "developerDiscordUrl": "https://discord.com/users/1341279384535044097",
+  "issueReporting": {
+    "status": "under_development",
+    "message": "Issue reporting is currently under development and will be available in a future website update."
+  },
   "channels": [
     {
       "id": "discord",
       "label": "Discord Server",
       "url": "",
-      "note": "Official server invite not yet published — message 0_umbra directly on Discord"
-    },
-    {
-      "id": "youtube",
-      "label": "YouTube",
-      "url": "",
-      "note": "Official channel URL not yet configured"
-    },
-    {
-      "id": "x",
-      "label": "X (Twitter)",
-      "url": "",
-      "note": "Official profile URL not yet configured"
+      "note": "Official community server planned for a future update"
     },
     {
       "id": "instagram",
       "label": "Instagram",
       "url": "",
-      "note": "Official profile URL not yet configured"
+      "note": "Official page planned for a future update"
+    },
+    {
+      "id": "youtube",
+      "label": "YouTube",
+      "url": "",
+      "note": "Official channel planned for a future update"
     }
   ],
-  "support": {
-    "bugReportUrl": "",
-    "feedbackUrl": "",
-    "discordUser": "0_umbra",
-    "summary": "Report bugs or share feedback via the public site repository Issues tab or on Discord (0_umbra)."
-  },
   "trailer": {
     "videoUrl": "media/scs-gameplay-trailer.mp4",
     "posterUrl": "img/screen-combat.webp",
