@@ -1,74 +1,86 @@
 # Sins of Chaotic Shadow — Official Site
 
-The public website for **Sins of Chaotic Shadow (SCS)**: game information, real screenshots,
-and a no-login download of the latest **signed Android APK**.
+The public website for **Sins of Chaotic Shadow (SCS)**: game overview, showcase galleries,
+patch notes, Android compatibility guide, and a direct no-login download of the latest
+**signed Android APK** (`/apk/SCS.apk`).
 
 This repository is **deliberately separate** from the private game repository
 (`Sins-Of-Chaotic-Shadows`). It contains **only** website code and approved public assets.
-No game source code, no private configuration, no signing material ever belongs here.
+No game source code, no private configuration, and no signing material ever belongs here.
 
 ## What's on the site
 
-- Cinematic hero with the SCS emblem
-- Prominent **Download Latest APK** button wired to `data/release.json`
-- Real, current-build screenshots (captured from the game itself — replaceable, never fictional)
-- Accurate mode descriptions: **TDM**, **Free-For-All**, **5v5 Shadow Core**, private rooms, Training Ground
-- Arsenal overview: 15 firearms in 5 classes + the level-gated melee collection
-- FAQ, About, Terms/Privacy summaries, responsive footer
+1. **Cinematic Homepage (`#top`, `#trailer`)** — Atmospheric dark/crimson FPS theme, distortion-free
+   SCS emblem (`<picture>` WebP + PNG fallback), direct working APK download button with verified
+   version (`0.22.1`) and actual file size (`5.58 MB` / `5,851,613` bytes), subtle motion, and an
+   in-build gameplay showcase trailer (`media/scs-gameplay-trailer.mp4`) with chapter controls.
+2. **Updates & Patch Notes (`#updates`)** — Filterable newest-first version history (`0.23.0` down
+   to `0.20.0`), new features, maps, arsenal, performance passes, bug fixes, known issues, and
+   individual release download links.
+3. **Game Showcase (`#showcase`, `#maps`, `#modes`, `#weapons`, `#abilities`, `#gallery`)** —
+   Interactive maps gallery featuring the **Sunken Meridian** planned-arena spotlight alongside the
+   4 playable `v0.22.1` daylight arenas (**Umbra Crossing**, **Neon Veil**, **Foundry Siege**,
+   **Ironfall Industries**); interactive 15-firearm & 11-blade arsenal browser; interactive
+   3-Resonator / 9-ability kit viewer (**Vex**, **Aura**, **Rift**); TDM, FFA, and competitive-format
+   **5v5 Shadow Core** mode cards; and filterable WebP build screenshots with keyboard lightbox.
+4. **News & Community (`#community`)** — Development announcements, explicitly labeled planned
+   feature previews, one-click diagnostic bug-report template generator, Discord contact
+   (`0_umbra`), and configurable social/support channels via `data/community.json`.
+5. **Android Compatibility & Performance (`#compatibility`)** — Manifest-verified Android
+   requirements (`minSdkVersion 24` / Android 7.0+, `targetSdkVersion 36` / Android 16, WebGL,
+   Sensor Landscape), in-game Render Control options, low-end GPU optimization profile, and
+   troubleshooting for lag, crashes, Play Protect installation, and in-place updates.
 
 ## Project layout
 
 ```
-├── index.html            single-page site (no framework, no CDN — fully self-contained)
-├── css/style.css         design system (dark neon, responsive, reduced-motion aware)
-├── js/main.js            release-manifest loader, gallery lightbox, nav, reveal animations
-├── img/                  approved public assets (emblem, screenshots, og image, favicon)
-├── data/release.json     ★ release manifest — the download button's single source of truth
-├── scripts/publish-release.py   publishes a signed APK to this repo's Releases + updates the manifest
-├── vercel.json           deployment config (security headers, cache rules)
-└── docs/                 deployment, release flow, and repo-split/privacy runbooks
+├── index.html                  single-page site (no framework, no CDN — fully self-contained)
+├── css/style.css               dark/crimson tactical FPS design system (responsive, reduced-motion aware)
+├── js/main.js                  release & community loaders, trailer chapters, interactive tabs, lightbox
+├── apk/SCS.apk                 verified signed Android APK served directly at /apk/SCS.apk
+├── data/release.json           ★ release manifest — single source of truth for APK metadata & kill-switch
+├── data/community.json         configurable social channels, support links & external trailer URL
+├── img/                        approved public assets (WebP + PNG/JPG fallbacks, OG card, favicon)
+├── media/                      self-contained in-build gameplay showcase reel (MP4)
+├── scripts/check-site.py       dependency-free structural, asset, manifest & content integrity suite
+├── scripts/check-responsive.cjs optional Playwright multi-viewport browser regression suite
+├── vercel.json                 Vercel static deployment config (security headers, APK headers, cache rules)
+└── docs/                       deployment, release flow, changelog provenance & privacy runbooks
 ```
 
 ## How downloads work
 
-`data/release.json` is the **only** thing the download button trusts:
+- The download buttons (`#heroDl`, `#dlBtn`, and patch-note release links) point directly to
+  `/apk/SCS.apk` with the `download` attribute so downloads work even without JavaScript.
+- `data/release.json` supplies verified version (`0.22.1`), `versionCode` (`3`), release date,
+  exact byte size (`5,851,613`), package ID (`com.sinsofchaoticshadow.game`), and SHA-256 checksum.
+- Setting `"available": false` in `data/release.json` acts as an instant kill-switch that cleanly
+  disables the download buttons and displays an honest status message.
 
-- `available: true` → the button links straight to the APK file in this repo's GitHub
-  **Releases** (public, no login, never an expiring artifact link), and the page shows
-  version, release date, file size and the SHA-256 checksum.
-- `available: false` (or manifest missing) → the site shows a clean "first signed build
-  being prepared" state instead of a broken button.
+## Configuring social & community links
 
-A new release can never silently break the site: the manifest keeps the previous valid
-release listed in `history`, and updates only flow through `scripts/publish-release.py`.
-It publishes in one of two modes, and says in the release notes which one was used:
+Edit `data/community.json` to publish official social or tracker URLs (`channels[].url`,
+`support.bugReportUrl`, `support.feedbackUrl`, `trailer.externalUrl`). Empty strings (`""`) keep
+unconfigured channels transparently labeled rather than exposing broken or placeholder links.
 
-- **workflow artifact** (default) — only the file produced by the game repo's
-  signature-verifying CI, matched against that run's `SHA256SUMS.txt`;
-- **`--local-apk`** — a signed APK that did not go through that CI; the script requires
-  the package id, version, version code and checksum the Android tools report, records
-  the signing-certificate digest, and labels the release plainly as not CI-verified.
+## Local development & testing
 
-Neither mode fabricates a fact: version, size and SHA-256 are computed from the file
-being published, and nothing is written to `data/release.json` until the uploaded asset
-has been read back from the release. See **docs/RELEASE-FLOW.md**.
-
-## Local development
-
-No build step — it's static on purpose.
+No build step — static by design.
 
 ```bash
-python3 -m http.server 8080     # then open http://localhost:8080
+python3 scripts/check-site.py          # structural, asset, checksum & content verification
+node --check js/main.js                # JS syntax check
+python3 -m http.server 8080            # preview locally at http://localhost:8080
 ```
 
 ## Deployment
 
-Any static host works. Recommended: **Vercel** (see docs/DEPLOYMENT.md) or GitHub Pages.
-There are no environment variables, no secrets, and no server functions required.
+Recommended: **Vercel** (zero build command, output directory = repo root; see `docs/DEPLOYMENT.md`).
+There are no environment variables, secrets, or serverless functions required.
 
 ## License
 
-Site code: MIT (see LICENSE). Game name, logo, screenshots and assets:
-© 2026 SCS project (0-umbra), all rights reserved.
+Site code: MIT (see `LICENSE`). Game name, logo, screenshots and media:
+© 2026 SCS project (`0-umbra`), all rights reserved.
 
-Support: open an issue here, or Discord `scr1pt.fx`.
+Support: open an issue on this repository, or reach developer `0_umbra` on Discord.

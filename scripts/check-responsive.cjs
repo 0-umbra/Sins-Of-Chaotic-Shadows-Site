@@ -7,18 +7,28 @@ for(const [w,h] of [[320,740],[375,812],[430,932],[600,960],[768,1024],[820,1180
  await page.setViewportSize({width:w,height:h});await page.goto('http://localhost:8080');await page.waitForFunction(()=>document.querySelector('#fVer').textContent==='0.22.1');
  const over=await page.evaluate(()=>[...document.querySelectorAll('body *')].filter(e=>{const r=e.getBoundingClientRect(),s=getComputedStyle(e);return r.width&&s.position!=='absolute'&&s.position!=='fixed'&&(r.right>innerWidth+1||r.left< -1)}).map(e=>e.className||e.id||e.tagName));
  if(over.length)throw Error(`${w}: overflowing ${over}`);
- for(const id of ['download','features','gallery','modes','weapons','updates','faq','about']){await page.locator('#'+id).scrollIntoViewIfNeeded();}
- await page.locator('#updates').scrollIntoViewIfNeeded();
+ for(const id of ['trailer','download','showcase','maps','modes','weapons','abilities','gallery','updates','community','compatibility','faq','about']){await page.locator('#'+id).scrollIntoViewIfNeeded();}
  if(!await page.locator('#updatesTitle').isVisible() || await page.locator('.update-card').count()!==5)throw Error('updates missing');
  if(await page.getByRole('link',{name:'Play in Browser',exact:true}).count())throw Error('browser play remains');
  if(await page.getByText(/no sign.up required/i).count())throw Error('old sign-up statement remains');
  if(!await page.locator('#offlineTitle').isVisible())throw Error('offline notice missing');
  if(!await page.locator('.dl-note').textContent().then(t=>t.includes('Security Scan Notice:')))throw Error('install note missing');
- await page.locator('#dlBtn').scrollIntoViewIfNeeded();if(await page.locator('#dlBtn').getAttribute('href')!=='/apk/SCS.apk')throw Error('download changed');
+ if(await page.locator('#dlBtn').getAttribute('href')!=='/apk/SCS.apk')throw Error('download changed');
+ if(await page.locator('#heroDl').getAttribute('href')!=='/apk/SCS.apk')throw Error('hero download changed');
+ // Interactive filter checks
+ await page.locator('[data-map-filter="spotlight"]').click();
+ if(await page.locator('#mapsGrid [data-map-cat="active"]:visible').count()!==0)throw Error('map filter failed');
+ await page.locator('[data-map-filter="all"]').click();
+ await page.locator('[data-wfilter="sniper"]').click();
+ if(await page.locator('#weaponGrid .wcard:visible').count()!==3)throw Error('weapon filter failed');
+ await page.locator('[data-wfilter="all"]').click();
+ await page.locator('[data-res="rift"]').click();
+ if(!await page.locator('[data-res-panel="rift"]').isVisible())throw Error('resonator switch failed');
+ await page.locator('[data-res="vex"]').click();
  await page.evaluate(()=>scrollTo(0,0));
  if(w<=1100){await page.locator('#burger').click();await page.locator('#navLinks a').last().click();if(await page.locator('#burger').getAttribute('aria-expanded')!=='false')throw Error('menu state');await page.locator('#burger').click();await page.keyboard.press('Escape');}
  await page.locator('[data-modal="mTerms"]').click();await page.keyboard.press('Tab');if(await page.evaluate(()=>!document.querySelector('#mTerms').contains(document.activeElement)))throw Error('focus leak');await page.keyboard.press('Escape');if(await page.locator('#mTerms').isVisible())throw Error('modal open');
- await page.locator('.gitem').first().click();await page.keyboard.press('Escape');
+ await page.locator('.gitem').first().click();await page.keyboard.press('ArrowRight');await page.keyboard.press('Escape');
  console.log(`PASS ${w}x${h}`);
 }
 console.log('Browser errors:',errors);if(errors.length)throw Error('browser errors');
