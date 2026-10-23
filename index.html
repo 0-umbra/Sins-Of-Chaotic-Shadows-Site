@@ -4,14 +4,15 @@
 <script>document.documentElement.classList.add('js')</script>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>Sins of Chaotic Shadow — Official Site</title>
-<meta name="description" content="Sins of Chaotic Shadow (SCS) is a fast neon tactical FPS for Android: TDM, free-for-all and 5v5 objective modes, 15 firearms, 11 melee blades, cloud accounts. Download the latest signed APK.">
-<meta name="theme-color" content="#070910">
+<title>Sins of Chaotic Shadow — Official Android Tactical FPS</title>
+<meta name="description" content="Sins of Chaotic Shadow (SCS) is a tactical FPS for Android: TDM, Free-For-All and 5v5 Shadow Core, 15 firearms, 11 melee blades, 3 Resonator kits, and verified signed APK download (v0.22.1, 5.58 MB).">
+<meta name="theme-color" content="#08060a">
 <meta property="og:type" content="website">
-<meta property="og:title" content="Sins of Chaotic Shadow — Official Site">
-<meta property="og:description" content="Fast neon tactical FPS for Android. TDM · FFA · 5v5 Shadow Core · 15 firearms · 11 melee blades. Download the latest signed APK.">
+<meta property="og:title" content="Sins of Chaotic Shadow — Official Tactical FPS Site">
+<meta property="og:description" content="Fast tactical FPS for Android. TDM · FFA · 5v5 Shadow Core · 15 firearms · 11 melee blades · 3 Resonators. Download the verified signed APK.">
 <meta property="og:image" content="img/og.jpg">
 <link rel="icon" type="image/png" href="img/favicon.png">
+<link rel="preload" as="image" href="img/scs-logo-640.webp" type="image/webp">
 <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
@@ -20,68 +21,140 @@
 <header class="nav" id="nav">
   <div class="wrap nav-in">
     <a class="brand" href="#top" aria-label="SCS home">
-      <img src="img/scs-logo.png" alt="Sins of Chaotic Shadows logo" width="1024" height="809">
+      <picture class="logo-pic">
+        <source srcset="img/scs-logo-160.webp" type="image/webp">
+        <img src="img/scs-logo.png" alt="Sins of Chaotic Shadows logo" width="1024" height="809" decoding="async">
+      </picture>
       <span class="brand-t">SINS<b>OF</b>CHAOTIC&nbsp;SHADOW</span>
     </a>
     <nav class="links" id="navLinks" aria-label="Site">
-      <a href="#features">Features</a>
-      <a href="#gallery">Screenshots</a>
-      <a href="#modes">Modes</a>
+      <a href="#trailer">Trailer</a>
+      <a href="#showcase">Showcase</a>
+      <a href="#maps">Maps</a>
       <a href="#weapons">Arsenal</a>
+      <a href="#updates">Patch Notes</a>
+      <a href="#community">Community</a>
+      <a href="#compatibility">Android &amp; Perf</a>
       <a href="#faq">FAQ</a>
-      <a href="#about">About</a>
     </nav>
-    <a class="btn btn-sm btn-primary nav-cta" href="#download">Download</a>
+    <a class="btn btn-sm btn-primary nav-cta" href="#download">Download APK</a>
     <button class="burger" id="burger" aria-label="Menu" aria-controls="navLinks" aria-expanded="false"><span></span><span></span><span></span></button>
   </div>
 </header>
 
-<!-- ===== HERO ===== -->
+<!-- ===== 1. CINEMATIC HOMEPAGE HERO ===== -->
 <section class="hero" id="top">
   <div class="hero-bg" aria-hidden="true"></div>
   <div class="hero-grid" aria-hidden="true"></div>
+  <div class="hero-embers" aria-hidden="true">
+    <span></span><span></span><span></span><span></span><span></span><span></span>
+  </div>
   <div class="wrap hero-in">
     <div class="hero-copy reveal">
-      <p class="kicker">PROJECT // SCS &nbsp;·&nbsp; TACTICAL COMBAT SIMULATION</p>
-      <h1>SINS OF<br><span class="grad">CHAOTIC SHADOW</span></h1>
-      <p class="lede">A fast, neon-drenched tactical FPS for Android. Squad up against
-        disciplined AI in <b>TDM</b>, <b>Free-For-All</b> and <b>5v5 Shadow Core</b> — buy weapons between rounds,
-        earn your blades, and keep your progress in the cloud.</p>
-      <div class="hero-cta">
-        <a class="btn btn-primary btn-lg" href="#download" id="heroDl">Download Latest APK</a>
+      <div class="hero-status">
+        <span class="status-dot" aria-hidden="true"></span>
+        <span class="mono">PROJECT // SCS &nbsp;·&nbsp; SIGNED ANDROID FPS</span>
       </div>
-      <p class="hero-meta mono">ANDROID APK &nbsp;·&nbsp; <span id="heroVer">VERSION: SEE DOWNLOAD</span></p>
+      <h1>SINS OF<br><span class="grad">CHAOTIC SHADOW</span></h1>
+      <p class="lede">Precision tactical gunplay built for Android. Deploy against disciplined AI or host peer-to-peer rooms across <b>TDM</b>, <b>Free-For-All</b>, and <b>5v5 Shadow Core</b> — manage round buy-phase credits, master <b>15 firearms</b> and <b>3 Resonator</b> kits, and unlock <b>11 melee blades</b> by level.</p>
+      <div class="hero-cta">
+        <a class="btn btn-primary btn-lg" href="/apk/SCS.apk" download id="heroDl">
+          <span class="btn-ic" aria-hidden="true">⬇</span>
+          <span id="heroDlLabel">Download APK · v0.22.1 (5.58 MB)</span>
+        </a>
+        <a class="btn btn-ghost btn-lg" href="#trailer">
+          <span class="btn-ic" aria-hidden="true">▶</span>
+          <span>Gameplay Trailer</span>
+        </a>
+        <a class="btn btn-ghost btn-sm hero-verify-link" href="#download">SHA-256 &amp; Install Guide</a>
+      </div>
+      <dl class="hero-telemetry mono" aria-label="Verified APK telemetry">
+        <div><dt>Latest APK</dt><dd id="heroVer">v0.22.1 (Code 3)</dd></div>
+        <div><dt>Actual Size</dt><dd id="heroSize">5.58 MB (5,851,613 B)</dd></div>
+        <div><dt>Android OS</dt><dd>7.0+ (API 24–36)</dd></div>
+        <div><dt>Released</dt><dd id="heroDate">Oct 22, 2026</dd></div>
+      </dl>
       <aside class="offline-notice" aria-labelledby="offlineTitle">
-        <h3 id="offlineTitle">Offline Mode — Coming Soon</h3>
+        <div class="notice-head">
+          <span class="badge badge-planned">PLANNED</span>
+          <h3 id="offlineTitle">Offline Mode — Coming Soon</h3>
+        </div>
         <p>Offline gameplay is planned for a future update. Stay tuned for upcoming releases.</p>
       </aside>
     </div>
     <figure class="hero-art reveal">
-      <img src="img/scs-logo.png" alt="Sins of Chaotic Shadows logo" width="1024" height="809" id="heroEmblem">
+      <div class="hero-halo" aria-hidden="true"></div>
+      <picture class="logo-pic hero-logo-pic">
+        <source srcset="img/scs-logo-640.webp 640w, img/scs-logo.webp 1024w" sizes="(max-width: 780px) 62vw, 460px" type="image/webp">
+        <img src="img/scs-logo.png" alt="Sins of Chaotic Shadows logo" width="1024" height="809" id="heroEmblem" fetchpriority="high">
+      </picture>
+      <figcaption class="hero-caption mono">OFFICIAL BUILD · <span class="wrapany">com.sinsofchaoticshadow.game</span></figcaption>
     </figure>
   </div>
   <div class="hero-fade" aria-hidden="true"></div>
 </section>
 
+<!-- ===== CINEMATIC GAMEPLAY TRAILER ===== -->
+<section class="sec trailer-sec" id="trailer" aria-labelledby="trailerTitle">
+  <div class="wrap">
+    <div class="sec-head center reveal">
+      <p class="kicker">CINEMATIC GAMEPLAY PREVIEW</p>
+      <h2 id="trailerTitle">Inside the Arena</h2>
+      <p class="sub">Real build showcase reel compiled directly from shipped SCS captures — mode selection, round buy-phase economy, Resonator abilities, and live combat HUD.</p>
+    </div>
+    <div class="trailer-shell reveal">
+      <div class="trailer-bar mono">
+        <span class="trailer-rec"><i aria-hidden="true"></i> IN-BUILD CAPTURE REEL · 720P 30FPS</span>
+        <span id="trailerCaptionMeta">SOURCE: VERIFIED BUILD CAPTURES</span>
+      </div>
+      <div class="trailer-stage">
+        <video id="trailerVideo" controls playsinline preload="metadata" poster="img/screen-combat.webp" aria-label="Sins of Chaotic Shadow in-build gameplay showcase reel">
+          <source id="trailerSource" src="media/scs-gameplay-trailer.mp4" type="video/mp4">
+          Your browser does not support embedded HTML5 video. View the real gameplay screenshots below.
+        </video>
+        <button type="button" class="trailer-play" id="trailerPlayBtn" aria-label="Play gameplay preview reel">
+          <span class="trailer-play-ring" aria-hidden="true">▶</span>
+          <span class="mono">PLAY GAMEPLAY REEL (0:16)</span>
+        </button>
+      </div>
+      <div class="trailer-controls">
+        <div class="chapter-list" role="group" aria-label="Trailer chapters">
+          <button type="button" class="chip active" data-seek="0">00:00 · Intro</button>
+          <button type="button" class="chip" data-seek="3.3">00:03 · Modes &amp; Arenas</button>
+          <button type="button" class="chip" data-seek="6.5">00:06 · Buy Phase &amp; Arsenal</button>
+          <button type="button" class="chip" data-seek="9.9">00:10 · Combat &amp; Abilities</button>
+          <button type="button" class="chip" data-seek="13.5">00:13 · Android APK</button>
+        </div>
+        <a class="btn btn-sm btn-ghost" id="trailerExtLink" href="#gallery" hidden rel="noopener" target="_blank">Watch Full External Trailer ↗</a>
+      </div>
+    </div>
+  </div>
+</section>
+
 <!-- ===== DOWNLOAD ===== -->
-<section class="sec" id="download">
+<section class="sec alt" id="download" aria-labelledby="downloadTitle">
   <div class="wrap">
     <div class="dl-card reveal" id="dlCard">
       <div class="dl-main">
-        <p class="kicker">GET THE GAME</p>
-        <h2>Download the latest signed APK</h2>
-        <p class="dl-sub">The same signed build the developer publishes — verified package
-          <span class="mono">com.sinsofchaoticshadow.game</span>, SHA-256 checksum published with every release.
+        <p class="kicker">DIRECT STATIC APK DISTRIBUTION</p>
+        <h2 id="downloadTitle">Download the latest signed APK</h2>
+        <p class="dl-sub">Served directly from this official site (<span class="mono">/apk/SCS.apk</span>) — verified package
+          <span class="mono">com.sinsofchaoticshadow.game</span>, signed with the pinned developer certificate and SHA-256 verified on every release.
           Install over an older SCS build to keep your local data.</p>
-        <a class="btn btn-primary btn-xl" id="dlBtn" href="/apk/SCS.apk" download>Download Latest APK</a>
-        <p class="dl-status mono" id="dlStatus" role="status">CHECKING RELEASE…</p>
+        <div class="dl-actions">
+          <a class="btn btn-primary btn-xl" id="dlBtn" href="/apk/SCS.apk" download>Download Latest APK</a>
+          <button type="button" class="btn btn-ghost btn-sm" id="copyShaBtn" data-copy-sha="da487b1657b3c2d5ac3f8f6340de9b11eb45de55d55899e631d2ac0ddb907280">Copy SHA-256</button>
+        </div>
+        <p class="dl-status mono ok" id="dlStatus" role="status">VERIFIED SIGNED RELEASE — SHA-256 CHECKSUM PUBLISHED BELOW.</p>
       </div>
-      <dl class="dl-facts" id="dlFacts" hidden>
-        <div><dt>Version</dt><dd class="mono" id="fVer">—</dd></div>
-        <div><dt>Release date</dt><dd id="fDate">—</dd></div>
-        <div><dt>File size</dt><dd id="fSize">—</dd></div>
-        <div><dt>Package</dt><dd class="mono small" id="fPkg">com.sinsofchaoticshadow.game</dd></div>
-        <div class="wide"><dt>SHA-256</dt><dd class="mono small wrapany" id="fSha">—</dd></div>
+      <dl class="dl-facts" id="dlFacts">
+        <div><dt>Version</dt><dd class="mono" id="fVer">0.22.1</dd></div>
+        <div><dt>Version code</dt><dd class="mono" id="fCode">3</dd></div>
+        <div><dt>Release date</dt><dd id="fDate">Oct 22, 2026</dd></div>
+        <div><dt>Actual APK size</dt><dd id="fSize">5.58 MB (5,851,613 B)</dd></div>
+        <div><dt>Android req.</dt><dd class="mono small">Android 7.0+ (API 24)</dd></div>
+        <div><dt>Package</dt><dd class="mono small wrapany" id="fPkg">com.sinsofchaoticshadow.game</dd></div>
+        <div class="wide"><dt>SHA-256 Checksum</dt><dd class="mono small wrapany" id="fSha">da487b1657b3c2d5ac3f8f6340de9b11eb45de55d55899e631d2ac0ddb907280</dd></div>
       </dl>
       <div class="dl-note">
         <p><b>Install note:</b> Android may ask you to allow installs from your browser — this is normal for
@@ -94,142 +167,672 @@
   </div>
 </section>
 
-<!-- ===== FEATURES ===== -->
-<section class="sec alt" id="features">
+<!-- ===== 3. GAME SHOWCASE HUB ===== -->
+<section class="sec" id="showcase" aria-labelledby="showcaseTitle">
   <div class="wrap">
-    <p class="kicker center reveal">WHY IT HITS DIFFERENT</p>
-    <h2 class="center reveal">Built for tight, honest gunplay</h2>
+    <div class="sec-head center reveal" id="features">
+      <p class="kicker">TACTICAL HIGHLIGHTS</p>
+      <h2 id="showcaseTitle">Built for tight, honest gunplay</h2>
+      <p class="sub">Every system in Sins of Chaotic Shadow is engineered around readable sightlines, round-by-round economy decisions, and responsive mobile controls.</p>
+    </div>
     <div class="cards">
-      <article class="card reveal"><div class="ci">◆</div><h3>Real buy-phase economy</h3><p>Credits per round, five weapon classes in the buy panel, and swap-anytime loadouts — every weapon has its own damage, fire rate, recoil, magazine and reload.</p></article>
-      <article class="card reveal"><div class="ci">⌖</div><h3>15 firearms, 11 blades</h3><p>ARs, SMGs, shotguns, snipers, pistols — plus a melee collection of karambits, katanas and akimbo pairs unlocked by level. Every weapon renders and sounds distinct.</p></article>
-      <article class="card reveal"><div class="ci">⬢</div><h3>AI that actually plays</h3><p>Ten combat bots deploy with their own Resonator models, aim tracking and muzzle flashes across four difficulty levels in Settings.</p></article>
-      <article class="card reveal"><div class="ci">☾</div><h3>Offline Mode — Coming Soon</h3><p>Offline gameplay is planned for a future update. Stay tuned for upcoming releases.</p></article>
-      <article class="card reveal"><div class="ci">↭</div><h3>Private rooms with friends</h3><p>Share a 4-digit code for a peer-to-peer room — 5v5 objective or TDM — with map voting resolved by the host. No matchmaking, no lobbies full of strangers.</p></article>
-      <article class="card reveal"><div class="ci">◎</div><h3>Training Ground</h3><p>Targets, a recoil wall, a movement course and weapon trials. Explicitly practice-only: no kills, XP, rank or rewards.</p></article>
+      <article class="card reveal"><div class="ci">◆</div><h3>Round buy-phase economy</h3><p>Earn credits each round, open the five-class shop during buy phase, and build loadouts where every firearm has distinct damage, RPM, recoil, magazine size, and reload timing.</p></article>
+      <article class="card reveal"><div class="ci">⌖</div><h3>15 firearms, 11 melee blades</h3><p>Three weapons per class across AR, SMG, Shotgun, Sniper, and Pistol — plus 11 level-unlocked blades (Karambits, Katanas, Kunai, Cleaver, and Akimbo pairs) with inspect and slash animations.</p></article>
+      <article class="card reveal"><div class="ci">⬢</div><h3>3 Resonators, 9 tactical abilities</h3><p>Deploy as <b>Vex</b> (Assault), <b>Aura</b> (Support), or <b>Rift</b> (Control) — combining wall-scan pulses, collision-true dashes, domes, shields, barriers, and gravity wells.</p></article>
+      <article class="card reveal"><div class="ci">⚔</div><h3>4-tier tactical combat AI</h3><p>Ten AI bots run Resonator models, patrol/objective navigation, aim tracking, and muzzle flashes across <b>Easy</b>, <b>Normal</b>, <b>Hard</b>, and <b>Nightmare</b> difficulty settings.</p></article>
+      <article class="card reveal"><div class="ci">↭</div><h3>4-digit peer-to-peer rooms</h3><p>Share a 4-digit room code for unranked 5v5 Shadow Core or TDM with friends, complete with map voting (host vote resolves ties) and configurable bot-fill or player-only slots.</p></article>
+      <article class="card reveal"><div class="ci">◎</div><h3>Practice-only Training Ground</h3><p>Warm up on targets, a recoil control wall, a movement course, weapon trials, and ability cooldown checks. Strictly practice-only: zero inflated kills, XP, or rating.</p></article>
     </div>
   </div>
 </section>
 
-<!-- ===== GALLERY ===== -->
-<section class="sec" id="gallery">
+<!-- ===== 3A. INTERACTIVE MAPS GALLERY (SUNKEN MERIDIAN SPOTLIGHT) ===== -->
+<section class="sec alt" id="maps" aria-labelledby="mapsTitle">
   <div class="wrap">
-    <p class="kicker center reveal">STRRAIGHT FROM THE BUILD</p>
-    <h2 class="center reveal">Screenshots</h2>
-    <p class="center sub reveal">Captured from the actual current build — menu, modes, buy phase and live match.</p>
-    <div class="gal reveal" id="gal">
-      <button class="gitem" data-full="img/screen-lobby.jpg"><img src="img/screen-lobby.jpg" alt="SCS main menu with Resonator lobby and career card" loading="lazy"><span>Main menu &amp; Resonator</span></button>
-      <button class="gitem" data-full="img/screen-play.jpg"><img src="img/screen-play.jpg" alt="Play hub with mode selection cards" loading="lazy"><span>Play hub</span></button>
-      <button class="gitem" data-full="img/screen-modes.jpg"><img src="img/screen-modes.jpg" alt="Game mode picker: TDM, FFA, 5v5 Shadow Core and map select" loading="lazy"><span>Mode picker &amp; maps</span></button>
-      <button class="gitem" data-full="img/screen-arsenal.jpg"><img src="img/screen-arsenal.jpg" alt="Buy phase weapon shop with AR, SMG, shotgun, sniper and pistol classes" loading="lazy"><span>Buy phase / Arsenal</span></button>
-      <button class="gitem" data-full="img/screen-combat.jpg"><img src="img/screen-combat.jpg" alt="Live TDM match in the neon arena with HUD and viewmodel" loading="lazy"><span>Live TDM match</span></button>
-      <button class="gitem" data-full="img/screen-pause.jpg"><img src="img/screen-pause.jpg" alt="In-match pause menu with resume, settings and quit" loading="lazy"><span>Pause &amp; settings</span></button>
+    <div class="sec-head center reveal">
+      <p class="kicker">ARENA ROTATION &amp; PREVIEWS</p>
+      <h2 id="mapsTitle">Tactical Maps</h2>
+      <p class="sub">Inspect the four daylight-converted arenas playable today in Android APK <span class="mono">v0.22.1</span>, plus our upcoming map spotlight: <b>Sunken Meridian</b>.</p>
     </div>
+
+    <div class="filter-bar reveal" role="tablist" aria-label="Filter maps" id="mapFilters">
+      <button type="button" class="chip active" data-map-filter="all" role="tab" aria-selected="true">All Maps (5)</button>
+      <button type="button" class="chip" data-map-filter="spotlight" role="tab" aria-selected="false">★ Sunken Meridian Spotlight</button>
+      <button type="button" class="chip" data-map-filter="active" role="tab" aria-selected="false">Playable in v0.22.1 APK (4)</button>
+    </div>
+
+    <div class="maps-grid" id="mapsGrid">
+      <!-- Featured Spotlight: Sunken Meridian -->
+      <article class="map-card map-spotlight reveal" data-map-cat="spotlight">
+        <div class="map-visual map-visual-planned">
+          <div class="map-grid-art" aria-hidden="true"></div>
+          <div class="map-spotlight-overlay">
+            <span class="badge badge-planned">PLANNED MAP PREVIEW · NOT IN v0.22.1 APK</span>
+            <p class="mono small">ARENA TELEMETRY PENDING PUBLIC BUILD</p>
+          </div>
+        </div>
+        <div class="map-body">
+          <header class="map-head">
+            <div>
+              <p class="kicker">FEATURED UPCOMING ARENA</p>
+              <h3>Sunken Meridian</h3>
+            </div>
+            <span class="badge badge-planned">PLANNED / IN DEVELOPMENT</span>
+          </header>
+          <p><b>Sunken Meridian</b> is an upcoming SCS tactical arena currently in development and <b>not yet bundled</b> in the downloadable <span class="mono">v0.22.1</span> signed Android APK (<span class="mono">/apk/SCS.apk</span>). Per project honesty rules, unshipped lane callouts, spawn counts, and concept renders are never fabricated ahead of release — verified screenshots and mode compatibility will be published here once Sunken Meridian ships in a signed Android update.</p>
+          <ul class="map-tags mono">
+            <li>STATUS: PLANNED FUTURE RELEASE</li>
+            <li>CURRENT APK FALLBACK: 4 DAYLIGHT ARENAS BELOW</li>
+          </ul>
+        </div>
+      </article>
+
+      <!-- Active Map 1: Umbra Crossing -->
+      <article class="map-card reveal" data-map-cat="active">
+        <button type="button" class="map-thumb gitem-trigger" data-full="img/screen-combat.jpg" aria-label="View Umbra Crossing live combat screenshot">
+          <picture>
+            <source srcset="img/screen-combat.webp" type="image/webp">
+            <img src="img/screen-combat.jpg" alt="Umbra Crossing arena in live combat view with minimap and central objective lane" width="1600" height="900" loading="lazy">
+          </picture>
+          <span class="map-thumb-tag mono">IN-BUILD CAPTURE · CLICK TO ENLARGE</span>
+        </button>
+        <div class="map-body">
+          <header class="map-head">
+            <h3>Umbra Crossing</h3>
+            <span class="badge badge-ok">IN v0.22.1 APK · DEFAULT</span>
+          </header>
+          <p>Core symmetrical multi-lane arena built around a central core objective, flanking corridors, and hard-angle pillar cover. Upgraded with procedural daytime sky lighting and sun-matched shadows in <span class="mono">0.22.0</span>; also serves as the automatic fallback for retired map selections.</p>
+          <ul class="map-tags mono">
+            <li>TDM</li><li>FFA</li><li>5V5 SHADOW CORE</li><li>PRIVATE MAP VOTE</li>
+          </ul>
+        </div>
+      </article>
+
+      <!-- Active Map 2: Neon Veil -->
+      <article class="map-card reveal" data-map-cat="active">
+        <button type="button" class="map-thumb gitem-trigger" data-full="img/screen-modes.jpg" aria-label="View mode and map selector screenshot">
+          <picture>
+            <source srcset="img/screen-modes.webp" type="image/webp">
+            <img src="img/screen-modes.jpg" alt="Game mode and map picker showing active SCS map selection" width="1600" height="900" loading="lazy">
+          </picture>
+          <span class="map-thumb-tag mono">MODE &amp; MAP SELECTOR</span>
+        </button>
+        <div class="map-body">
+          <header class="map-head">
+            <h3>Neon Veil</h3>
+            <span class="badge badge-ok">IN v0.22.1 APK</span>
+          </header>
+          <p>High-contrast neon-accented combat arena converted to crisp blue-zenith daylight skies and cool atmospheric haze in <span class="mono">0.22.0</span> while preserving its original collision, sightlines, and spawn geometry.</p>
+          <ul class="map-tags mono">
+            <li>TDM</li><li>FFA</li><li>5V5 SHADOW CORE</li><li>PRIVATE MAP VOTE</li>
+          </ul>
+        </div>
+      </article>
+
+      <!-- Active Map 3: Foundry Siege -->
+      <article class="map-card reveal" data-map-cat="active">
+        <div class="map-visual">
+          <div class="map-grid-art" aria-hidden="true"></div>
+          <span class="mono small">DAYLIGHT ARENA · ATTACK &amp; DESTROY</span>
+        </div>
+        <div class="map-body">
+          <header class="map-head">
+            <h3>Foundry Siege</h3>
+            <span class="badge badge-ok">IN v0.22.1 APK</span>
+          </header>
+          <p>Designated <b>Attack &amp; Destroy</b> objective arena engineered for plant, defuse, and breach rotations, featuring dedicated AI bot patrol nodes and full daytime sky &amp; shadow integration.</p>
+          <ul class="map-tags mono">
+            <li>ATTACK &amp; DESTROY</li><li>5V5 SHADOW CORE</li><li>TDM / FFA</li><li>MAP VOTE</li>
+          </ul>
+        </div>
+      </article>
+
+      <!-- Active Map 4: Ironfall Industries -->
+      <article class="map-card reveal" data-map-cat="active">
+        <div class="map-visual">
+          <div class="map-grid-art" aria-hidden="true"></div>
+          <span class="mono small">DAYLIGHT ARENA · INDUSTRIAL SECTOR</span>
+        </div>
+        <div class="map-body">
+          <header class="map-head">
+            <h3>Ironfall Industries</h3>
+            <span class="badge badge-ok">IN v0.22.1 APK</span>
+          </header>
+          <p>Industrial tactical complex featuring warm daylight atmospheric haze, sun-matched shadows, and structured mid-to-long sightlines across solo bot modes and peer-to-peer private lobbies.</p>
+          <ul class="map-tags mono">
+            <li>TDM</li><li>FFA</li><li>5V5 SHADOW CORE</li><li>PRIVATE MAP VOTE</li>
+          </ul>
+        </div>
+      </article>
+    </div>
+    <p class="map-footnote mono small dim reveal">Archive note: <b>Eclipse Veil</b> was retired in v0.22.0 during the daylight conversion; any saved selection automatically resolves to <b>Umbra Crossing</b>.</p>
   </div>
 </section>
 
-<!-- ===== MODES ===== -->
-<section class="sec alt" id="modes">
+<!-- ===== 3B. GAME MODES (TDM, FFA, COMPETITIVE-FORMAT 5V5) ===== -->
+<section class="sec" id="modes" aria-labelledby="modesTitle">
   <div class="wrap">
-    <p class="kicker center reveal">GAME MODES</p>
-    <h2 class="center reveal">Three ways to fight the shadows</h2>
+    <div class="sec-head center reveal">
+      <p class="kicker">GAME MODES</p>
+      <h2 id="modesTitle">Three ways to fight the shadows</h2>
+      <p class="sub">Switch seamlessly between squad rounds, solo kill races, and tactical 5v5 objective play.</p>
+    </div>
     <div class="modes">
       <article class="mode reveal">
-        <header><span class="mtag">UNRANKED</span><h3>TEAM DEATHMATCH</h3></header>
-        <p>Win rounds by clearing the opposing bot squad. Buy weapons between rounds, hold the lanes, and close out the round before they regroup.</p>
-        <ul class="facts"><li>10 AI combat bots</li><li>Round-based with buy phases</li><li>4 bot difficulty levels</li></ul>
+        <header><span class="mtag">UNRANKED</span><h3>TEAM DEATHMATCH (TDM)</h3></header>
+        <p>Win rounds by clearing the opposing squad or hitting target elimination counts in private rooms. Buy weapons between rounds, hold crossfires, and close out before enemies regroup.</p>
+        <ul class="facts">
+          <li>10 AI combat bots across 4 difficulty tiers</li>
+          <li>Round-based credit &amp; weapon buy phases</li>
+          <li>Private room rules: 5 / 10 / 15 / 20 kills &amp; 3–10m timers</li>
+        </ul>
       </article>
       <article class="mode reveal">
-        <header><span class="mtag">UNRANKED</span><h3>FREE-FOR-ALL</h3></header>
-        <p>A solo kill race against six independent AI opponents, each with its own score and respawns. First to 12 eliminations — or the leader when the 3:00 clock runs out.</p>
-        <ul class="facts"><li>6 independent AI opponents</li><li>First to 12 or best at 3:00</li><li>Live individual scoreboard</li></ul>
+        <header><span class="mtag">UNRANKED</span><h3>FREE-FOR-ALL (FFA)</h3></header>
+        <p>Every operator for themselves against six independent AI opponents, each tracking individual score and rapid respawns. First to 12 eliminations — or top leader at the 3:00 horn.</p>
+        <ul class="facts">
+          <li>6 independent AI combatants</li>
+          <li>First to 12 eliminations or leader at 3:00</li>
+          <li>Live individual elimination scoreboard</li>
+        </ul>
       </article>
       <article class="mode reveal">
-        <header><span class="mtag">UNRANKED</span><h3>5V5 SHADOW CORE</h3></header>
-        <p>Objective-based round scoring with real plant, defuse and elimination win conditions — the closest SCS gets to tactical 5v5, today against bots and in private rooms.</p>
-        <ul class="facts"><li>Plant / defuse / elimination wins</li><li>5v5 scoreboard with K / D / A / OBJ</li><li>Private 5v5 lobbies with map vote</li></ul>
+        <header><span class="mtag">COMPETITIVE 5V5 FORMAT · UNRANKED</span><h3>5V5 SHADOW CORE</h3></header>
+        <p>Tactical competitive-format 5v5 round scoring with plant, defuse, and squad-elimination win conditions — playable today solo with bots (fill or player-only) and in peer-to-peer 5v5 private lobbies.</p>
+        <ul class="facts">
+          <li>Plant, defuse &amp; elimination round wins</li>
+          <li>Full 5v5 scoreboard with K / D / A / OBJ stats</li>
+          <li>Private 5v5 lobbies with host tie-breaker map vote</li>
+        </ul>
       </article>
     </div>
-    <p class="honesty reveal"><b>Honest status:</b> online ranked matchmaking is <b>disabled</b> — there is no configured ranked service, and SCS will not pretend otherwise. Private rooms are peer-to-peer and unranked by design. Local career rating is earned against bots only.</p>
+    <p class="honesty reveal"><b>Honest competitive status:</b> online ranked matchmaking is currently <b>disabled</b> (<span class="mono">Planned</span>) — no ranked server endpoint is configured, and SCS never fakes online queues with disguised bots. Competitive 5v5 Shadow Core rules run unranked against AI or in peer-to-peer private rooms; local career rating is earned against bots only.</p>
   </div>
 </section>
 
-<!-- ===== WEAPONS ===== -->
-<section class="sec" id="weapons">
+<!-- ===== 3C. INTERACTIVE ARSENAL (15 FIREARMS + 11 BLADES) ===== -->
+<section class="sec alt" id="weapons" aria-labelledby="weaponsTitle">
   <div class="wrap">
-    <p class="kicker center reveal">ARSENAL</p>
-    <h2 class="center reveal">Fifteen guns. Eleven blades. One shadow.</h2>
-    <div class="wcats reveal">
-      <div class="wcat"><h4><span class="wkey">01</span> AR</h4><p>All-round primaries: controllable, accurate, dependable at mid range. <span class="mono small">Vanguard · Phalanx · Ronin</span></p></div>
-      <div class="wcat"><h4><span class="wkey">02</span> SMG</h4><p>Fast, mobile and lethal up close — quarters range traded for risk. <span class="mono small">Viper · Cinder</span></p></div>
-      <div class="wcat"><h4><span class="wkey">03</span> SHOTGUN</h4><p>Devastating up close, punishing slow and predictable. <span class="mono small">Reaver-8 · Howler</span></p></div>
-      <div class="wcat"><h4><span class="wkey">04</span> SNIPER</h4><p>One shot, one angle. Hold breath and commit. <span class="mono small">Eclipse · Warden DMR · Bulwark .50</span></p></div>
-      <div class="wcat"><h4><span class="wkey">05</span> PISTOL</h4><p>The Nova sidearm: tap-fire or hold, always your fallback. <span class="mono small">Nova · Stiletto</span></p></div>
+    <div class="sec-head center reveal">
+      <p class="kicker">INTERACTIVE ARSENAL</p>
+      <h2 id="weaponsTitle">Fifteen guns. Eleven blades. One shadow.</h2>
+      <p class="sub">Filter every verified firearm and level-unlocked blade from the shipped <span class="mono">v0.22.1</span> build — exact credit costs, damage profiles, magazines, and unlock levels.</p>
     </div>
+
+    <div class="filter-bar reveal" role="tablist" aria-label="Filter weapon classes" id="weaponFilters">
+      <button type="button" class="chip active" data-wfilter="all" role="tab" aria-selected="true">All Firearms (15)</button>
+      <button type="button" class="chip" data-wfilter="ar" role="tab" aria-selected="false">01 · AR (3)</button>
+      <button type="button" class="chip" data-wfilter="smg" role="tab" aria-selected="false">02 · SMG (3)</button>
+      <button type="button" class="chip" data-wfilter="shotgun" role="tab" aria-selected="false">03 · Shotgun (3)</button>
+      <button type="button" class="chip" data-wfilter="sniper" role="tab" aria-selected="false">04 · Sniper / DMR (3)</button>
+      <button type="button" class="chip" data-wfilter="pistol" role="tab" aria-selected="false">05 · Pistol (3)</button>
+    </div>
+
+    <div class="wgrid reveal" id="weaponGrid">
+      <!-- ARs -->
+      <article class="wcard" data-wcat="ar"><header><span class="wclass mono">AR</span><span class="wcost mono">$1,600</span></header><h3>Vanguard AR</h3><p class="wsub">Balanced automatic rifle — dependable mid-range primary.</p><dl class="wstats mono"><div><dt>DMG</dt><dd>30</dd></div><div><dt>MAG</dt><dd>30</dd></div><div><dt>RELOAD</dt><dd>2.4s</dd></div></dl></article>
+      <article class="wcard" data-wcat="ar"><header><span class="wclass mono">AR</span><span class="wcost mono">$1,900</span></header><h3>Phalanx AR</h3><p class="wsub">Heavy-hitting sustained rifle with extended 40-round box.</p><dl class="wstats mono"><div><dt>DMG</dt><dd>34</dd></div><div><dt>MAG</dt><dd>40</dd></div><div><dt>RELOAD</dt><dd>2.7s</dd></div></dl></article>
+      <article class="wcard" data-wcat="ar"><header><span class="wclass mono">AR</span><span class="wcost mono">$2,100</span></header><h3>Ronin AR</h3><p class="wsub">High-tempo entry rifle built for rapid tempo swings.</p><dl class="wstats mono"><div><dt>DMG</dt><dd>25</dd></div><div><dt>MAG</dt><dd>25</dd></div><div><dt>RELOAD</dt><dd>2.0s</dd></div></dl></article>
+      <!-- SMGs -->
+      <article class="wcard" data-wcat="smg"><header><span class="wclass mono">SMG</span><span class="wcost mono">$1,100</span></header><h3>Raptor SMG</h3><p class="wsub">Agile eco-round submachine gun for aggressive flanks.</p><dl class="wstats mono"><div><dt>DMG</dt><dd>19</dd></div><div><dt>MAG</dt><dd>30</dd></div><div><dt>RELOAD</dt><dd>2.0s</dd></div></dl></article>
+      <article class="wcard" data-wcat="smg"><header><span class="wclass mono">SMG</span><span class="wcost mono">$1,300</span></header><h3>Viper SMG</h3><p class="wsub">High-capacity 34-round shredder for tight choke points.</p><dl class="wstats mono"><div><dt>DMG</dt><dd>15</dd></div><div><dt>MAG</dt><dd>34</dd></div><div><dt>RELOAD</dt><dd>1.8s</dd></div></dl></article>
+      <article class="wcard" data-wcat="smg"><header><span class="wclass mono">SMG</span><span class="wcost mono">$1,500</span></header><h3>Cinder SMG</h3><p class="wsub">Hard-punching tactical SMG bridging close and mid lanes.</p><dl class="wstats mono"><div><dt>DMG</dt><dd>27</dd></div><div><dt>MAG</dt><dd>28</dd></div><div><dt>RELOAD</dt><dd>2.4s</dd></div></dl></article>
+      <!-- Shotguns -->
+      <article class="wcard" data-wcat="shotgun"><header><span class="wclass mono">SHOTGUN</span><span class="wcost mono">$1,200</span></header><h3>Titan-12</h3><p class="wsub">Pump-action corridor stopper with tight 9-pellet spread.</p><dl class="wstats mono"><div><dt>DMG</dt><dd>11×9</dd></div><div><dt>MAG</dt><dd>6</dd></div><div><dt>ACTION</dt><dd>Pump</dd></div></dl></article>
+      <article class="wcard" data-wcat="shotgun"><header><span class="wclass mono">SHOTGUN</span><span class="wcost mono">$1,650</span></header><h3>Reaver-8</h3><p class="wsub">Drum-fed automatic shotgun built to clear objective sites.</p><dl class="wstats mono"><div><dt>DMG</dt><dd>9×8</dd></div><div><dt>MAG</dt><dd>8</dd></div><div><dt>RELOAD</dt><dd>2.9s</dd></div></dl></article>
+      <article class="wcard" data-wcat="shotgun"><header><span class="wclass mono">SHOTGUN</span><span class="wcost mono">$1,450</span></header><h3>Howler</h3><p class="wsub">Break-open double-barrel unleashing 12 pellets per shell.</p><dl class="wstats mono"><div><dt>DMG</dt><dd>13×12</dd></div><div><dt>MAG</dt><dd>2</dd></div><div><dt>ACTION</dt><dd>Twin</dd></div></dl></article>
+      <!-- Snipers -->
+      <article class="wcard" data-wcat="sniper"><header><span class="wclass mono">SNIPER</span><span class="wcost mono">$2,000</span></header><h3>Sentinel</h3><p class="wsub">Precision bolt-style long-lane sniper rifle.</p><dl class="wstats mono"><div><dt>DMG</dt><dd>105</dd></div><div><dt>MAG</dt><dd>5</dd></div><div><dt>RELOAD</dt><dd>3.0s</dd></div></dl></article>
+      <article class="wcard" data-wcat="sniper"><header><span class="wclass mono">SNIPER</span><span class="wcost mono">$2,400</span></header><h3>Eclipse</h3><p class="wsub">Heavy flagship sniper engineered for one-shot angle control.</p><dl class="wstats mono"><div><dt>DMG</dt><dd>122</dd></div><div><dt>MAG</dt><dd>7</dd></div><div><dt>RELOAD</dt><dd>3.2s</dd></div></dl></article>
+      <article class="wcard" data-wcat="sniper"><header><span class="wclass mono">DMR</span><span class="wcost mono">$2,200</span></header><h3>Warden DMR</h3><p class="wsub">Semi-auto marksman rifle rewarding disciplined two-taps.</p><dl class="wstats mono"><div><dt>DMG</dt><dd>62</dd></div><div><dt>MAG</dt><dd>10</dd></div><div><dt>RELOAD</dt><dd>2.5s</dd></div></dl></article>
+      <!-- Pistols -->
+      <article class="wcard" data-wcat="pistol"><header><span class="wclass mono">PISTOL</span><span class="wcost mono">$500</span></header><h3>Nova Pistol</h3><p class="wsub">Standard sidearm supporting both tap-fire and hold-to-fire.</p><dl class="wstats mono"><div><dt>DMG</dt><dd>38</dd></div><div><dt>MAG</dt><dd>12</dd></div><div><dt>RELOAD</dt><dd>1.7s</dd></div></dl></article>
+      <article class="wcard" data-wcat="pistol"><header><span class="wclass mono">MACHINE PISTOL</span><span class="wcost mono">$1,150</span></header><h3>Stiletto</h3><p class="wsub">Rapid-cycling machine pistol for close-range emergencies.</p><dl class="wstats mono"><div><dt>DMG</dt><dd>22</dd></div><div><dt>MAG</dt><dd>20</dd></div><div><dt>RELOAD</dt><dd>1.9s</dd></div></dl></article>
+      <article class="wcard" data-wcat="pistol"><header><span class="wclass mono">REVOLVER</span><span class="wcost mono">$1,700</span></header><h3>Bulwark .50</h3><p class="wsub">High-caliber 6-shot revolver punishing wide peeks.</p><dl class="wstats mono"><div><dt>DMG</dt><dd>78</dd></div><div><dt>MAG</dt><dd>6</dd></div><div><dt>CLASS</dt><dd>Sidearm</dd></div></dl></article>
+    </div>
+
     <div class="wmelee reveal">
       <div class="wmelee-copy">
-        <h3>The melee collection</h3>
-        <p>Eleven blades — Karambit, Dagger, Kunai, Butterfly, Tanto, Katana, Cleaver and four akimbo pairs — each with its own model, equip, inspect and slash animation, unlocked by <b>level</b>. Locked items show exactly what they need. No purchases pretending to be progress.</p>
-        <p class="mono small dim">COLLECTION → MELEE, IN GAME</p>
+        <p class="kicker">LEVEL-GATED PROGRESSION · ZERO MICROTRANSACTIONS</p>
+        <h3>The 11-Blade Melee Collection</h3>
+        <p>Every blade has its own 3D viewmodel, equip flourish, inspect choreography, and neon slash trail — unlocked strictly by player level in <b>Collection → Melee</b>:</p>
+        <ul class="blade-pills mono">
+          <li>Neon Karambit <b>Lv 1</b></li>
+          <li>Shadow Dagger <b>Lv 3</b></li>
+          <li>Void Kunai <b>Lv 5</b></li>
+          <li>Eclipse Butterfly <b>Lv 8</b></li>
+          <li>Oni Tanto <b>Lv 10</b></li>
+          <li>Ronin Katana <b>Lv 12</b></li>
+          <li>Akimbo Karambit <b>Lv 15</b></li>
+          <li>Akimbo Daggers <b>Lv 18</b></li>
+          <li>Akimbo Kunai <b>Lv 21</b></li>
+          <li>Akimbo Katana <b>Lv 24</b></li>
+          <li>Rift Cleaver <b>Lv 27</b></li>
+        </ul>
       </div>
-      <figure><img src="img/screen-arsenal.jpg" alt="Weapon cards with stats in the in-game arsenal" loading="lazy"></figure>
+      <figure>
+        <picture>
+          <source srcset="img/screen-arsenal.webp" type="image/webp">
+          <img src="img/screen-arsenal.jpg" alt="Weapon cards with stats in the in-game arsenal" width="1600" height="900" loading="lazy">
+        </picture>
+      </figure>
     </div>
   </div>
 </section>
 
-<!-- ===== LATEST UPDATES ===== -->
+<!-- ===== 3D. INTERACTIVE RESONATORS & ABILITIES ===== -->
+<section class="sec" id="abilities" aria-labelledby="abilitiesTitle">
+  <div class="wrap">
+    <div class="sec-head center reveal">
+      <p class="kicker">RESONATOR OPERATORS</p>
+      <h2 id="abilitiesTitle">Tactical Abilities</h2>
+      <p class="sub">Select any of the three playable Resonators to inspect their verified tactical (<span class="mono">Q</span> / <span class="mono">E</span>) and ultimate (<span class="mono">Z</span>) kit.</p>
+    </div>
+
+    <div class="filter-bar reveal" role="tablist" aria-label="Select Resonator kit" id="resTabs">
+      <button type="button" class="chip active" data-res="vex" role="tab" aria-selected="true">01 · VEX (Assault)</button>
+      <button type="button" class="chip" data-res="aura" role="tab" aria-selected="false">02 · AURA (Support)</button>
+      <button type="button" class="chip" data-res="rift" role="tab" aria-selected="false">03 · RIFT (Control)</button>
+      <button type="button" class="chip" data-res="all" role="tab" aria-selected="false">Compare All 3 Kits</button>
+    </div>
+
+    <div class="res-list" id="resPanels">
+      <!-- VEX -->
+      <article class="res-card reveal" data-res-panel="vex">
+        <header class="res-head">
+          <div>
+            <span class="badge badge-crimson">ROLE // ASSAULT</span>
+            <h3>VEX</h3>
+          </div>
+          <p>Aggressive shadow operator. Scouts lanes with scanning shockwaves and closes gaps with collision-true void dashes.</p>
+        </header>
+        <div class="ability-grid">
+          <div class="ab-item"><span class="ab-key mono">Q · TACTICAL</span><h4>Shadow Pulse</h4><p>Charges for 0.4s, then releases a 24m scanning shockwave outlining living enemies through walls for 4.5s (deals no damage; 8s cooldown).</p></div>
+          <div class="ab-item"><span class="ab-key mono">E · MOBILITY</span><h4>Void Dash</h4><p>Rushes up to 9m forward in ~0.2s. Respects world collision (stops cleanly at walls) and cancels an active magazine reload (6s cooldown).</p></div>
+          <div class="ab-item ab-ult"><span class="ab-key mono">Z · ULTIMATE</span><h4>Nightfall</h4><p>For 8s every living enemy is outlined through walls while granting +20% movement speed and +28% weapon fire rate.</p></div>
+        </div>
+      </article>
+
+      <!-- AURA -->
+      <article class="res-card reveal" data-res-panel="aura" hidden>
+        <header class="res-head">
+          <div>
+            <span class="badge badge-crimson">ROLE // SUPPORT</span>
+            <h3>AURA</h3>
+          </div>
+          <p>Sustained combat medic &amp; anchor. Regenerates health mid-duel, absorbs burst damage, and fortifies objective plants.</p>
+        </header>
+        <div class="ability-grid">
+          <div class="ab-item"><span class="ab-key mono">Q · SUSTAIN</span><h4>Restore Field</h4><p>Restores 60 HP over 4s (15 HP/s). Healing continues uninterrupted while moving and firing.</p></div>
+          <div class="ab-item"><span class="ab-key mono">E · DEFENSE</span><h4>Aegis Veil</h4><p>Wraps you in a 45-point protective shield for 6s that absorbs incoming damage before health is touched.</p></div>
+          <div class="ab-item ab-ult"><span class="ab-key mono">Z · ULTIMATE</span><h4>Sanctuary</h4><p>Deploys a 6m protective dome for 10s. Standing inside heals 12 HP/s and reduces incoming damage by 50%.</p></div>
+        </div>
+      </article>
+
+      <!-- RIFT -->
+      <article class="res-card reveal" data-res-panel="rift" hidden>
+        <header class="res-head">
+          <div>
+            <span class="badge badge-crimson">ROLE // CONTROL</span>
+            <h3>RIFT</h3>
+          </div>
+          <p>Spatial area-denial specialist. Punishes pushes with gravity wells, hard-blocks sightlines, and drags squads off cover.</p>
+        </header>
+        <div class="ability-grid">
+          <div class="ab-item"><span class="ab-key mono">Q · CROWD CONTROL</span><h4>Gravity Snare</h4><p>Deploys a gravity well up to 8m ahead. For 5s, enemies within its 7m radius are slowed to 40% movement speed.</p></div>
+          <div class="ab-item"><span class="ab-key mono">E · BARRIER</span><h4>Rift Barrier</h4><p>Raises a solid 6m-wide wall 4m ahead for 6s that blocks both movement and bullets for all combatants before dissolving.</p></div>
+          <div class="ab-item ab-ult"><span class="ab-key mono">Z · ULTIMATE</span><h4>Event Horizon</h4><p>Opens a singularity up to 10m ahead for 6s. Enemies within 9m are pulled toward the center, slowed, and take 18 damage/s.</p></div>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 3E. INTERACTIVE SCREENSHOTS GALLERY ===== -->
+<section class="sec alt" id="gallery" aria-labelledby="galleryTitle">
+  <div class="wrap">
+    <div class="sec-head center reveal">
+      <p class="kicker">STRAIGHT FROM THE BUILD</p>
+      <h2 id="galleryTitle">Gameplay Screenshots</h2>
+      <p class="sub">Captured directly from the real build — zero mockups or bullshots. Filter by category or click any frame to inspect full screen.</p>
+    </div>
+
+    <div class="filter-bar reveal" role="tablist" aria-label="Filter screenshots" id="galFilters">
+      <button type="button" class="chip active" data-gfilter="all" role="tab" aria-selected="true">All Captures (6)</button>
+      <button type="button" class="chip" data-gfilter="combat" role="tab" aria-selected="false">Live Combat &amp; HUD</button>
+      <button type="button" class="chip" data-gfilter="menus" role="tab" aria-selected="false">Lobby &amp; Modes</button>
+      <button type="button" class="chip" data-gfilter="arsenal" role="tab" aria-selected="false">Buy Phase &amp; Settings</button>
+    </div>
+
+    <div class="gal reveal" id="gal">
+      <button type="button" class="gitem" data-gcat="menus" data-full="img/screen-lobby.jpg" data-webp="img/screen-lobby.webp">
+        <picture><source srcset="img/screen-lobby.webp" type="image/webp"><img src="img/screen-lobby.jpg" alt="SCS main menu with Resonator lobby and career card" width="1600" height="900" loading="lazy"></picture>
+        <span>Main menu &amp; Resonator</span>
+      </button>
+      <button type="button" class="gitem" data-gcat="menus" data-full="img/screen-play.jpg" data-webp="img/screen-play.webp">
+        <picture><source srcset="img/screen-play.webp" type="image/webp"><img src="img/screen-play.jpg" alt="Play hub with mode selection cards" width="1600" height="900" loading="lazy"></picture>
+        <span>Play hub</span>
+      </button>
+      <button type="button" class="gitem" data-gcat="menus" data-full="img/screen-modes.jpg" data-webp="img/screen-modes.webp">
+        <picture><source srcset="img/screen-modes.webp" type="image/webp"><img src="img/screen-modes.jpg" alt="Game mode picker: TDM, FFA, 5v5 Shadow Core and map select" width="1600" height="900" loading="lazy"></picture>
+        <span>Mode picker &amp; maps</span>
+      </button>
+      <button type="button" class="gitem" data-gcat="arsenal" data-full="img/screen-arsenal.jpg" data-webp="img/screen-arsenal.webp">
+        <picture><source srcset="img/screen-arsenal.webp" type="image/webp"><img src="img/screen-arsenal.jpg" alt="Buy phase weapon shop with AR, SMG, shotgun, sniper and pistol classes" width="1600" height="900" loading="lazy"></picture>
+        <span>Buy phase / Arsenal</span>
+      </button>
+      <button type="button" class="gitem" data-gcat="combat" data-full="img/screen-combat.jpg" data-webp="img/screen-combat.webp">
+        <picture><source srcset="img/screen-combat.webp" type="image/webp"><img src="img/screen-combat.jpg" alt="Live TDM match in the neon arena with HUD and viewmodel" width="1600" height="900" loading="lazy"></picture>
+        <span>Live TDM match</span>
+      </button>
+      <button type="button" class="gitem" data-gcat="arsenal" data-full="img/screen-pause.jpg" data-webp="img/screen-pause.webp">
+        <picture><source srcset="img/screen-pause.webp" type="image/webp"><img src="img/screen-pause.jpg" alt="In-match pause menu with resume, settings and quit" width="1600" height="900" loading="lazy"></picture>
+        <span>Pause &amp; settings</span>
+      </button>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 2. UPDATES & PATCH NOTES ===== -->
 <section class="sec" id="updates" aria-labelledby="updatesTitle">
   <div class="wrap narrow">
-    <p class="kicker center">VERSION HISTORY</p>
-    <h2 class="center" id="updatesTitle">Latest Updates</h2>
-    <p class="sub center">Discover what's new in Sins of Chaotic Shadows.</p>
-    <p class="updates-context">Selected highlights from the project's documented game history. These notes do not change which APK is available: check <a href="#download">Download</a> for the current signed Android release. Dates are shown only when documented.</p>
+    <p class="kicker center">VERSION HISTORY &amp; RELEASE ARCHIVE</p>
+    <h2 class="center" id="updatesTitle">Updates &amp; Patch Notes</h2>
+    <p class="sub center">Documented features, maps, arsenal additions, performance optimizations, bug fixes, known issues, and individual APK release downloads.</p>
+    <p class="updates-context">Selected verified highlights from the project's documented game history. Game changelog entries do not alter which binary is served: <span class="mono">v0.22.1</span> is the current signed Android APK at <a href="#download">Download</a>. Dates are shown only when documented.</p>
+
+    <div class="filter-bar" role="tablist" aria-label="Filter patch notes" id="updateFilters">
+      <button type="button" class="chip active" data-ufilter="all" role="tab" aria-selected="true">All Releases (5)</button>
+      <button type="button" class="chip" data-ufilter="apk" role="tab" aria-selected="false">APK Downloads</button>
+      <button type="button" class="chip" data-ufilter="maps" role="tab" aria-selected="false">Maps &amp; Sky</button>
+      <button type="button" class="chip" data-ufilter="weapons" role="tab" aria-selected="false">Weapons &amp; Audio</button>
+      <button type="button" class="chip" data-ufilter="perf" role="tab" aria-selected="false">Perf &amp; Bug Fixes</button>
+    </div>
+
     <!-- Maintain newest-first. Sources and inclusion rules: docs/CHANGELOG-SOURCES.md. -->
-    <ol class="updates-list">
-      <li><article class="update-card" aria-labelledby="update023">
-        <header><h3 id="update023"><span class="mono">0.23.0</span> · Living sky</h3><span class="update-label">Documented game update</span></header>
+    <ol class="updates-list" id="updatesList">
+      <li data-ucats="maps perf"><article class="update-card" aria-labelledby="update023">
+        <header>
+          <h3 id="update023"><span class="mono">0.23.0</span> · Living sky</h3>
+          <span class="update-label badge badge-planned">Documented game update</span>
+        </header>
+        <div class="u-tags"><span>Environment</span><span>Visuals</span><span>Performance</span></div>
         <ul>
-          <li><b>Environment:</b> sun rays, two moving cloud layers and gradual cloud-driven lighting bring the daytime sky to life.</li>
-          <li><b>Visuals:</b> distant birds appear above LOW effects quality; midday remains the default environment.</li>
-          <li><b>Quality options:</b> LOW keeps a static sky and cheaper rays, without the cirrus layer or birds.</li>
+          <li><b>New Features (Environment):</b> Volumetric sun rays, two independent moving cloud layers, and gradual cloud-driven lighting bring the daytime sky to life; midday remains the default environment.</li>
+          <li><b>Visuals:</b> Distant birds appear above <code>LOW</code> effects quality.</li>
+          <li><b>Performance Improvements:</b> <code>LOW</code> effects quality retains a static sky and cheaper sun rays while omitting the cirrus cloud layer and birds for low-end GPUs.</li>
+        </ul>
+        <footer class="update-dl">
+          <span class="dim small">APK status: Documented engine update — download current signed Android release <code>v0.22.1</code> below.</span>
+        </footer>
+      </article></li>
+
+      <li data-ucats="apk"><article class="update-card update-card-current" aria-labelledby="update0221">
+        <header>
+          <h3 id="update0221"><span class="mono">0.22.1</span> · Signed Android package</h3>
+          <time datetime="2026-10-22">October 22, 2026</time>
+        </header>
+        <div class="u-tags"><span class="u-tag-apk">Current Signed APK</span><span>Android 7.0+</span></div>
+        <p>The site's release manifest records this signed APK (<code>com.sinsofchaoticshadow.game</code>, versionCode <code>3</code>, <code>5,851,613</code> bytes, SHA-256 <code>da487b16…b907280</code>). Separate gameplay changes for this patch are not documented in the supplied README.</p>
+        <footer class="update-dl">
+          <a class="btn btn-sm btn-primary update-apk-btn" href="/apk/SCS.apk" download>⬇ Download v0.22.1 APK (5.58 MB)</a>
+          <a class="small" href="#download">View full SHA-256 &amp; install notes →</a>
+        </footer>
+      </article></li>
+
+      <li data-ucats="maps perf"><article class="update-card" aria-labelledby="update022">
+        <header>
+          <h3 id="update022"><span class="mono">0.22.0</span> · Daylight across the maps</h3>
+          <span class="update-label">Superseded by v0.22.1 APK</span>
+        </header>
+        <div class="u-tags"><span>Maps</span><span>Lighting</span><span>Performance</span></div>
+        <ul>
+          <li><b>Maps:</b> All four active arenas (<b>Umbra Crossing</b>, <b>Neon Veil</b>, <b>Foundry Siege</b>, and <b>Ironfall Industries</b>) share daylight lighting, procedural skies, sun-matched shadows, and per-map haze. <b>Eclipse Veil</b> was removed; stale selections fall back to <b>Umbra Crossing</b>.</li>
+          <li><b>Gameplay Integrity:</b> Map layouts, wall collision, spawn points, and Shadow Core objectives are unchanged by the daylight conversion.</li>
+          <li><b>Performance Improvements:</b> <code>LOW</code> quality uses a smaller static sky and omits environment reflections; <code>LOW</code> / <code>Off</code> shadow quality disables real-time shadow maps.</li>
         </ul>
       </article></li>
-      <li><article class="update-card" aria-labelledby="update0221">
-        <header><h3 id="update0221"><span class="mono">0.22.1</span> · Signed Android package</h3><time datetime="2026-10-22">October 22, 2026</time></header>
-        <p>The site's release manifest records this signed APK. Separate gameplay changes for this patch are not documented in the supplied README.</p>
-      </article></li>
-      <li><article class="update-card" aria-labelledby="update022">
-        <header><h3 id="update022"><span class="mono">0.22.0</span> · Daylight across the maps</h3></header>
+
+      <li data-ucats="weapons"><article class="update-card" aria-labelledby="update021">
+        <header>
+          <h3 id="update021"><span class="mono">0.21.0</span> · Arsenal, melee &amp; audio</h3>
+          <span class="update-label">Included in v0.22.1 APK</span>
+        </header>
+        <div class="u-tags"><span>Weapons</span><span>Melee Collection</span><span>UI &amp; Audio</span></div>
         <ul>
-          <li><b>Maps:</b> the four remaining maps share daylight lighting, procedural skies, sun-matched shadows and per-map haze. Eclipse Veil was removed; stale selections fall back to Umbra Crossing.</li>
-          <li><b>Gameplay:</b> map layouts, collision, spawns and objectives are unchanged by the daylight conversion.</li>
-          <li><b>Quality options:</b> LOW uses a smaller static sky and omits environment reflections; LOW shadow quality disables shadow maps.</li>
+          <li><b>Weapons (15 Firearms):</b> Ten new firearms expand the arsenal to fifteen across AR, SMG, Shotgun, Sniper, and Pistol classes alongside the three Resonator ability kits.</li>
+          <li><b>Melee Collection (11 Blades):</b> Eleven level-gated blades ship with dedicated 3D models and custom equip, inspect, and slash animations.</li>
+          <li><b>Interface &amp; Audio:</b> Category tabs and larger weapon cards display ownership and level-unlock states; every firearm has distinct synthesized audio and press-responsive UI feedback.</li>
         </ul>
       </article></li>
-      <li><article class="update-card" aria-labelledby="update021">
-        <header><h3 id="update021"><span class="mono">0.21.0</span> · Arsenal, melee &amp; audio</h3></header>
+
+      <li data-ucats="weapons perf"><article class="update-card" aria-labelledby="update020">
+        <header>
+          <h3 id="update020"><span class="mono">0.20.0</span> · Audio &amp; trigger controls</h3>
+          <span class="update-label">Included in v0.22.1 APK</span>
+        </header>
+        <div class="u-tags"><span>Audio</span><span>Controls</span><span>Bug Fixes</span></div>
         <ul>
-          <li><b>Arsenal:</b> ten new firearms bring the total to fifteen, organized into AR, SMG, Shotgun, Sniper and Pistol categories.</li>
-          <li><b>Collection:</b> eleven level-gated blades have their own models and equip, inspect and slash animations.</li>
-          <li><b>Interface &amp; audio:</b> larger weapon cards show ownership and unlock states; weapon sounds are distinct and menu audio responds on press.</li>
-        </ul>
-      </article></li>
-      <li><article class="update-card" aria-labelledby="update020">
-        <header><h3 id="update020"><span class="mono">0.20.0</span> · Audio &amp; trigger controls</h3></header>
-        <ul>
-          <li><b>Audio:</b> centralized menu sounds, layered weapon audio and separate menu/UI and weapon volume controls.</li>
-          <li><b>Gameplay:</b> the Nova pistol supports tap or hold-to-fire; sniper and shotgun remain semi-automatic.</li>
-          <li><b>Input fixes:</b> mobile fire input ends on release, cancellation or focus loss, preventing parallel holds and extra release shots.</li>
+          <li><b>New Features (Audio):</b> Centralized menu sound architecture, layered weapon audio, and independent Menu/UI and Weapon volume sliders.</li>
+          <li><b>Weapon Controls:</b> Nova Pistol supports tap-fire or continuous hold-to-fire; Sniper and Shotgun classes remain semi-automatic.</li>
+          <li><b>Bug Fixes (Mobile Input):</b> Mobile fire input cleanly terminates on touch release, OS gesture cancellation, or window focus loss — fixing stuck parallel holds and unintended extra shots on release.</li>
         </ul>
       </article></li>
     </ol>
+
+    <!-- Dynamic Archive for Prior Releases from release.json history[] -->
+    <div class="archive-box" id="releaseArchiveBox">
+      <h3>Individual Release Downloads</h3>
+      <p class="small dim">Every verified public APK remains linked directly while hosted. Older pre-0.22.1 development milestones do not have separate public APK binaries archived.</p>
+      <ul class="archive-list mono small" id="releaseArchiveList">
+        <li>
+          <span><b>v0.22.1</b> (versionCode 3 · Oct 22, 2026 · 5.58 MB)</span>
+          <a href="/apk/SCS.apk" download id="archiveCurrentLink">Download /apk/SCS.apk</a>
+        </li>
+      </ul>
+    </div>
+
+    <!-- Known Issues & Limitations -->
+    <aside class="known-issues" aria-labelledby="knownIssuesTitle">
+      <header>
+        <span class="badge badge-crimson">KNOWN ISSUES &amp; CURRENT LIMITATIONS</span>
+        <h3 id="knownIssuesTitle">What to know before dropping in</h3>
+      </header>
+      <ul>
+        <li><b>Online Ranked Matchmaking Disabled:</b> No ranked server endpoint is configured; online ranked 5v5 is disabled rather than simulated. Career rating is local-only against AI.</li>
+        <li><b>Network Required on Launch (Offline Mode Planned):</b> Current builds require an active internet connection for account/cloud sync; offline play is planned for a future release.</li>
+        <li><b>Browser Build Paused:</b> Browser play is unavailable because the latest maps are built for the signed Android package.</li>
+        <li><b>Peer-to-Peer Room NAT Restrictions:</b> Private 4-digit rooms connect directly via PeerJS/WebRTC; strict mobile carrier NATs may occasionally require switching one peer to Wi-Fi or recreating the room code.</li>
+        <li><b>Documented vs. Packaged Version:</b> Living Sky (<span class="mono">0.23.0</span>) is documented in game changelog history while <span class="mono">0.22.1</span> is the latest signed Android APK published to <span class="mono">/apk/SCS.apk</span>.</li>
+      </ul>
+    </aside>
+  </div>
+</section>
+
+<!-- ===== 4. NEWS & COMMUNITY ===== -->
+<section class="sec alt" id="community" aria-labelledby="communityTitle">
+  <div class="wrap">
+    <div class="sec-head center reveal">
+      <p class="kicker">DEV DISPATCHES &amp; PLAYER HUB</p>
+      <h2 id="communityTitle">News &amp; Community</h2>
+      <p class="sub">Official development announcements, clearly labeled upcoming previews, real in-build captures, bug reporting, and configurable community channels.</p>
+    </div>
+
+    <div class="news-grid">
+      <article class="news-card reveal">
+        <div class="news-meta mono"><span class="badge badge-ok">ANNOUNCEMENT</span><time datetime="2026-10-22">Oct 22, 2026</time></div>
+        <h3>Direct Signed APK Hosting Live on Official Site</h3>
+        <p>Android release <span class="mono">v0.22.1</span> (<span class="mono">5.58 MB</span>) is served directly from <span class="mono">/apk/SCS.apk</span> with no third-party login walls or expiring links, backed by pinned signer-certificate continuity and published SHA-256 verification.</p>
+      </article>
+
+      <article class="news-card reveal">
+        <div class="news-meta mono"><span class="badge badge-ok">DEV LOG</span><span>ENGINE &amp; MAPS</span></div>
+        <h3>Daylight Arenas &amp; Living Sky Architecture</h3>
+        <p>Following the full daylight sky conversion across <b>Umbra Crossing</b>, <b>Neon Veil</b>, <b>Foundry Siege</b>, and <b>Ironfall Industries</b>, the <span class="mono">0.23.0</span> sky pass adds volumetric rays and dual moving cloud layers while preserving fast static-sky fallbacks on <code>LOW</code> preset devices.</p>
+      </article>
+
+      <article class="news-card reveal">
+        <div class="news-meta mono"><span class="badge badge-planned">PLANNED ROADMAP</span><span>UPCOMING PREVIEWS</span></div>
+        <h3>What's Planned Next (Not Yet Released)</h3>
+        <ul class="roadmap-list">
+          <li><span class="badge badge-planned">PLANNED</span> <b>Offline Mode:</b> Playable local bot sessions without requiring online connectivity.</li>
+          <li><span class="badge badge-planned">PLANNED</span> <b>Sunken Meridian Arena:</b> Upcoming tactical map in development for a future signed APK.</li>
+          <li><span class="badge badge-planned">PLANNED</span> <b>Online Ranked 5v5 Service:</b> Dedicated server-verified competitive queue (remains disabled until backend service ships).</li>
+        </ul>
+      </article>
+    </div>
+
+    <div class="community-split reveal">
+      <!-- Feedback & Diagnostic Bug Report Helper -->
+      <div class="comm-panel">
+        <p class="kicker">FEEDBACK &amp; BUG REPORTS</p>
+        <h3>Report an Issue or Share Tactical Feedback</h3>
+        <p class="comm-desc" id="commSupportSummary">Reach developer <span class="mono">0_umbra</span> directly on Discord or open an issue on the public site repository. Use the quick template generator below to copy clean device diagnostics for faster fixes.</p>
+
+        <div class="bug-builder">
+          <label for="bugCategory" class="mono small">ISSUE / FEEDBACK CATEGORY</label>
+          <div class="bug-row">
+            <select id="bugCategory" class="tactical-select">
+              <option value="Performance / FPS Lag">Performance / FPS Lag</option>
+              <option value="Crash or Freeze on Android">Crash or Freeze on Android</option>
+              <option value="APK Installation / Update">APK Installation / Update</option>
+              <option value="Weapon / Resonator / Map Bug">Weapon / Resonator / Map Bug</option>
+              <option value="Feature Request / Balance Feedback">Feature Request / Balance Feedback</option>
+            </select>
+            <button type="button" class="btn btn-sm btn-primary" id="copyBugTemplateBtn">Copy Report Template</button>
+          </div>
+          <p class="mono small dim" id="bugCopyStatus" role="status" aria-live="polite">Copies a structured v0.22.1 report template to your clipboard.</p>
+        </div>
+
+        <div class="comm-actions">
+          <button type="button" class="btn btn-sm btn-ghost" id="copyDiscordBtn" data-discord="0_umbra">Copy Discord: 0_umbra</button>
+          <a class="btn btn-sm btn-ghost" id="bugReportExtBtn" href="#faq" hidden rel="noopener" target="_blank">Open Bug Tracker ↗</a>
+          <a class="btn btn-sm btn-ghost" id="feedbackExtBtn" href="#faq" hidden rel="noopener" target="_blank">Submit Feedback ↗</a>
+        </div>
+      </div>
+
+      <!-- Configurable Social Links & Community Captures -->
+      <div class="comm-panel">
+        <p class="kicker">COMMUNITY CHANNELS &amp; CAPTURES</p>
+        <h3>Official Channels</h3>
+        <p class="comm-desc">Social destinations are loaded from <span class="mono">data/community.json</span>. Unconfigured channels are shown transparently rather than linking to placeholder pages.</p>
+
+        <ul class="social-list" id="socialLinksList">
+          <li class="social-item">
+            <div><strong>Discord Developer Contact</strong><span class="block small dim">Direct handle verified — public server invite not yet published</span></div>
+            <span class="mono badge badge-ok">@0_umbra</span>
+          </li>
+          <li class="social-item">
+            <div><strong>YouTube / X / Instagram</strong><span class="block small dim">Configurable in data/community.json when official pages go live</span></div>
+            <span class="mono badge">NOT YET CONFIGURED</span>
+          </li>
+        </ul>
+
+        <div class="comm-shots">
+          <p class="mono small dim">FEATURED BUILD CAPTURES — SHARE YOUR MATCH SCREENSHOTS VIA DISCORD (<span class="mono">0_umbra</span>)</p>
+          <div class="comm-shot-strip">
+            <button type="button" class="comm-shot gitem-trigger" data-full="img/screen-combat.jpg" aria-label="Open combat capture">
+              <picture><source srcset="img/screen-combat.webp" type="image/webp"><img src="img/screen-combat.jpg" alt="In-build combat capture on Umbra Crossing" width="1600" height="900" loading="lazy"></picture>
+            </button>
+            <button type="button" class="comm-shot gitem-trigger" data-full="img/screen-arsenal.jpg" aria-label="Open buy phase capture">
+              <picture><source srcset="img/screen-arsenal.webp" type="image/webp"><img src="img/screen-arsenal.jpg" alt="In-build buy phase arsenal capture" width="1600" height="900" loading="lazy"></picture>
+            </button>
+            <button type="button" class="comm-shot gitem-trigger" data-full="img/screen-lobby.jpg" aria-label="Open Resonator lobby capture">
+              <picture><source srcset="img/screen-lobby.webp" type="image/webp"><img src="img/screen-lobby.jpg" alt="In-build Resonator lobby capture" width="1600" height="900" loading="lazy"></picture>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 5. ANDROID COMPATIBILITY & PERFORMANCE ===== -->
+<section class="sec" id="compatibility" aria-labelledby="compatTitle">
+  <div class="wrap">
+    <div class="sec-head center reveal">
+      <p class="kicker">VERIFIED SYSTEM SPECS &amp; TUNING</p>
+      <h2 id="compatTitle">Android Compatibility &amp; Performance</h2>
+      <p class="sub">Hardware/OS specifications verified directly from the signed <span class="mono">v0.22.1</span> APK manifest, paired with real in-game render controls and troubleshooting.</p>
+    </div>
+
+    <div class="compat-grid reveal">
+      <!-- Verified Android Requirements -->
+      <article class="compat-card">
+        <p class="kicker">PACKAGE MANIFEST FACTS</p>
+        <h3>Verified Android Requirements</h3>
+        <dl class="spec-list">
+          <div><dt>Minimum Android Version</dt><dd><b>Android 7.0 Nougat</b> (<span class="mono">minSdkVersion 24</span>)</dd></div>
+          <div><dt>Target SDK Level</dt><dd><b>Android 16</b> (<span class="mono">targetSdkVersion 36</span>)</dd></div>
+          <div><dt>APK Download Size</dt><dd><b>5.58 MB</b> (<span class="mono">5,851,613 bytes</span>; keep ~50 MB free for install &amp; shader cache)</dd></div>
+          <div><dt>3D Graphics Engine</dt><dd>Hardware-accelerated <b>WebGL</b> via updated <b>Android System WebView</b> (Three.js + Capacitor)</dd></div>
+          <div><dt>Screen Orientation</dt><dd><b>Sensor Landscape</b> (auto-rotates between left/right landscape)</dd></div>
+          <div><dt>App Permissions</dt><dd><span class="mono">INTERNET</span> only (cloud sync &amp; P2P rooms — zero camera, mic, location, or ad permissions)</dd></div>
+        </dl>
+      </article>
+
+      <!-- In-Game Graphics & Controls Matrix -->
+      <article class="compat-card">
+        <p class="kicker">IN-GAME SETTINGS → RENDER CONTROL</p>
+        <h3>Graphics &amp; Frame-Rate Options</h3>
+        <dl class="spec-list">
+          <div><dt>Quality Presets</dt><dd><span class="mono">Low</span> · <span class="mono">Medium</span> · <span class="mono">High</span></dd></div>
+          <div><dt>Target Frame Rate</dt><dd><span class="mono">Auto (display refresh)</span> · <span class="mono">30 FPS</span> · <span class="mono">60 FPS</span> · <span class="mono">90 FPS</span> (if display supports)</dd></div>
+          <div><dt>Render Quality (Scale)</dt><dd><span class="mono">50%</span> · <span class="mono">75%</span> · <span class="mono">100%</span> · <span class="mono">125%</span> internal resolution</dd></div>
+          <div><dt>Shadow Quality</dt><dd><span class="mono">Off</span> · <span class="mono">Low</span> · <span class="mono">Medium</span> · <span class="mono">High</span> (<span class="mono">Off/Low</span> disables shadow maps)</dd></div>
+          <div><dt>Effects &amp; Sky Quality</dt><dd><span class="mono">Low</span> · <span class="mono">Medium</span> · <span class="mono">High</span> (<span class="mono">Low</span> uses static sky &amp; omits reflections/birds)</dd></div>
+          <div><dt>Textures, View &amp; Gyro</dt><dd>Texture &amp; View Distance (<span class="mono">Low–Ultra</span>); Gyro Aim (<span class="mono">Off / Always On / ADS Only</span>)</dd></div>
+        </dl>
+      </article>
+    </div>
+
+    <!-- Low-End Device Optimization Tips -->
+    <div class="opt-banner reveal">
+      <div>
+        <p class="kicker">LOW-END &amp; BUDGET PHONE TUNING</p>
+        <h3>Recommended Settings for Entry-Level Android GPUs</h3>
+        <p>Experiencing heat or frame dips during heavy ability crossfire? Apply this verified in-game profile under <b>Settings → Controls &amp; Graphics</b>:</p>
+      </div>
+      <ul class="opt-steps mono small">
+        <li><b>1. Quality Preset:</b> Low</li>
+        <li><b>2. Render Quality:</b> 75% (or 50% on 2–3 GB RAM phones)</li>
+        <li><b>3. Shadow Quality:</b> Off (biggest GPU saver)</li>
+        <li><b>4. Effects Quality:</b> Low (static sky, fewer VFX arcs)</li>
+        <li><b>5. Target FPS:</b> 30 FPS (thermal stability) or 60 FPS</li>
+        <li><b>6. System WebView:</b> Update via Google Play Store</li>
+      </ul>
+    </div>
+
+    <!-- Troubleshooting Accordion -->
+    <div class="trouble-wrap narrow reveal">
+      <h3 class="center trouble-title">Android Troubleshooting Guide</h3>
+      <div class="faq">
+        <details>
+          <summary>Lag, frame drops, or overheating mid-match</summary>
+          <p>Open <b>Settings → Render Control</b> and drop <b>Render Quality</b> to <span class="mono">75%</span> or <span class="mono">50%</span>, set <b>Shadow Quality</b> to <span class="mono">Off</span>, <b>Effects Quality</b> to <span class="mono">Low</span>, and <b>View Distance</b> to <span class="mono">Low</span>. Cap <b>Target FPS</b> to <span class="mono">30 FPS</span> or <span class="mono">60 FPS</span> instead of uncapped refresh rates, close background social/video apps, and avoid fast-charging while playing to prevent thermal CPU/GPU throttling.</p>
+        </details>
+        <details>
+          <summary>Black screen, WebGL error, or crash on startup</summary>
+          <p>SCS renders 3D arenas through Android's system WebGL driver. Update <b>Android System WebView</b> and <b>Google Chrome</b> in the Play Store, then restart your phone. On low-memory devices, set <b>Texture Quality</b> to <span class="mono">Low</span>. Also verify your mobile data or Wi-Fi connection is active, as offline startup is not yet enabled.</p>
+        </details>
+        <details>
+          <summary>“App not installed”, package parse error, or Play Protect warning</summary>
+          <p>First verify your device runs <b>Android 7.0 or newer</b> and that the downloaded <span class="mono">SCS.apk</span> is complete (<span class="mono">5,851,613</span> bytes, SHA-256 <span class="mono wrapany">da487b1657b3c2d5ac3f8f6340de9b11eb45de55d55899e631d2ac0ddb907280</span>) — an interrupted browser download causes “problem parsing the package”. Enable <i>Install unknown apps</i> for your browser once, and if Google Play Protect prompts you, tap <b>“Scan app”</b> and proceed once scanning finishes.</p>
+        </details>
+        <details>
+          <summary>Updating to a newer APK version without losing progress</summary>
+          <p>Download the new <span class="mono">/apk/SCS.apk</span> and install it <b>directly over</b> your existing app — <b>do not uninstall SCS first</b>. All official releases use package <span class="mono">com.sinsofchaoticshadow.game</span> signed with the same developer certificate, so Android upgrades cleanly in place while keeping local data. Using an SCS cloud account additionally syncs level, rank, unlocks, and settings across devices.</p>
+        </details>
+      </div>
+    </div>
   </div>
 </section>
 
 <!-- ===== FAQ ===== -->
-<section class="sec alt" id="faq">
+<section class="sec alt" id="faq" aria-labelledby="faqTitle">
   <div class="wrap narrow">
     <p class="kicker center reveal">QUESTIONS</p>
-    <h2 class="center reveal">FAQ</h2>
+    <h2 class="center reveal" id="faqTitle">FAQ</h2>
     <div class="faq reveal" id="faqList">
       <details><summary>What platforms does SCS run on?</summary><p>Download the signed Android APK on this page. Browser gameplay is not currently available because the latest maps are not available for the browser build.</p></details>
       <details><summary>Do I need an account?</summary><p>SCS accounts support server-verified level, rank, unlock sync and shared settings across devices. Offline gameplay is planned for a future update; it is not currently available.</p></details>
@@ -244,10 +847,10 @@
 </section>
 
 <!-- ===== ABOUT ===== -->
-<section class="sec" id="about">
+<section class="sec" id="about" aria-labelledby="aboutTitle">
   <div class="wrap narrow">
     <p class="kicker center reveal">ABOUT THE PROJECT</p>
-    <h2 class="center reveal">One developer, no shortcuts</h2>
+    <h2 class="center reveal" id="aboutTitle">One developer, no shortcuts</h2>
     <div class="about reveal">
       <p><b>Sins of Chaotic Shadow</b> is an independent tactical FPS project led by a single developer
         (<span class="mono">0-umbra</span>) with an explicit rule: nothing on this site or in the game pretends to be
@@ -264,7 +867,10 @@
 <footer class="foot">
   <div class="wrap foot-in">
     <div class="foot-brand">
-      <img src="img/scs-logo.png" alt="Sins of Chaotic Shadows logo" width="1024" height="809">
+      <picture class="logo-pic">
+        <source srcset="img/scs-logo-160.webp" type="image/webp">
+        <img src="img/scs-logo.png" alt="Sins of Chaotic Shadows logo" width="1024" height="809" loading="lazy">
+      </picture>
       <div>
         <p class="brand-t">SINS<b>OF</b>CHAOTIC&nbsp;SHADOW</p>
         <p class="dim small">Official project site · built for the SCS community</p>
@@ -272,33 +878,41 @@
     </div>
     <nav class="foot-nav" aria-label="Footer">
       <a href="#download">Download</a>
-      <a href="#features">Features</a>
-      <a href="#gallery">Screenshots</a>
-      <a href="#modes">Modes</a>
+      <a href="#trailer">Trailer</a>
+      <a href="#maps">Maps</a>
+      <a href="#weapons">Arsenal</a>
+      <a href="#abilities">Abilities</a>
+      <a href="#updates">Patch Notes</a>
+      <a href="#community">Community</a>
+      <a href="#compatibility">Android &amp; Perf</a>
       <a href="#faq">FAQ</a>
-      <a href="#updates">Latest Updates</a>
     </nav>
     <div class="foot-legal">
-      <button class="linky" data-modal="mTerms">Terms of Use</button>
-      <button class="linky" data-modal="mPrivacy">Privacy</button>
+      <button type="button" class="linky" data-modal="mTerms">Terms of Use</button>
+      <button type="button" class="linky" data-modal="mPrivacy">Privacy</button>
     </div>
   </div>
   <div class="wrap foot-base">
     <p class="dim small">© 2026 Sins of Chaotic Shadow. All rights reserved. Game media used under the project's own license.
       SCS is not affiliated with Supabase, Google LLC, Three.js or PeerJS. Android is a trademark of Google LLC.</p>
-    <p class="dim small mono" id="footVer"></p>
+    <p class="dim small mono" id="footVer">SITE · LATEST RELEASE 0.22.1 (2026-10-22)</p>
   </div>
 </footer>
 
-<!-- ===== LIGHTBOX ===== -->
+<!-- ===== ENHANCED ACCESSIBLE LIGHTBOX ===== -->
 <div class="lightbox" id="lightbox" hidden>
-  <button class="lb-close" id="lbClose" aria-label="Close">×</button>
-  <img id="lbImg" src="" alt="Screenshot full view">
+  <button type="button" class="lb-close" id="lbClose" aria-label="Close">×</button>
+  <button type="button" class="lb-nav lb-prev" id="lbPrev" aria-label="Previous screenshot">‹</button>
+  <figure class="lb-figure">
+    <img id="lbImg" src="" alt="Screenshot full view">
+    <figcaption class="lb-cap mono small" id="lbCap"></figcaption>
+  </figure>
+  <button type="button" class="lb-nav lb-next" id="lbNext" aria-label="Next screenshot">›</button>
 </div>
 
 <!-- ===== MODALS ===== -->
 <div class="modal" id="mTerms" hidden>
-  <div class="modal-card"><button class="lb-close" data-close aria-label="Close">×</button>
+  <div class="modal-card"><button type="button" class="lb-close" data-close aria-label="Close">×</button>
   <h3>Terms of Use — Summary</h3>
   <p class="small dim">Last updated: 2026-10-22</p>
   <p>By downloading or playing SCS you agree to these terms. SCS is provided <b>as is</b>, without warranties of any
@@ -309,7 +923,7 @@
   to the maximum extent permitted by law. These terms may be updated on this page.</p></div>
 </div>
 <div class="modal" id="mPrivacy" hidden>
-  <div class="modal-card"><button class="lb-close" data-close aria-label="Close">×</button>
+  <div class="modal-card"><button type="button" class="lb-close" data-close aria-label="Close">×</button>
   <h3>Privacy — Summary</h3>
   <p class="small dim">Last updated: 2026-10-22</p>
   <p>This website itself collects nothing: no cookies, no analytics, no ads, no tracking pixels. Offline gameplay is planned for a future update. If you create an optional SCS account, the
