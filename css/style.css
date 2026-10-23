@@ -245,3 +245,19 @@ h2{font-size:clamp(1.7rem,3.6vw,2.6rem);margin:6px 0 14px}
   .modal-card{padding:24px}
   .foot-brand{align-items:flex-start}
 }
+
+/* Offline availability and documented version history. */
+.offline-notice{margin-top:20px;padding:16px 18px;border:1px solid var(--line);border-left:3px solid var(--vio);border-radius:12px;background:var(--panel);max-width:560px}
+.offline-notice h3{font-size:1rem;line-height:1.4;color:var(--tx)}
+.offline-notice p,.updates-context{color:var(--mut);font-size:.92rem;margin-top:6px}
+.updates-list{list-style:none;display:grid;gap:20px;margin-top:26px}
+.update-card{min-width:0;padding:clamp(18px,3vw,30px);border:1px solid var(--line);border-radius:var(--r);background:var(--panel);overflow-wrap:anywhere}
+.update-card header{display:flex;flex-wrap:wrap;align-items:baseline;justify-content:space-between;gap:10px;margin-bottom:14px}
+.update-card h3{font-size:clamp(1.05rem,2vw,1.3rem);line-height:1.4;min-width:0}
+.update-card h3 .mono{color:var(--cyn)}
+.update-card time,.update-label{color:var(--mut);font-size:.78rem}
+.update-card ul{padding-left:20px}
+.update-card li+li{margin-top:10px}
+.update-card li,.update-card p{color:var(--mut);font-size:.94rem}
+.update-card b{color:var(--tx)}
+@media(max-width:780px){.offline-notice{margin-inline:auto}}
