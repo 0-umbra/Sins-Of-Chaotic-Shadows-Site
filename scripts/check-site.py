@@ -86,8 +86,19 @@ for btn_id in ('dlBtn', 'heroDl', 'archiveCurrentLink'):
     assert 'download' in site.downloads[btn_id]
 
 apk = (ROOT / 'apk/SCS.apk').read_bytes()
-assert hashlib.sha256(apk).hexdigest() == manifest['sha256']
-assert len(apk) == manifest['fileSizeBytes'] == 5851613
+assert manifest['downloadUrl'] == '/apk/SCS.apk'
+assert manifest.get('fileName') == 'SCS.apk', 'release.json must name the published APK'
+assert hashlib.sha256(apk).hexdigest() == manifest['sha256'], 'APK SHA-256 disagrees with release.json'
+assert len(apk) == manifest['fileSizeBytes'], 'APK byte size disagrees with release.json'
+
+# The download UI must show the real file name, byte size and checksum from the manifest
+assert 'id="fName"' in html and 'id="fSize"' in html and 'id="fSha"' in html
+assert re.search(r'id="fName"[^>]*>SCS\.apk<', html), 'APK file name is not displayed'
+assert f"{manifest['fileSizeBytes']:,}" in html, 'Actual APK byte size is not displayed'
+assert manifest['sha256'] in html, 'Published SHA-256 is not displayed'
+assert 'DOWNLOAD LATEST ANDROID APK' in html, 'Download button does not use the release label'
+for stale in ('5.58 MB', '5,851,613', 'da487b16'):
+    assert stale not in html, f'Stale pre-release value remains in index.html: {stale}'
 
 # Verify logo attributes and distortion-free CSS rules
 assert len(site.logos) >= 3, 'Expected header, hero, and footer SCS logo elements'
@@ -205,7 +216,27 @@ assert versions == sorted(versions, key=lambda v: tuple(map(int, v.split('.'))),
 assert len(versions) == len(set(versions))
 assert versions == ['0.23.0', '0.22.1', '0.22.0', '0.21.0', '0.20.0']
 assert re.findall(r'<time datetime="([^"]+)">', notes) == [manifest['releaseDate']]
-assert 'Documented game update' in notes and 'Separate gameplay changes' in notes
+assert 'Documented game update' in notes
+assert 'Part 4' in notes and 'Part 5' in notes, 'Packaged optimization pass not documented in the changelog'
+
+# What's New release notes: verified packaging facts, honest limits, no invented features
+assert 'whatsNew' in site.ids, 'Missing #whatsNew release-notes panel'
+wn_match = re.search(r'<div class="wn-panel.*?</section>', html, re.S)
+assert wn_match, 'Missing What\'s New panel markup'
+wn_html = wn_match.group(0)
+for required in (
+    "What's New in This Build",
+    'Performance optimizations',
+    'Movement and stability',
+    'Testing status and honest limits',
+    'no guaranteed 60 FPS',
+    'not a measured Android FPS gain',
+    'adds no new weapons',
+):
+    assert required in wn_html, f'Release notes missing required content: {required}'
+for forbidden_claim in ('guarantees 60 fps', 'guaranteed 60 fps on', 'zero lag on every',
+                        'verified on every android', 'verified 60 fps'):
+    assert forbidden_claim not in wn_html.lower(), f'Unverifiable performance claim: {forbidden_claim}'
 
 # Ensure zero leaked Supabase/private keys or keystore references in public files
 for text_blob in (html, css, js):

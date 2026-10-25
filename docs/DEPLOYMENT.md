@@ -33,6 +33,11 @@ lag behind for ~10 minutes unless you bust cache (hard refresh).
 - [ ] Lighthouse mobile check: layout stacks, no horizontal scroll.
 - [ ] Download section shows either the verified release facts or the honest
       "not available yet" state — never a broken button.
-- [ ] After the first release is published: click **Download Latest APK** — the browser
+- [ ] After the first release is published: click **Download Latest Android APK** — the browser
       should download an `.apk` file directly (not an HTML page), and the SHA-256 on the
       page must match `sha256sum` of the downloaded file.
+- [ ] `curl -sSI https://<deployment>/apk/SCS.apk` returns `200` with
+      `content-type: application/vnd.android.package-archive` and a `content-length` equal to
+      `data/release.json` → `fileSizeBytes` (`5,901,720` for the current build).
+- [ ] `What's New in This Build` (`#download` → `#whatsNew`) stacks to one column on a narrow
+      phone viewport and every download button reads "Download Latest Android APK".
