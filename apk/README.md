@@ -22,8 +22,8 @@ This directory hosts the Android APK served by this website itself
 | Field | Value (measured from `apk/SCS.apk`) |
 | --- | --- |
 | File name | `SCS.apk` |
-| Size | `5,901,720` bytes (`5.63 MB`) |
-| SHA-256 | `820cd45bd918697f05dda8771e7df8da856b044505668ac6fd70bfcf24e72220` |
+| Size | `8,244,435` bytes (`7.86 MB`) |
+| SHA-256 | `04cf9290c3fc04364ea149d9f346b0e5e7517c76e3a112f77d414669b0f6d9cf` |
 | versionName / versionCode | `0.22.1` / `3` (from `AndroidManifest.xml`) |
 | Package | `com.sinsofchaoticshadow.game` |
 | Signer cert SHA-256 | `2e868ac5056906ddfddf8be00bdc1a89629cbec335a38d5cb621f638b1a28018` (unchanged, matches `certSha256`) |
@@ -43,6 +43,9 @@ python3 scripts/check-site.py                           # fails if either disagr
 2. Make sure `data/release.json` describes that exact file — `version`,
    `versionCode`, `releaseDate`, `fileSizeBytes`, `sha256`, `certSha256`,
    `updated`. Leave `downloadUrl` as `/apk/SCS.apk`.
+   Run `python3 scripts/sync-apk-metadata.py` to regenerate
+   `fileSizeBytes`/`sha256` (and every hard-coded size/checksum copy)
+   from the actual `apk/SCS.apk` instead of editing them by hand.
    (Verify with `sha256sum apk/SCS.apk` and compare to the manifest.)
 3. Push/merge to `main`. Vercel redeploys and the download button goes
    live on its own — no code change needed.
