@@ -69,6 +69,9 @@ for css_ref in re.findall(r"url\(['\"]?([^'\")]+)['\"]?\)", css):
 assert re.search(r'img,\s*video\s*\{[^}]*height:\s*auto', css), 'Missing height:auto on img, video'
 assert re.search(r'picture\s*\{[^}]*display:\s*block', css), 'Missing display:block on picture'
 assert 'object-fit: cover' not in css, 'object-fit: cover must not crop screenshots/maps/video'
+assert 'backdrop-filter' not in css, 'Glassmorphism backdrop-filter is forbidden in CSS'
+assert 'filter: blur' not in css, 'Blurred halo/glass filter is forbidden in CSS'
+assert '999px' not in css, 'Pill-shaped rounded glass UI is replaced by angular tactical UI'
 assert css.count('object-fit: contain') >= 4, 'Expected object-fit: contain across logos, screenshots, video, and lightbox'
 for img_ad in site.imgs:
     if img_ad.get('id') == 'lbImg':

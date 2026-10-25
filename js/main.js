@@ -1,5 +1,5 @@
 /* SCS official site — release manifest, community config, trailer, interactive showcase,
-   accessible gallery/modals, responsive nav, and scroll reveal.
+   accessible gallery/modals, responsive nav, active section tracking, and scroll reveal.
    APK buttons link directly to /apk/SCS.apk in HTML so downloads work even without JS;
    data/release.json supplies verified release facts and acts as an availability kill-switch. */
 (() => {
@@ -31,6 +31,30 @@
   addEventListener('keydown', e => {
     if (e.key === 'Escape' && links?.classList.contains('open')) closeMenu(true);
   });
+
+  /* ---------- active nav indicator via IntersectionObserver ---------- */
+  if ('IntersectionObserver' in window && links) {
+    const navAnchors = [...links.querySelectorAll('a[href^="#"]')];
+    const anchorMap = new Map();
+    navAnchors.forEach(a => {
+      const sec = $(a.getAttribute('href').slice(1));
+      if (sec) anchorMap.set(sec, a);
+    });
+    const navIo = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (!entry.isIntersecting) return;
+        const activeLink = anchorMap.get(entry.target);
+        if (!activeLink) return;
+        navAnchors.forEach(a => {
+          const isCur = a === activeLink;
+          a.classList.toggle('active', isCur);
+          if (isCur) a.setAttribute('aria-current', 'true');
+          else a.removeAttribute('aria-current');
+        });
+      });
+    }, { rootMargin: '-28% 0px -60% 0px', threshold: 0 });
+    anchorMap.forEach((_, sec) => navIo.observe(sec));
+  }
 
   /* ---------- reveal on scroll (content stays visible without support) ---------- */
   if ('IntersectionObserver' in window) {
@@ -111,13 +135,22 @@
   bindFilterGroup('resTabs', 'data-res', val => {
     document.querySelectorAll('#resPanels [data-res-panel]').forEach(panel => {
       const show = val === 'all' || panel.dataset.resPanel === val;
-      panel.hidden = !show;
-      if (show) panel.classList.add('in');
+      cardShow(panel, show);
     });
   });
 
+  function cardShow(el, show) {
+    el.hidden = !show;
+    if (show) el.classList.add('in');
+  }
+
   // Screenshots gallery filter
   bindFilterGroup('galFilters', 'data-gfilter', val => {
+    const galEl = $('gal');
+    if (galEl) {
+      if (val === 'all') galEl.removeAttribute('data-filtered');
+      else galEl.setAttribute('data-filtered', 'true');
+    }
     document.querySelectorAll('#gal .gitem').forEach(item => {
       const show = val === 'all' || item.dataset.gcat === val;
       item.hidden = !show;
@@ -297,7 +330,7 @@
     if (!sha || sha === '—') return;
     const ok = await copyText(sha);
     const orig = copyShaBtn.textContent;
-    copyShaBtn.textContent = ok ? 'Copied SHA-256 ✓' : 'Select SHA-256 below';
+    copyShaBtn.textContent = ok ? 'COPIED SHA-256 ✓' : 'SELECT SHA-256 BELOW';
     setTimeout(() => { copyShaBtn.textContent = orig; }, 2200);
   });
 
@@ -346,6 +379,10 @@
         status.className = 'dl-status mono';
       }
       if ($('dlFacts')) $('dlFacts').hidden = true;
+      if ($('dlReleaseTag')) {
+        $('dlReleaseTag').textContent = 'UNAVAILABLE';
+        $('dlReleaseTag').className = 'badge badge-planned';
+      }
       return;
     }
 
@@ -365,6 +402,8 @@
       status.className = 'dl-status mono ok';
     }
     if ($('dlFacts')) $('dlFacts').hidden = false;
+    if ($('dlBuildVer')) $('dlBuildVer').textContent = manifest.version ? `v${manifest.version}` : '—';
+    if ($('dlBuildCode')) $('dlBuildCode').textContent = manifest.versionCode || '—';
     if ($('fVer')) $('fVer').textContent = manifest.version || '—';
     if ($('fCode')) $('fCode').textContent = manifest.versionCode || '—';
     if ($('fDate')) $('fDate').textContent = formattedDate;
@@ -376,7 +415,7 @@
     if ($('heroVer')) $('heroVer').textContent = manifest.versionCode ? `v${manifest.version} (Code ${manifest.versionCode})` : `v${manifest.version}`;
     if ($('heroSize')) $('heroSize').textContent = fullSize;
     if ($('heroDate')) $('heroDate').textContent = formattedDate;
-    if ($('heroDlLabel')) $('heroDlLabel').textContent = `Download APK · v${manifest.version} (${shortSize})`;
+    if ($('heroDlLabel')) $('heroDlLabel').textContent = `DOWNLOAD SCS · v${manifest.version} (${shortSize})`;
     if ($('footVer')) {
       $('footVer').textContent = manifest.version
         ? `SITE · LATEST RELEASE ${manifest.version} (${(manifest.releaseDate || '').slice(0, 10)})`
@@ -394,7 +433,7 @@
       const arch = $('releaseArchiveList');
       if (arch) {
         const items = [
-          `<li><span><b>v${manifest.version}</b> (versionCode ${manifest.versionCode || '—'} · ${formattedDate} · ${shortSize})</span><a href="${manifest.downloadUrl}" download>Download Current APK</a></li>`,
+          `<li><span><b>v${manifest.version}</b> (versionCode ${manifest.versionCode || '—'} · ${formattedDate} · ${shortSize})</span><a href="${manifest.downloadUrl}" download id="archiveCurrentLink">Download Current APK</a></li>`,
           ...hist.map(h =>
             `<li><span><b>v${h.version}</b> (${fmtDate(h.releaseDate)} · ${fmtSize(h.fileSizeBytes)})</span><a href="${h.downloadUrl}" rel="noopener" download>Download v${h.version}</a></li>`
           )
@@ -407,6 +446,11 @@
   /* ---------- configurable community & trailer manifest ---------- */
   const safeExternalUrl = u => (typeof u === 'string' && /^https?:\/\/\S+$/i.test(u.trim())) ? u.trim() : '';
   const ALLOWED_CHANNEL_IDS = new Set(['discord', 'instagram', 'youtube']);
+  const CHANNEL_ICONS = {
+    discord: '<svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M19.54 5.34A18.2 18.2 0 0 0 15.05 4c-.2.36-.42.84-.58 1.22a16.9 16.9 0 0 0-4.94 0C9.37 4.84 9.14 4.36 8.95 4a18.2 18.2 0 0 0-4.5 1.34C1.6 9.52.83 13.6 1.21 17.62A18.4 18.4 0 0 0 6.72 20.3c.45-.6.84-1.24 1.18-1.91-.65-.24-1.27-.54-1.85-.89.15-.11.3-.23.45-.35a13.1 13.1 0 0 0 11 0c.15.12.3.24.45.35-.58.35-1.2.65-1.85.89.34.67.73 1.31 1.18 1.91a18.3 18.3 0 0 0 5.51-2.68c.45-4.66-.76-8.7-3.25-12.28ZM8.68 15.15c-1.08 0-1.97-.97-1.97-2.16 0-1.2.87-2.17 1.97-2.17 1.1 0 1.99.98 1.97 2.17 0 1.19-.87 2.16-1.97 2.16Zm6.64 0c-1.08 0-1.97-.97-1.97-2.16 0-1.2.87-2.17 1.97-2.17 1.1 0 1.99.98 1.97 2.17 0 1.19-.87 2.16-1.97 2.16Z"/></svg>',
+    instagram: '<svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.9"><rect x="3" y="3" width="18" height="18" rx="4"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>',
+    youtube: '<svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M21.6 7.2a2.7 2.7 0 0 0-1.9-1.9C18 4.8 12 4.8 12 4.8s-6 0-7.7.5a2.7 2.7 0 0 0-1.9 1.9C2 8.9 2 12 2 12s0 3.1.4 4.8a2.7 2.7 0 0 0 1.9 1.9c1.7.5 7.7.5 7.7.5s6 0 7.7-.5a2.7 2.7 0 0 0 1.9-1.9c.4-1.7.4-4.8.4-4.8s0-3.1-.4-4.8ZM10 15.2V8.8l5.5 3.2-5.5 3.2Z"/></svg>'
+  };
 
   async function loadCommunity() {
     let cfg = null;
@@ -432,8 +476,18 @@
       if (validChannels.length) {
         list.innerHTML = '';
         validChannels.forEach(ch => {
+          const chId = String(ch.id).toLowerCase();
           const li = document.createElement('li');
           li.className = 'social-item';
+
+          const idWrap = document.createElement('div');
+          idWrap.className = 'social-id';
+
+          const ic = document.createElement('span');
+          ic.className = 'social-ic';
+          ic.setAttribute('aria-hidden', 'true');
+          ic.innerHTML = CHANNEL_ICONS[chId] || '';
+
           const info = document.createElement('div');
           const title = document.createElement('strong');
           title.textContent = ch.label;
@@ -442,6 +496,7 @@
           const url = safeExternalUrl(ch.url);
           note.textContent = url ? url.replace(/^https?:\/\//i, '') : (ch.note || 'Planned for a future update');
           info.append(title, note);
+          idWrap.append(ic, info);
 
           if (url) {
             const a = document.createElement('a');
@@ -450,12 +505,12 @@
             a.target = '_blank';
             a.rel = 'noopener noreferrer';
             a.textContent = 'Visit ↗';
-            li.append(info, a);
+            li.append(idWrap, a);
           } else {
             const badge = document.createElement('span');
             badge.className = 'mono badge badge-planned';
             badge.textContent = 'COMING SOON';
-            li.append(info, badge);
+            li.append(idWrap, badge);
           }
           list.appendChild(li);
         });
