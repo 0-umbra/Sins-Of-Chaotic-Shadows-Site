@@ -12,13 +12,17 @@ No game source code, no private configuration, and no signing material ever belo
 
 1. **Cinematic Homepage (`#top`, `#trailer`)** — Atmospheric dark/crimson FPS theme, distortion-free
    SCS emblem (`<picture>` responsive WebP + PNG fallback), direct working APK download button with
-   verified version (`0.22.1`) and actual file size (`5.58 MB` / `5,851,613` bytes), subtle motion,
+   verified version (`0.22.1`) and actual file size (`SCS.apk` · `5.63 MB` / `5,901,720` bytes), subtle motion,
    and an in-build gameplay showcase trailer (`media/scs-gameplay-trailer.mp4`, `object-fit: contain`)
    with chapter controls.
-2. **Updates & Patch Notes (`#updates`)** — Filterable newest-first version history (`0.23.0` down
+2. **What's New in This Build (`#whatsNew`, inside `#download`)** — Mobile-friendly release notes for the
+   packaged Part 4 + Part 5 optimization pass: performance optimizations, movement/stability fixes,
+   developer testing status, and an explicit list of honest limits (no FPS guarantees, no unverified
+   device claims, no invented content). Every bullet is verifiable in the shipped APK.
+3. **Updates & Patch Notes (`#updates`)** — Filterable newest-first version history (`0.23.0` down
    to `0.20.0`), new features, maps, arsenal, performance passes, bug fixes, known issues, and
    individual release download links.
-3. **Game Showcase (`#showcase`, `#maps`, `#modes`, `#weapons`, `#abilities`, `#gallery`)** —
+4. **Game Showcase (`#showcase`, `#maps`, `#modes`, `#weapons`, `#abilities`, `#gallery`)** —
    - **Tactical Maps (`#maps`)**: Filterable across all 5 maps (**Umbra Crossing**, **Neon Veil**,
      **Foundry Siege**, **Ironfall Industries**, and planned future arena **Sunken Meridian**). Each
      map shows only its own authentic capture (`object-fit: contain`) or a clearly labelled 16:9
@@ -30,12 +34,12 @@ No game source code, no private configuration, and no signing material ever belo
      **Aura**, **Rift**).
    - **Gameplay Screenshots (`#gallery`)**: Full 16:9 uncropped build captures (`800w` + `1600w`
      responsive WebP with JPG fallback, `object-fit: contain`) and keyboard/touch-swipe lightbox.
-4. **News & Community (`#community`)** — Development announcements, planned roadmap items,
+5. **News & Community (`#community`)** — Development announcements, planned roadmap items,
    **Issue Reporting — Under Development** status notice (no nonfunctional submission form),
    planned community channels (**Discord Server**, **Instagram**, **YouTube** marked *Coming Soon*),
    and direct clickable [Contact the Developer on Discord](https://discord.com/users/1341279384535044097)
    links.
-5. **Android Compatibility & Performance (`#compatibility`)** — Manifest-verified Android
+6. **Android Compatibility & Performance (`#compatibility`)** — Manifest-verified Android
    requirements (`minSdkVersion 24` / Android 7.0+, `targetSdkVersion 36` / Android 16, WebGL,
    Sensor Landscape), in-game Render Control options, low-end GPU optimization profile, and
    troubleshooting for lag, crashes, Play Protect installation, and in-place updates.
@@ -48,6 +52,7 @@ No game source code, no private configuration, and no signing material ever belo
 ├── js/main.js                  release & community loaders, trailer chapters, interactive tabs, lightbox
 ├── apk/SCS.apk                 verified signed Android APK served directly at /apk/SCS.apk
 ├── data/release.json           ★ release manifest — single source of truth for APK metadata & kill-switch
+│                               (file name, byte size, SHA-256, cert digest, version)
 ├── data/community.json         developer Discord contact URL, coming-soon channels & trailer config
 ├── img/                        approved public assets (800w/1600w WebP + PNG/JPG fallbacks, OG, favicon)
 ├── media/                      self-contained in-build gameplay showcase reel (MP4)
@@ -62,7 +67,8 @@ No game source code, no private configuration, and no signing material ever belo
 - The download buttons (`#heroDl`, `#dlBtn`, and patch-note release links) point directly to
   `/apk/SCS.apk` with the `download` attribute so downloads work even without JavaScript.
 - `data/release.json` supplies verified version (`0.22.1`), `versionCode` (`3`), release date,
-  exact byte size (`5,851,613`), package ID (`com.sinsofchaoticshadow.game`), and SHA-256 checksum.
+  file name (`SCS.apk`), exact byte size (`5,901,720`), package ID (`com.sinsofchaoticshadow.game`),
+  and SHA-256 checksum (`820cd45b…4e72220`) — all measured from the file in `apk/`.
 - Setting `"available": false` in `data/release.json` acts as an instant kill-switch that cleanly
   disables the download buttons and displays an honest status message.
 

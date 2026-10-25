@@ -49,5 +49,5 @@ for(const [w,h] of [[320,740],[375,812],[430,932],[600,960],[768,1024],[820,1180
  console.log(`PASS ${w}x${h}`);
 }
 console.log('Browser errors:',errors);if(errors.length)throw Error('browser errors');
-const response=await page.request.get('http://localhost:8080/apk/SCS.apk');const crypto=require('node:crypto');if(crypto.createHash('sha256').update(await response.body()).digest('hex')!=='da487b1657b3c2d5ac3f8f6340de9b11eb45de55d55899e631d2ac0ddb907280')throw Error('APK checksum');console.log('PASS APK bytes and original destination');await browser.close();
+const response=await page.request.get('http://localhost:8080/apk/SCS.apk');const crypto=require('node:crypto');if(crypto.createHash('sha256').update(await response.body()).digest('hex')!=='820cd45bd918697f05dda8771e7df8da856b044505668ac6fd70bfcf24e72220')throw Error('APK checksum');console.log('PASS APK bytes and original destination');await browser.close();
 })().catch(e=>{console.error(e);process.exit(1)});

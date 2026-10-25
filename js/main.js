@@ -409,13 +409,15 @@
     if ($('fDate')) $('fDate').textContent = formattedDate;
     if ($('fSize')) $('fSize').textContent = fullSize;
     if ($('fPkg')) $('fPkg').textContent = manifest.packageName || 'com.sinsofchaoticshadow.game';
+    if ($('fName')) $('fName').textContent = manifest.fileName || 'SCS.apk';
+    if ($('dlFileLine')) $('dlFileLine').textContent = `FILE // ${manifest.fileName || 'SCS.apk'} · ${fullSize}`;
     if ($('fSha')) $('fSha').textContent = manifest.sha256 || 'see SHA256SUMS in the release';
     if (copyShaBtn && manifest.sha256) copyShaBtn.dataset.copySha = manifest.sha256;
 
     if ($('heroVer')) $('heroVer').textContent = manifest.versionCode ? `v${manifest.version} (Code ${manifest.versionCode})` : `v${manifest.version}`;
     if ($('heroSize')) $('heroSize').textContent = fullSize;
     if ($('heroDate')) $('heroDate').textContent = formattedDate;
-    if ($('heroDlLabel')) $('heroDlLabel').textContent = `DOWNLOAD SCS · v${manifest.version} (${shortSize})`;
+    if ($('heroDlLabel')) $('heroDlLabel').textContent = `DOWNLOAD LATEST ANDROID APK · ${manifest.fileName || 'SCS.apk'} (${shortSize})`;
     if ($('footVer')) {
       $('footVer').textContent = manifest.version
         ? `SITE · LATEST RELEASE ${manifest.version} (${(manifest.releaseDate || '').slice(0, 10)})`
