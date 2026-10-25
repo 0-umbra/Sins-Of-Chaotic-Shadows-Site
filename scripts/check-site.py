@@ -97,7 +97,7 @@ assert re.search(r'id="fName"[^>]*>SCS\.apk<', html), 'APK file name is not disp
 assert f"{manifest['fileSizeBytes']:,}" in html, 'Actual APK byte size is not displayed'
 assert manifest['sha256'] in html, 'Published SHA-256 is not displayed'
 assert 'DOWNLOAD LATEST ANDROID APK' in html, 'Download button does not use the release label'
-for stale in ('5.58 MB', '5,851,613', 'da487b16'):
+for stale in ('5.58 MB', '5,851,613', 'da487b16', '5.63 MB', '5,901,720', '820cd45b'):
     assert stale not in html, f'Stale pre-release value remains in index.html: {stale}'
 
 # Verify logo attributes and distortion-free CSS rules

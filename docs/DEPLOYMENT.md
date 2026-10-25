@@ -38,6 +38,6 @@ lag behind for ~10 minutes unless you bust cache (hard refresh).
       page must match `sha256sum` of the downloaded file.
 - [ ] `curl -sSI https://<deployment>/apk/SCS.apk` returns `200` with
       `content-type: application/vnd.android.package-archive` and a `content-length` equal to
-      `data/release.json` → `fileSizeBytes` (`5,901,720` for the current build).
+      `data/release.json` → `fileSizeBytes` (`8,244,435` for the current build).
 - [ ] `What's New in This Build` (`#download` → `#whatsNew`) stacks to one column on a narrow
       phone viewport and every download button reads "Download Latest Android APK".

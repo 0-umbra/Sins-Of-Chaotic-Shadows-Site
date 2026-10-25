@@ -12,7 +12,7 @@ No game source code, no private configuration, and no signing material ever belo
 
 1. **Cinematic Homepage (`#top`, `#trailer`)** — Atmospheric dark/crimson FPS theme, distortion-free
    SCS emblem (`<picture>` responsive WebP + PNG fallback), direct working APK download button with
-   verified version (`0.22.1`) and actual file size (`SCS.apk` · `5.63 MB` / `5,901,720` bytes), subtle motion,
+   verified version (`0.22.1`) and actual file size (`SCS.apk` · `7.86 MB` / `8,244,435` bytes), subtle motion,
    and an in-build gameplay showcase trailer (`media/scs-gameplay-trailer.mp4`, `object-fit: contain`)
    with chapter controls.
 2. **What's New in This Build (`#whatsNew`, inside `#download`)** — Mobile-friendly release notes for the
@@ -67,8 +67,8 @@ No game source code, no private configuration, and no signing material ever belo
 - The download buttons (`#heroDl`, `#dlBtn`, and patch-note release links) point directly to
   `/apk/SCS.apk` with the `download` attribute so downloads work even without JavaScript.
 - `data/release.json` supplies verified version (`0.22.1`), `versionCode` (`3`), release date,
-  file name (`SCS.apk`), exact byte size (`5,901,720`), package ID (`com.sinsofchaoticshadow.game`),
-  and SHA-256 checksum (`820cd45b…4e72220`) — all measured from the file in `apk/`.
+  file name (`SCS.apk`), exact byte size (`8,244,435`), package ID (`com.sinsofchaoticshadow.game`),
+  and SHA-256 checksum (`04cf9290…0f6d9cf`) — all measured from the file in `apk/`.
 - Setting `"available": false` in `data/release.json` acts as an instant kill-switch that cleanly
   disables the download buttons and displays an honest status message.
 
