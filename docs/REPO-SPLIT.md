@@ -22,9 +22,9 @@ to confirm.
    `sins-of-chaotic-shadows.vercel.app` must still load. If it breaks, open the Vercel
    project → Settings → Git → reconnect/re-grant the repo.
 3. **Releases in the game repo become private too.** Anyone relying on downloading the
-   APK from the *game* repo loses access — which is exactly why the public APK lives in
-   *this* repo's Releases (see docs/RELEASE-FLOW.md). The website's download is
-   unaffected.
+   APK from the *game* repo loses access — which is exactly why the public APK is served
+   directly from *this* site at `/apk/SCS.apk` (see docs/RELEASE-FLOW.md). The website's
+   download is unaffected.
 4. **Collaborators** keep access; everyone else (forks, watchers, issue reporters) is cut
    off. Check Settings → Collaborators before flipping if that matters.
 5. **Existing forks are not deleted or made private** — if the repo was forked while

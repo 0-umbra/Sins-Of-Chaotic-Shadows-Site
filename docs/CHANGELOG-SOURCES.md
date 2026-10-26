@@ -1,5 +1,15 @@
 # Latest Updates: provenance and maintenance
 
+## Current release notes
+
+The current **What’s New** bullets shown in `#download` now come from
+`apk/release.json`. They are human-written and intentionally contain no
+version, version code, file size or checksum. The static semantic list in
+`#updates` remains a historical, documented game changelog; the old Part 4 +
+Part 5 technical notes are preserved below the dynamic list as a labelled
+archive. APK identity facts are generated from `apk/SCS.apk` by
+`npm run build`, not from this document.
+
 ## Primary source
 
 The complete user-supplied `README.md.txt` (395 lines, attached to the website task)
@@ -39,13 +49,14 @@ are untouched.
 
 ## Maintenance
 
-The static semantic list in `index.html#updates` is the sole player-facing
-changelog; no second release manifest or runtime renderer was introduced. Add
+`index.html#updates` remains the historical, versioned changelog ledger. Add
 verified entries newest-first, document their source here, and omit unknown
-dates/categories. Keep APK metadata in the existing release manifest, not in new
-configuration. If all reliable notes are removed, replace the list with:
-“Release notes will be available here soon.” An empty state is not currently
-needed because the attachment provides explicit versioned notes.
+dates/categories. Current player-facing release bullets belong in
+`apk/release.json`; keep that file limited to `releaseDate` and `whatsNew`.
+APK metadata is generated from the binary by `npm run build` into
+`data/apk-metadata.json`, and the legacy `data/release.json` is refreshed
+automatically. Never hand-edit version/size/checksum values into HTML or the
+changelog JSON.
 
 ## Validation for this change
 

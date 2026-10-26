@@ -1,43 +1,70 @@
 # Deployment — SCS Official Site
 
-The site is 100% static (HTML/CSS/JS + images + one JSON manifest). No env vars,
-no secrets, no build step. Connect **this repository only** — never the game repo.
+The site remains plain HTML/CSS/JS plus the APK and public assets. It now has one
+tiny, dependency-free build step: `npm run build` reads `apk/SCS.apk`, generates
+`data/apk-metadata.json`, refreshes `data/release.json`, and stages the static
+site into `dist/`. No environment variables, secrets, serverless functions or
+runtime npm dependencies are required.
 
-## Option A — Vercel (recommended, ~2 minutes)
+## Vercel (recommended)
+
+The repository’s `vercel.json` pins everything needed, so a re-imported project
+does not depend on dashboard defaults:
+
+- Framework Preset: **Other** (`"framework": null`)
+- Install Command: `npm install --ignore-scripts --no-audit --no-fund --no-package-lock`
+- Build Command: `npm run build`
+- Output Directory: `dist`
+- Environment Variables: **none required**
+
+To deploy:
 
 1. Sign in at https://vercel.com with your GitHub account.
-2. **Add New → Project** → Import `0-umbra/Sins-Of-Chaotic-Shadows-Site`.
-3. Configure:
-   - Framework Preset: **Other** (static)
-   - Build Command: *(empty)*
-   - Output Directory: *(empty — repo root)*
-   - Environment Variables: **none required. Ever.**
-4. **Deploy.** Vercel assigns a URL like `https://sins-of-chaotic-shadows-site.vercel.app`.
-5. (Optional) Settings → Domains to attach a custom domain — follow Vercel's DNS instructions.
+2. **Add New → Project** → import `0-umbra/Sins-Of-Chaotic-Shadows-Site`.
+3. Keep the overrides from `vercel.json` (or enter the values above).
+4. Deploy. Vercel assigns a production URL; a custom domain can be attached in
+   **Settings → Domains**.
 
-`vercel.json` in the repo root already sets security headers, long cache for images,
-and `no-store` for `data/release.json` so version updates appear immediately.
+`vercel.json` also sets security headers, long image/media caching, `no-store`
+for `/data/*.json` and `/apk/*.json`, and the APK MIME type /
+`Content-Disposition: attachment` header for `/apk/SCS.apk`. Generated JSON uses
+no-store so a new release appears immediately without a stale CDN copy.
 
-## Option B — GitHub Pages
+### What the build produces
 
-1. Repo → **Settings → Pages**.
-2. Source: **Deploy from a branch** → Branch `main`, folder `/ (root)` → Save.
-3. The site goes live at `https://0-umbra.github.io/Sins-Of-Chaotic-Shadows-Site/`.
+`dist/` is a complete copy of the existing static site (so no asset paths
+change) plus freshly generated metadata. It is gitignored and rebuilt on every
+deployment. Sensitive local files such as `.env`, key/keystore files and Git
+credentials are explicitly excluded from the staged output.
 
-Note: GitHub Pages caches aggressively; after publishing a new release the manifest may
-lag behind for ~10 minutes unless you bust cache (hard refresh).
+## GitHub Pages (alternative)
 
-## Verification checklist (after first deploy)
+GitHub Pages does not run this repository’s Vercel build command. If you use
+Pages, either publish the generated `dist/` directory via a small Actions
+workflow, or run `npm run build` locally and publish `dist/` as the site root.
+Serving the source root without rebuilding will show the committed fallback
+metadata rather than facts from a newly replaced APK.
+
+Pages also caches aggressively; after a release, hard-refresh or bust the cache
+to see the new JSON files.
+
+## Verification checklist (after deployment)
 
 - [ ] Open the production URL in a private/incognito window — no auth prompt, page loads.
-- [ ] Lighthouse mobile check: layout stacks, no horizontal scroll.
-- [ ] Download section shows either the verified release facts or the honest
-      "not available yet" state — never a broken button.
-- [ ] After the first release is published: click **Download Latest Android APK** — the browser
-      should download an `.apk` file directly (not an HTML page), and the SHA-256 on the
-      page must match `sha256sum` of the downloaded file.
+- [ ] The Download section shows `SCS vX.X.X`, the generated version code,
+      calculated APK size and release date; no stale hardcoded values remain.
 - [ ] `curl -sSI https://<deployment>/apk/SCS.apk` returns `200` with
-      `content-type: application/vnd.android.package-archive` and a `content-length` equal to
-      `data/release.json` → `fileSizeBytes` (`8,244,435` for the current build).
-- [ ] `What's New in This Build` (`#download` → `#whatsNew`) stacks to one column on a narrow
-      phone viewport and every download button reads "Download Latest Android APK".
+      `content-type: application/vnd.android.package-archive` and
+      `content-disposition: attachment`. Its `content-length` equals
+      `data/apk-metadata.json → fileSizeBytes`.
+- [ ] `curl -s https://<deployment>/data/apk-metadata.json` matches
+      `versionName`/`versionCode` from the APK’s `AndroidManifest.xml` and the
+      real byte size / SHA-256 of the served file.
+- [ ] `curl -s https://<deployment>/apk/release.json` returns the current
+      `whatsNew` list, and the page renders every item.
+- [ ] Click **Download Latest Android APK** on an Android browser. The browser
+      downloads an `.apk` file directly, not an HTML page.
+- [ ] Lighthouse/mobile check: no horizontal scroll at 320–430px, the Download
+      button is at least 44px high, and the What’s New list wraps cleanly.
+- [ ] Temporarily invalidating `apk/release.json` in a preview must not break
+      the page or the APK download; release notes show a fallback message.

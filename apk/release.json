@@ -1,0 +1,12 @@
+{
+  "releaseDate": "2026-10-22",
+  "whatsNew": [
+    "Part 4 + Part 5 optimization pass for the current signed APK.",
+    "Reduced character detail work at distance and batched static character parts.",
+    "Lowered shadow-map work and avoidable per-frame allocations.",
+    "Added adaptive graphics quality with cooldown/back-off and deeper frame-time monitoring.",
+    "Made movement acceleration and jump arcs consistent across frame rates.",
+    "Improved frame pacing when returning from the background.",
+    "No new weapons, maps, modes, or multiplayer features are included in this build."
+  ]
+}

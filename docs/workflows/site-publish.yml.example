@@ -1,7 +1,10 @@
-# OPTIONAL AUTOMATION — copy this file into the PRIVATE GAME repository as
-# .github/workflows/site-publish.yml, then create the secret SCS_SITE_PUBLISH_TOKEN
-# there (fine-grained PAT: only the site repo, Contents read/write).
-# Never put this workflow or the token in the public site repo.
+# LEGACY OPTIONAL AUTOMATION — the live website now uses apk/SCS.apk plus
+# apk/release.json and Vercel build-time metadata. This older GitHub Releases
+# publisher is retained only for private game-repo automation. If used, copy
+# this file into the PRIVATE GAME repository as .github/workflows/site-publish.yml
+# and create the secret SCS_SITE_PUBLISH_TOKEN there (fine-grained PAT: only the
+# site repo, Contents read/write). Never put this workflow or the token in the
+# public site repo.
 #
 # It runs after the signed-release workflow has published a release, downloads the
 # verified APK asset, publishes it on the public site repo, and updates the manifest.

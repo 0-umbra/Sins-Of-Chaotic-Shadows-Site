@@ -14,6 +14,7 @@ Thumbs.db
 *.keystore
 node_modules/
 dist/
+.vercel/
 
 # python bytecode (scripts/)
 __pycache__/

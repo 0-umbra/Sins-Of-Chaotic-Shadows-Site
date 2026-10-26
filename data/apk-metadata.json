@@ -1,0 +1,20 @@
+{
+  "schemaVersion": 1,
+  "source": "apk/SCS.apk",
+  "available": true,
+  "status": "ok",
+  "versionName": "0.22.1",
+  "versionCode": 3,
+  "fileSize": "7.86 MB",
+  "fileSizeBytes": 8244435,
+  "releaseDate": "2026-10-22",
+  "releaseDateSource": "apk/release.json",
+  "downloadUrl": "/apk/SCS.apk",
+  "fileName": "SCS.apk",
+  "sha256": "04cf9290c3fc04364ea149d9f346b0e5e7517c76e3a112f77d414669b0f6d9cf",
+  "packageName": "com.sinsofchaoticshadow.game",
+  "minSdkVersion": 24,
+  "targetSdkVersion": 36,
+  "changelogAvailable": true,
+  "metadataError": null
+}

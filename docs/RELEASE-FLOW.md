@@ -3,6 +3,60 @@
 The game source lives in the **private** `Sins-Of-Chaotic-Shadows` repo. The public site
 repo never sees game source — only the **verified signed APK** that gets published here.
 
+## Active flow — direct APK + Vercel build-time metadata
+
+This is the flow used by the live website today:
+
+```
+GAME REPO (private)                    SITE REPO (public)                    VERCEL BUILD
+──────────────────                    ──────────────────                    ────────────
+signed release APK  ──manual──▶  apk/SCS.apk (replace)
+                                 apk/release.json (whatsNew [+ date])  ──▶ npm run build
+                                                                          • binary AndroidManifest.xml
+                                                                          • real byte size / SHA-256
+                                                                          • data/apk-metadata.json
+                                                                          • dist/ static output
+                                                                              ▼
+                                                                     Website reads generated JSON
+                                                                     and /apk/SCS.apk directly.
+```
+
+1. Replace `apk/SCS.apk` with the new signed APK. Keep the exact filename.
+2. Edit the `whatsNew` array in `apk/release.json`. Optionally update its
+   `releaseDate`. Do **not** put version, version code, size or checksum there.
+3. Push the commit. Vercel runs `npm run build`, which extracts the APK facts
+   and stages `dist/`. The generated metadata and changelog are fetched by
+   `js/main.js` at runtime; the download button always points to
+   `/apk/SCS.apk`.
+
+Version name, version code, human-readable APK size, exact byte size and
+SHA-256 are measured from the APK at build time. The optional
+`releaseDate` in `apk/release.json` is the explicit date; if omitted the build
+falls back to the APK’s last Git commit date, then to a build-environment date.
+Filesystem/ZIP timestamps are intentionally not trusted.
+
+Failure behavior: a missing APK marks the release unavailable; a missing or
+invalid changelog only affects the What’s New list; an unreadable binary
+manifest leaves the direct APK download active with “Unavailable” version
+fields. The Vercel build itself does not fail for those cases.
+
+Local verification:
+
+```bash
+npm run build
+npm run check
+python3 -m http.server 8080 --directory dist --bind 0.0.0.0
+```
+
+---
+
+# Legacy GitHub Release publisher (historical reference only)
+
+`scripts/publish-release.py` and the pipeline below describe the older flow that
+uploaded APKs to GitHub Releases. The current site does **not** use GitHub
+Release URLs for downloads. This section is retained for provenance and private
+game-repo automation only.
+
 ## The pipeline (one release, end to end)
 
 ```

@@ -5,7 +5,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>Sins of Chaotic Shadows — Official Tactical FPS for Android</title>
-<meta name="description" content="Sins of Chaotic Shadows (SCS) is a tactical FPS for Android: TDM, Free-For-All and 5v5 Shadow Core, 15 firearms, 11 melee blades, 3 Resonator kits, and a verified signed APK download (SCS.apk, v0.22.1, 7.86 MB).">
+<meta name="description" content="Sins of Chaotic Shadows (SCS) is a tactical FPS for Android: TDM, Free-For-All and 5v5 Shadow Core, 15 firearms, 11 melee blades, 3 Resonator kits, and a verified signed APK download (SCS.apk).">
 <meta name="theme-color" content="#060709">
 <meta property="og:type" content="website">
 <meta property="og:title" content="Sins of Chaotic Shadows — Official Tactical FPS Site">
@@ -79,9 +79,9 @@
         <p class="lede">Precision round-based gunplay built for Android. Deploy against disciplined 4-tier AI or host peer-to-peer rooms across <b>TDM</b>, <b>Free-For-All</b>, and <b>5v5 Shadow Core</b> — manage buy-phase credits, master <b>15 firearms</b> and <b>3 Resonator</b> kits, and unlock <b>11 melee blades</b> strictly through progression.</p>
 
         <div class="hero-cta">
-          <a class="btn btn-primary btn-lg" href="/apk/SCS.apk" download id="heroDl">
+          <a class="btn btn-primary btn-lg apk-download" href="/apk/SCS.apk" download id="heroDl">
             <span class="btn-ic mono" aria-hidden="true">[⬇]</span>
-            <span id="heroDlLabel">DOWNLOAD LATEST ANDROID APK · SCS.apk (7.86 MB)</span>
+            <span id="heroDlLabel" data-apk-template="DOWNLOAD LATEST ANDROID APK · {fileName} ({fileSize})">DOWNLOAD LATEST ANDROID APK</span>
           </a>
           <a class="btn btn-ghost btn-lg" href="#showcase">
             <span>EXPLORE THE GAME</span>
@@ -119,10 +119,10 @@
     <!-- Flush Architectural Telemetry Bar & Honest Offline Status -->
     <div class="hero-bottom-rail reveal">
       <dl class="hero-telemetry mono" aria-label="Verified APK telemetry">
-        <div><dt>Latest APK</dt><dd id="heroVer">v0.22.1 (Code 3)</dd></div>
-        <div><dt>Actual Size</dt><dd id="heroSize">7.86 MB (8,244,435 B)</dd></div>
+        <div><dt>Latest APK</dt><dd id="heroVer" data-apk-template="{versionWithCode}">Reading APK…</dd></div>
+        <div><dt>Actual Size</dt><dd id="heroSize" data-apk-template="{sizeWithBytes}">Reading APK…</dd></div>
         <div><dt>Android OS</dt><dd>7.0+ (API 24–36)</dd></div>
-        <div><dt>Released</dt><dd id="heroDate">Oct 22, 2026</dd></div>
+        <div><dt>Released</dt><dd id="heroDate" data-apk-template="{releaseDate}">—</dd></div>
       </dl>
       <aside class="offline-notice" aria-labelledby="offlineTitle">
         <div class="notice-head">
@@ -285,12 +285,12 @@
         <p class="kicker">TACTICAL SECTORS</p>
         <h2 id="mapsTitle">Map Database</h2>
       </div>
-      <p class="sub">Inspect all five arenas in Sins of Chaotic Shadows — the four daylight sectors playable in signed APK <span class="mono">v0.22.1</span> plus upcoming arena <b>Sunken Meridian</b>. Each map uses only its own authentic capture or a clearly labelled tactical placeholder.</p>
+      <p class="sub">Inspect all five arenas in Sins of Chaotic Shadows — the four daylight sectors playable in the current signed APK plus upcoming arena <b>Sunken Meridian</b>. Each map uses only its own authentic capture or a clearly labelled tactical placeholder.</p>
     </div>
 
     <div class="filter-bar reveal" role="tablist" aria-label="Filter maps" id="mapFilters">
       <button type="button" class="chip active" data-map-filter="all" role="tab" aria-selected="true">All Maps (5)</button>
-      <button type="button" class="chip" data-map-filter="active" role="tab" aria-selected="false">Playable in v0.22.1 (4)</button>
+      <button type="button" class="chip" data-map-filter="active" role="tab" aria-selected="false">Playable in current APK (4)</button>
       <button type="button" class="chip" data-map-filter="umbra-crossing" role="tab" aria-selected="false">01 · Umbra Crossing</button>
       <button type="button" class="chip" data-map-filter="neon-veil" role="tab" aria-selected="false">02 · Neon Veil</button>
       <button type="button" class="chip" data-map-filter="foundry-siege" role="tab" aria-selected="false">03 · Foundry Siege</button>
@@ -298,7 +298,7 @@
       <button type="button" class="chip" data-map-filter="sunken-meridian" role="tab" aria-selected="false">05 · Sunken Meridian [Planned]</button>
     </div>
 
-    <p class="filter-status mono small dim" id="mapFilterCount" role="status" aria-live="polite">Showing all 5 maps (4 playable in v0.22.1 APK · 1 planned future arena)</p>
+    <p class="filter-status mono small dim" id="mapFilterCount" role="status" aria-live="polite">Showing all 5 maps (4 playable in current APK · 1 planned future arena)</p>
 
     <div class="maps-grid" id="mapsGrid">
       <!-- Active Map 01: Umbra Crossing -->
@@ -313,7 +313,7 @@
         <div class="map-body">
           <div class="map-index-line mono">
             <span>ARENA // 01</span>
-            <span class="badge badge-ok">ACTIVE · DEFAULT IN v0.22.1</span>
+            <span class="badge badge-ok">ACTIVE · DEFAULT IN CURRENT APK</span>
           </div>
           <header class="map-head">
             <h3>Umbra Crossing</h3>
@@ -323,7 +323,7 @@
             <div><dt>MODE</dt><dd>TDM · FFA · 5v5 Shadow Core</dd></div>
             <div><dt>PLAYERS</dt><dd>5v5 Squad · 6-Bot FFA · P2P Vote</dd></div>
             <div><dt>TYPE</dt><dd>Symmetrical Multi-Lane Arena</dd></div>
-            <div><dt>STATUS</dt><dd class="tx-ok">ACTIVE (v0.22.1 APK)</dd></div>
+            <div><dt>STATUS</dt><dd class="tx-ok">ACTIVE (CURRENT APK)</dd></div>
           </dl>
           <div class="map-actions">
             <button type="button" class="btn btn-sm btn-primary gitem-trigger" data-full="img/screen-combat.jpg" data-webp="img/screen-combat.webp">VIEW MAP</button>
@@ -342,13 +342,13 @@
           <div class="placeholder-inner">
             <span class="badge">SCREENSHOT UNAVAILABLE</span>
             <strong class="placeholder-title">NEON VEIL</strong>
-            <span class="mono small dim">SECTOR 02 // Playable in v0.22.1 APK · Capture pending upload</span>
+            <span class="mono small dim">SECTOR 02 // Playable in current APK · Capture pending upload</span>
           </div>
         </div>
         <div class="map-body">
           <div class="map-index-line mono">
             <span>ARENA // 02</span>
-            <span class="badge badge-ok">ACTIVE · IN v0.22.1 APK</span>
+            <span class="badge badge-ok">ACTIVE · IN CURRENT APK</span>
           </div>
           <header class="map-head">
             <h3>Neon Veil</h3>
@@ -358,7 +358,7 @@
             <div><dt>MODE</dt><dd>TDM · FFA · 5v5 Shadow Core</dd></div>
             <div><dt>PLAYERS</dt><dd>5v5 Squad · 6-Bot FFA · P2P Vote</dd></div>
             <div><dt>TYPE</dt><dd>Urban Daylight Corridors</dd></div>
-            <div><dt>STATUS</dt><dd class="tx-ok">ACTIVE (v0.22.1 APK)</dd></div>
+            <div><dt>STATUS</dt><dd class="tx-ok">ACTIVE (CURRENT APK)</dd></div>
           </dl>
           <div class="map-actions">
             <span class="btn btn-sm btn-ghost map-pending-tag mono" aria-disabled="true">VIEW MAP // CAPTURE PENDING</span>
@@ -374,7 +374,7 @@
           <div class="placeholder-inner">
             <span class="badge">SCREENSHOT UNAVAILABLE</span>
             <strong class="placeholder-title">FOUNDRY SIEGE</strong>
-            <span class="mono small dim">SECTOR 03 // Playable in v0.22.1 APK · Capture pending upload</span>
+            <span class="mono small dim">SECTOR 03 // Playable in current APK · Capture pending upload</span>
           </div>
         </div>
         <div class="map-body">
@@ -390,7 +390,7 @@
             <div><dt>MODE</dt><dd>Attack &amp; Destroy · 5v5 · TDM / FFA</dd></div>
             <div><dt>PLAYERS</dt><dd>5v5 Objective · Solo AI · P2P Vote</dd></div>
             <div><dt>TYPE</dt><dd>Breach &amp; Plant Industrial Site</dd></div>
-            <div><dt>STATUS</dt><dd class="tx-ok">ACTIVE (v0.22.1 APK)</dd></div>
+            <div><dt>STATUS</dt><dd class="tx-ok">ACTIVE (CURRENT APK)</dd></div>
           </dl>
           <div class="map-actions">
             <span class="btn btn-sm btn-ghost map-pending-tag mono" aria-disabled="true">VIEW MAP // CAPTURE PENDING</span>
@@ -406,13 +406,13 @@
           <div class="placeholder-inner">
             <span class="badge">SCREENSHOT UNAVAILABLE</span>
             <strong class="placeholder-title">IRONFALL INDUSTRIES</strong>
-            <span class="mono small dim">SECTOR 04 // Playable in v0.22.1 APK · Capture pending upload</span>
+            <span class="mono small dim">SECTOR 04 // Playable in current APK · Capture pending upload</span>
           </div>
         </div>
         <div class="map-body">
           <div class="map-index-line mono">
             <span>ARENA // 04</span>
-            <span class="badge badge-ok">ACTIVE · IN v0.22.1 APK</span>
+            <span class="badge badge-ok">ACTIVE · IN CURRENT APK</span>
           </div>
           <header class="map-head">
             <h3>Ironfall Industries</h3>
@@ -422,7 +422,7 @@
             <div><dt>MODE</dt><dd>TDM · FFA · 5v5 Shadow Core</dd></div>
             <div><dt>PLAYERS</dt><dd>5v5 Squad · 6-Bot FFA · P2P Vote</dd></div>
             <div><dt>TYPE</dt><dd>Mid-to-Long Sightline Complex</dd></div>
-            <div><dt>STATUS</dt><dd class="tx-ok">ACTIVE (v0.22.1 APK)</dd></div>
+            <div><dt>STATUS</dt><dd class="tx-ok">ACTIVE (CURRENT APK)</dd></div>
           </dl>
           <div class="map-actions">
             <span class="btn btn-sm btn-ghost map-pending-tag mono" aria-disabled="true">VIEW MAP // CAPTURE PENDING</span>
@@ -438,7 +438,7 @@
           <div class="placeholder-inner">
             <span class="badge badge-planned">PREVIEW UNAVAILABLE · PLANNED ARENA</span>
             <strong class="placeholder-title">SUNKEN MERIDIAN</strong>
-            <span class="mono small dim">SECTOR 05 // In development · Not yet bundled in v0.22.1 APK</span>
+            <span class="mono small dim">SECTOR 05 // In development · Not yet bundled in the current APK</span>
           </div>
         </div>
         <div class="map-body">
@@ -449,7 +449,7 @@
           <header class="map-head">
             <h3>Sunken Meridian</h3>
           </header>
-          <p><b>Sunken Meridian</b> is an upcoming SCS tactical arena planned for a future update and is <b>not yet included</b> in the current <span class="mono">v0.22.1</span> signed Android APK (<span class="mono">/apk/SCS.apk</span>). Authentic screenshots and mode details will be published here once Sunken Meridian ships in a public release.</p>
+          <p><b>Sunken Meridian</b> is an upcoming SCS tactical arena planned for a future update and is <b>not yet included</b> in the current signed Android APK (<span class="mono">/apk/SCS.apk</span>). Authentic screenshots and mode details will be published here once Sunken Meridian ships in a public release.</p>
           <dl class="map-specs mono">
             <div><dt>MODE</dt><dd>TBA — Pending Public Build</dd></div>
             <div><dt>PLAYERS</dt><dd>TBA — Tactical Arena Rotation</dd></div>
@@ -546,7 +546,7 @@
         <p class="kicker">EQUIPMENT &amp; BALLISTICS</p>
         <h2 id="weaponsTitle">Fifteen Guns.<br>Eleven Blades.</h2>
       </div>
-      <p class="sub">Every verified firearm and level-unlocked blade from the shipped <span class="mono">v0.22.1</span> build — exact credit costs, ballistic damage profiles, magazines, and progression unlock levels.</p>
+      <p class="sub">Every verified firearm and level-unlocked blade from the shipped Android build — exact credit costs, ballistic damage profiles, magazines, and progression unlock levels.</p>
     </div>
 
     <!-- Dominant In-Build Firearm Shop / Weapon Silhouettes Visual -->
@@ -817,31 +817,37 @@
           <span class="kicker">LATEST BUILD</span>
           <span class="badge badge-ok" id="dlReleaseTag">LATEST RELEASE</span>
         </div>
-        <h2 id="downloadTitle" class="dl-display">SCS <span id="dlBuildVer">v0.22.1</span></h2>
-        <p class="dl-code-line mono">VERSION CODE <span id="dlBuildCode">3</span> &nbsp;//&nbsp; SIGNED ANDROID PACKAGE</p>
+        <h2 id="downloadTitle" class="dl-display"><span id="dlBuildVer" data-apk-template="{versionFull}">SCS</span></h2>
+        <p class="dl-code-line mono">VERSION CODE <span id="dlBuildCode" data-apk-template="{versionCode}">—</span> &nbsp;//&nbsp; SIGNED ANDROID PACKAGE</p>
+        <p class="dl-quick mono" id="dlQuick" aria-label="Current APK summary">
+          <span>VERSION CODE: <b data-apk-template="{versionCode}">—</b></span>
+          <span>APK SIZE: <b data-apk-template="{fileSize}">—</b></span>
+          <span>RELEASED: <b data-apk-template="{releaseDate}">—</b></span>
+        </p>
         <p class="dl-sub">Served directly from this official site (<span class="mono">/apk/SCS.apk</span>) — verified package
-          <span class="mono">com.sinsofchaoticshadow.game</span>, signed with the pinned developer certificate and SHA-256 verified on every release.
+          <span class="mono" data-apk-template="{packageName}">reading APK…</span>, signed with the pinned developer certificate and SHA-256 verified on every release.
           Install over an older SCS build to keep your local data.</p>
         <div class="dl-actions">
-          <a class="btn btn-primary btn-xl" id="dlBtn" href="/apk/SCS.apk" download>
+          <a class="btn btn-primary btn-xl apk-download" id="dlBtn" href="/apk/SCS.apk" download>
             <span class="btn-ic mono" aria-hidden="true">[⬇]</span>
             <span>DOWNLOAD LATEST ANDROID APK</span>
           </a>
-          <button type="button" class="btn btn-ghost btn-sm mono" id="copyShaBtn" data-copy-sha="04cf9290c3fc04364ea149d9f346b0e5e7517c76e3a112f77d414669b0f6d9cf">COPY SHA-256</button>
+          <button type="button" class="btn btn-ghost btn-sm mono" id="copyShaBtn" disabled>COPY SHA-256</button>
         </div>
-        <p class="dl-file mono" id="dlFileLine">FILE // SCS.apk · 7.86 MB (8,244,435 bytes)</p>
-        <p class="dl-status mono ok" id="dlStatus" role="status">VERIFIED SIGNED RELEASE — SHA-256 CHECKSUM PUBLISHED BELOW.</p>
+        <p class="dl-file mono" id="dlFileLine" data-apk-template="FILE // {fileName} · {sizeWithBytesWord}">FILE // SCS.apk · reading APK…</p>
+        <p class="dl-status mono" id="dlStatus" role="status">READING APK RELEASE DETAILS…</p>
+        <noscript><p class="dl-status mono">Version details require JavaScript. The direct APK download works without it.</p></noscript>
       </div>
 
-      <dl class="dl-facts" id="dlFacts">
-        <div><dt>File name</dt><dd class="mono" id="fName">SCS.apk</dd></div>
-        <div><dt>Version</dt><dd class="mono" id="fVer">0.22.1</dd></div>
-        <div><dt>Version code</dt><dd class="mono" id="fCode">3</dd></div>
-        <div><dt>Release date</dt><dd class="mono" id="fDate">Oct 22, 2026</dd></div>
-        <div><dt>Actual APK size</dt><dd class="mono" id="fSize">7.86 MB (8,244,435 B)</dd></div>
+      <dl class="dl-facts" id="dlFacts" aria-busy="true">
+        <div><dt>File name</dt><dd class="mono" id="fName" data-apk-template="{fileName}">—</dd></div>
+        <div><dt>Version</dt><dd class="mono" id="fVer" data-apk-template="{versionName}">—</dd></div>
+        <div><dt>Version code</dt><dd class="mono" id="fCode" data-apk-template="{versionCode}">—</dd></div>
+        <div><dt>Release date</dt><dd class="mono" id="fDate" data-apk-template="{releaseDate}">—</dd></div>
+        <div><dt>Actual APK size</dt><dd class="mono" id="fSize" data-apk-template="{sizeWithBytes}">—</dd></div>
         <div><dt>Android req.</dt><dd class="mono small">Android 7.0+ (API 24)</dd></div>
-        <div class="wide"><dt>Package</dt><dd class="mono small wrapany" id="fPkg">com.sinsofchaoticshadow.game</dd></div>
-        <div class="wide"><dt>SHA-256 Checksum</dt><dd class="mono small wrapany" id="fSha">04cf9290c3fc04364ea149d9f346b0e5e7517c76e3a112f77d414669b0f6d9cf</dd></div>
+        <div class="wide"><dt>Package</dt><dd class="mono small wrapany" id="fPkg" data-apk-template="{packageName}">—</dd></div>
+        <div class="wide"><dt>SHA-256 Checksum</dt><dd class="mono small wrapany" id="fSha" data-apk-template="{sha256}">—</dd></div>
       </dl>
 
       <div class="dl-note">
@@ -853,18 +859,33 @@
       </div>
     </div>
 
-    <!-- ===== WHAT'S NEW — verified against the contents of the signed APK ===== -->
+    <!-- ===== WHAT'S NEW — current changelog from apk/release.json ===== -->
     <div class="wn-panel hud-frame reveal" id="whatsNew" aria-labelledby="whatsNewTitle">
       <div class="wn-head">
         <div class="wn-head-copy">
-          <p class="kicker">RELEASE NOTES // OPTIMIZATION PASS</p>
+          <p class="kicker">RELEASE NOTES // LATEST SIGNED APK</p>
           <h3 id="whatsNewTitle">What's New in This Build</h3>
-          <p class="wn-sub">The package served here is <span class="mono">SCS.apk</span> — <span class="mono">7.86 MB (8,244,435 bytes)</span>,
-            versionName <span class="mono">0.22.1</span>, versionCode <span class="mono">3</span>. Every item below is present in that
-            signed file. These notes describe what changed; they do not publish measured frame rates.</p>
+          <p class="wn-sub">The package served here is <span class="mono" data-apk-template="{fileName}">SCS.apk</span> — <span class="mono" data-apk-template="{sizeWithBytesWord}">size unavailable</span>,
+            <span class="mono" data-apk-template="{versionNameCode}">APK version details unavailable</span>. Current release notes are loaded from <span class="mono">apk/release.json</span>;
+            they are written by the developer, not inferred from the binary.</p>
         </div>
-        <span class="badge badge-ok wn-badge">PART 4 + PART 5</span>
+        <span class="badge badge-ok wn-badge" id="whatsNewVersion" data-apk-template="{whatsNewVersion}">LATEST APK</span>
       </div>
+
+      <div class="wn-current" id="whatsNewCurrent">
+        <div class="wn-current-head">
+          <h4>Latest changes</h4>
+          <span class="badge badge-ok" data-apk-template="{whatsNewVersion}">LATEST APK</span>
+        </div>
+        <ul id="whatsNewList" class="wn-current-list" aria-busy="true">
+          <li>Release notes are loading…</li>
+        </ul>
+        <noscript><p class="wn-current-status mono err">Release notes require JavaScript. The APK download works without it.</p></noscript>
+        <p class="wn-current-status mono" id="whatsNewStatus" role="status">LOADING RELEASE NOTES…</p>
+      </div>
+
+      <details class="wn-archive" id="whatsNewArchive">
+        <summary>Archived technical notes — v0.22.1 / versionCode 3 (historical build)</summary>
 
       <div class="wn-grid">
         <article class="wn-group">
@@ -900,6 +921,7 @@
           <li><b>Nothing new to unlock:</b> this pass adds no new weapons, maps, modes, multiplayer features or other gameplay content. Version identity stays versionName <span class="mono">0.22.1</span> / versionCode <span class="mono">3</span> — confirm the SHA-256 above rather than the number.</li>
         </ul>
       </aside>
+      </details>
     </div>
   </div>
 </section>
@@ -919,7 +941,7 @@
         <p class="kicker">CHANGELOG LEDGER</p>
         <h2 id="updatesTitle">Updates &amp; Patch Notes</h2>
         <p class="sub">Documented features, maps, arsenal additions, performance optimizations, bug fixes, known issues, and individual APK release downloads.</p>
-        <p class="updates-context">Selected verified highlights from the project's documented game history. Game changelog entries do not alter which binary is served: <span class="mono">v0.22.1</span> is the current signed Android APK at <a href="#download">Download</a>. Dates are shown only when documented.</p>
+        <p class="updates-context">Selected verified highlights from the project's documented game history. Game changelog entries do not alter which binary is served: the current signed Android APK is always at <a href="#download">Download</a>. Dates are shown only when documented.</p>
       </div>
 
       <div class="filter-bar" role="tablist" aria-label="Filter patch notes" id="updateFilters">
@@ -944,7 +966,7 @@
             <li><b>Performance Improvements:</b> <code>LOW</code> effects quality retains a static sky and cheaper sun rays while omitting the cirrus cloud layer and birds for low-end GPUs.</li>
           </ul>
           <footer class="update-dl">
-            <span class="dim small">APK status: Documented engine update — download current signed Android release <code>v0.22.1</code> below.</span>
+            <span class="dim small">APK status: Documented engine update — download the current signed Android release below.</span>
           </footer>
         </article></li>
 
@@ -953,10 +975,10 @@
             <h3 id="update0221"><span class="mono">0.22.1</span> · Signed Android package</h3>
             <time datetime="2026-10-22">October 22, 2026</time>
           </header>
-          <div class="u-tags"><span class="u-tag-apk">Current Signed APK</span><span>Part 4 + Part 5</span><span>Android 7.0+</span></div>
-          <p>Optimization build of the signed package (<code>com.sinsofchaoticshadow.game</code>, versionCode <code>3</code>) — now <code>8,244,435</code> bytes with SHA-256 <code>04cf9290…0f6d9cf</code>. It ships the Part 4 + Part 5 performance and movement-stability pass summarised in <a href="#whatsNew">What's New in This Build</a>; no new weapons, maps or modes are included.</p>
+          <div class="u-tags"><span class="u-tag-apk">Archived Signed APK</span><span>Part 4 + Part 5</span><span>Android 7.0+</span></div>
+          <p>Archived optimization build of the signed package (<code>com.sinsofchaoticshadow.game</code>, versionCode <code>3</code>) — at release <code>8,244,435</code> bytes with SHA-256 <code>04cf9290…0f6d9cf</code>. It shipped the Part 4 + Part 5 performance and movement-stability pass documented in the archived notes under <a href="#whatsNew">What's New in This Build</a>; no new weapons, maps or modes were included.</p>
           <footer class="update-dl">
-            <a class="btn btn-sm btn-primary update-apk-btn" href="/apk/SCS.apk" download>⬇ DOWNLOAD LATEST ANDROID APK (SCS.apk · 7.86 MB)</a>
+            <a class="btn btn-sm btn-primary update-apk-btn apk-download" href="/apk/SCS.apk" download data-apk-template="⬇ DOWNLOAD LATEST ANDROID APK ({fileName} · {fileSize})">⬇ DOWNLOAD LATEST ANDROID APK</a>
             <a class="small mono" href="#download">VIEW FULL SHA-256 &amp; INSTALL NOTES →</a>
           </footer>
         </article></li>
@@ -1008,8 +1030,8 @@
         <p class="small dim">Every verified public APK remains linked directly while hosted. Older pre-0.22.1 development milestones do not have separate public APK binaries archived.</p>
         <ul class="archive-list mono small" id="releaseArchiveList">
           <li>
-            <span><b>v0.22.1</b> (versionCode 3 · Oct 22, 2026 · 7.86 MB)</span>
-            <a href="/apk/SCS.apk" download id="archiveCurrentLink">Download /apk/SCS.apk</a>
+            <span><b data-apk-template="{versionRef}">current APK</b> (versionCode <span data-apk-template="{versionCode}">—</span> · <span data-apk-template="{releaseDate}">—</span> · <span data-apk-template="{fileSize}">—</span>)</span>
+            <a class="apk-download" href="/apk/SCS.apk" download id="archiveCurrentLink">Download /apk/SCS.apk</a>
           </li>
         </ul>
       </div>
@@ -1025,7 +1047,7 @@
           <li><b>Network Required on Launch (Offline Mode Planned):</b> Current builds require an active internet connection for account/cloud sync; offline play is planned for a future release.</li>
           <li><b>Browser Build Paused:</b> Browser play is unavailable because the latest maps are built for the signed Android package.</li>
           <li><b>Peer-to-Peer Room NAT Restrictions:</b> Private 4-digit rooms connect directly via PeerJS/WebRTC; strict mobile carrier NATs may occasionally require switching one peer to Wi-Fi or recreating the room code.</li>
-          <li><b>Documented vs. Packaged Version:</b> Living Sky (<span class="mono">0.23.0</span>) is documented in game changelog history while <span class="mono">0.22.1</span> is the latest signed Android APK published to <span class="mono">/apk/SCS.apk</span>.</li>
+          <li><b>Documented vs. Packaged Version:</b> Living Sky (<span class="mono">0.23.0</span>) is documented in game changelog history; the latest signed Android APK is always published to <span class="mono">/apk/SCS.apk</span>.</li>
         </ul>
       </aside>
     </div>
@@ -1047,7 +1069,7 @@
         <p class="kicker">VERIFIED SYSTEM SPECS &amp; TUNING</p>
         <h2 id="compatTitle">Android Compatibility &amp; Performance</h2>
       </div>
-      <p class="sub">Hardware and OS specifications verified directly from the signed <span class="mono">v0.22.1</span> APK manifest, paired with real in-game render controls and low-end GPU tuning.</p>
+      <p class="sub">Hardware and OS specifications verified directly from the current signed APK manifest, paired with real in-game render controls and low-end GPU tuning.</p>
     </div>
 
     <div class="compat-grid reveal">
@@ -1055,9 +1077,9 @@
         <p class="kicker">PACKAGE MANIFEST FACTS</p>
         <h3>Verified Android Requirements</h3>
         <dl class="spec-list">
-          <div><dt>Minimum Android Version</dt><dd><b>Android 7.0 Nougat</b> (<span class="mono">minSdkVersion 24</span>)</dd></div>
-          <div><dt>Target SDK Level</dt><dd><b>Android 16</b> (<span class="mono">targetSdkVersion 36</span>)</dd></div>
-          <div><dt>APK Download Size</dt><dd><b>7.86 MB</b> (<span class="mono">8,244,435 bytes</span>; keep ~50 MB free for install &amp; shader cache)</dd></div>
+          <div><dt>Minimum Android Version</dt><dd><b>Android 7.0 Nougat</b> (<span class="mono" data-apk-template="minSdkVersion {minSdkVersion}">minSdkVersion —</span>)</dd></div>
+          <div><dt>Target SDK Level</dt><dd><b>Android 16</b> (<span class="mono" data-apk-template="targetSdkVersion {targetSdkVersion}">targetSdkVersion —</span>)</dd></div>
+          <div><dt>APK Download Size</dt><dd><b data-apk-template="{fileSize}">—</b> (<span class="mono" data-apk-template="{fileSizeBytes} bytes">—</span>; keep ~50 MB free for install &amp; shader cache)</dd></div>
           <div><dt>3D Graphics Engine</dt><dd>Hardware-accelerated <b>WebGL</b> via updated <b>Android System WebView</b> (Three.js + Capacitor)</dd></div>
           <div><dt>Screen Orientation</dt><dd><b>Sensor Landscape</b> (auto-rotates between left/right landscape)</dd></div>
           <div><dt>App Permissions</dt><dd><span class="mono">INTERNET</span> only (cloud sync &amp; P2P rooms — zero camera, mic, location, or ad permissions)</dd></div>
@@ -1108,7 +1130,7 @@
         </details>
         <details>
           <summary><span class="faq-q">“App not installed”, package parse error, or Play Protect warning</span></summary>
-          <p>First verify your device runs <b>Android 7.0 or newer</b> and that the downloaded <span class="mono">SCS.apk</span> is complete (<span class="mono">8,244,435</span> bytes, SHA-256 <span class="mono wrapany">04cf9290c3fc04364ea149d9f346b0e5e7517c76e3a112f77d414669b0f6d9cf</span>) — an interrupted browser download causes “problem parsing the package”. Enable <i>Install unknown apps</i> for your browser once, and if Google Play Protect prompts you, tap <b>“Scan app”</b> and proceed once scanning finishes.</p>
+          <p>First verify your device runs <b>Android 7.0 or newer</b> and that the downloaded <span class="mono" data-apk-template="{fileName}">SCS.apk</span> is complete (<span class="mono" data-apk-template="{fileSizeBytes} bytes">—</span>, SHA-256 <span class="mono wrapany" data-apk-template="{sha256}">—</span>) — an interrupted browser download causes “problem parsing the package”. Enable <i>Install unknown apps</i> for your browser once, and if Google Play Protect prompts you, tap <b>“Scan app”</b> and proceed once scanning finishes.</p>
         </details>
         <details>
           <summary><span class="faq-q">Updating to a newer APK version without losing progress</span></summary>
@@ -1170,9 +1192,9 @@
 
     <div class="news-grid">
       <article class="news-card reveal">
-        <div class="news-meta mono"><span class="badge badge-ok">ANNOUNCEMENT</span><time datetime="2026-10-22">Oct 22, 2026</time></div>
+        <div class="news-meta mono"><span class="badge badge-ok">ANNOUNCEMENT</span><time datetime="" data-apk-datetime="releaseDateISO" data-apk-template="{releaseDate}">Latest release</time></div>
         <h3>Direct Signed APK Hosting Live on Official Site</h3>
-        <p>Android release <span class="mono">v0.22.1</span> (<span class="mono">SCS.apk · 7.86 MB</span>) is served directly from <span class="mono">/apk/SCS.apk</span> with no third-party login walls or expiring links, backed by pinned signer-certificate continuity and published SHA-256 verification.</p>
+        <p>The current Android release <span class="mono" data-apk-template="{versionRef}">the current APK</span> (<span class="mono" data-apk-template="{fileName} · {fileSize}">SCS.apk</span>) is served directly from <span class="mono">/apk/SCS.apk</span> with no third-party login walls or expiring links, backed by pinned signer-certificate continuity and published SHA-256 verification.</p>
       </article>
 
       <article class="news-card reveal">
@@ -1313,7 +1335,7 @@
   <div class="wrap foot-base">
     <p class="dim small">© 2026 Sins of Chaotic Shadows. All rights reserved. Game media used under the project's own license.
       SCS is not affiliated with Supabase, Google LLC, Three.js or PeerJS. Android is a trademark of Google LLC.</p>
-    <p class="dim small mono" id="footVer">SITE · LATEST RELEASE 0.22.1 (2026-10-22)</p>
+    <p class="dim small mono" id="footVer">SITE · LATEST RELEASE —</p>
   </div>
 </footer>
 

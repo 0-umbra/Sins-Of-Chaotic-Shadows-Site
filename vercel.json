@@ -1,5 +1,9 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
+  "framework": null,
+  "installCommand": "npm install --ignore-scripts --no-audit --no-fund --no-package-lock",
+  "buildCommand": "npm run build",
+  "outputDirectory": "dist",
   "cleanUrls": false,
   "trailingSlash": false,
   "headers": [
@@ -26,6 +30,12 @@
     },
     {
       "source": "/data/(.*)\\.json",
+      "headers": [
+        { "key": "Cache-Control", "value": "no-store, must-revalidate" }
+      ]
+    },
+    {
+      "source": "/apk/(.*)\\.json",
       "headers": [
         { "key": "Cache-Control", "value": "no-store, must-revalidate" }
       ]

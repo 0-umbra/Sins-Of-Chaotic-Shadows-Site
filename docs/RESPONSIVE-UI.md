@@ -25,6 +25,9 @@ Root causes found by code inspection:
   Escape and focus restoration for legal dialogs and screenshots, reveal fallback.
 - `scripts/check-site.py`: dependency-free asset/anchor/download integrity regression check.
 - `scripts/check-responsive.cjs`: optional Playwright browser regression suite.
+- `css/style.css`, `index.html`, `js/main.js`: incremental generated-metadata upgrade —
+  compact current-release facts, dynamic What's New list, and a collapsible archive
+  of the previous long-form technical notes.
 
 ## Checks completed
 
@@ -32,7 +35,9 @@ Root causes found by code inspection:
   original `/apk/SCS.apk` URL, download attribute, manifest size and SHA-256 verified.
 - `node --check js/main.js`: PASS.
 - `git diff --check`: PASS.
-- No package manifest, build step, existing lint, type-check or test runner exists.
+- A minimal `package.json` now defines `npm run build`, `npm test`, and
+  `npm run check`. There is still no application framework, runtime dependency,
+  bundler, linter or type-check step.
 
 ## Browser validation: still required
 
@@ -57,6 +62,31 @@ node scripts/check-responsive.cjs
 Also manually review each section at those widths, tablet portrait/landscape,
 short-height menus/dialogs, touch navigation, zoom, reduced motion and no-JS fallback.
 External browser-game and GitHub destinations are preserved, not network-validated.
+
+## Incremental APK-metadata upgrade
+
+The latest-release card now uses the existing SCS design system. New elements
+are deliberately small and mobile-safe:
+
+- `.dl-quick` is a wrapping flex row of version code / APK size / released
+  values; it never uses `white-space: nowrap`.
+- `.wn-current` holds the changelog loaded from `apk/release.json`. Its list
+  items use `overflow-wrap: anywhere`, a shrinkable grid/flex context, and the
+  existing dark/crimson surface colors.
+- The long Part 4 + Part 5 technical notes remain intact inside a native
+  `<details class="wn-archive">` disclosure, reducing scroll length on Android
+  without deleting content or adding JavaScript state.
+- The direct `<a href="/apk/SCS.apk" download>` buttons keep their existing
+  `min-height` and full-width mobile rules; the optional Playwright suite now
+  checks the button box, generated values, changelog item count and overflow at
+  all 11 viewports.
+- Generated JSON files are tiny and requested with `no-store`; the APK itself
+  is never fetched just to display metadata.
+
+Run `npm run check` after replacing an APK. It regenerates `dist/`, verifies
+the binary manifest / size / SHA-256 independently, checks all existing site
+features and asset paths, and runs synthetic-APK regression tests for changed
+versions, missing files and failure fallbacks.
 
 ## Branch / PR prerequisite
 
