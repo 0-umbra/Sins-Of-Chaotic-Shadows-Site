@@ -1,5 +1,11 @@
 #!/usr/bin/env python3
-"""SCS release publisher — turns a verified signed APK into a public site release.
+"""LEGACY SCS release publisher (GitHub Releases flow).
+
+The live website no longer downloads APKs from GitHub Releases. Current
+releases replace `apk/SCS.apk`, edit `apk/release.json`, and let Vercel run
+`npm run build` to extract metadata from that APK. This script is retained for
+historical/private-workflow use only; do not use it as the normal site release
+path. See `docs/RELEASE-FLOW.md` for the active flow.
 
 WHAT THIS DOES
   1. Creates a release on the PUBLIC site repo (0-umbra/Sins-Of-Chaotic-Shadows-Site)

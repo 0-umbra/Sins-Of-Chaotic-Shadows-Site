@@ -11,14 +11,13 @@ No game source code, no private configuration, and no signing material ever belo
 ## What's on the site
 
 1. **Cinematic Homepage (`#top`, `#trailer`)** — Atmospheric dark/crimson FPS theme, distortion-free
-   SCS emblem (`<picture>` responsive WebP + PNG fallback), direct working APK download button with
-   verified version (`0.22.1`) and actual file size (`SCS.apk` · `7.86 MB` / `8,244,435` bytes), subtle motion,
+   SCS emblem (`<picture>` responsive WebP + PNG fallback), direct working APK download button whose
+   version, version code and file size come from the actual APK at build time, subtle motion,
    and an in-build gameplay showcase trailer (`media/scs-gameplay-trailer.mp4`, `object-fit: contain`)
    with chapter controls.
-2. **What's New in This Build (`#whatsNew`, inside `#download`)** — Mobile-friendly release notes for the
-   packaged Part 4 + Part 5 optimization pass: performance optimizations, movement/stability fixes,
-   developer testing status, and an explicit list of honest limits (no FPS guarantees, no unverified
-   device claims, no invented content). Every bullet is verifiable in the shipped APK.
+2. **What's New in This Build (`#whatsNew`, inside `#download`)** — Mobile-friendly current notes
+   loaded from `apk/release.json`. The original Part 4 + Part 5 technical notes and honest limits
+   remain available in a clearly labelled historical archive beneath the current list.
 3. **Updates & Patch Notes (`#updates`)** — Filterable newest-first version history (`0.23.0` down
    to `0.20.0`), new features, maps, arsenal, performance passes, bug fixes, known issues, and
    individual release download links.
@@ -49,28 +48,49 @@ No game source code, no private configuration, and no signing material ever belo
 ```
 ├── index.html                  single-page site (no framework, no CDN — fully self-contained)
 ├── css/style.css               dark/crimson tactical FPS design system (aspect-ratio safe, responsive)
-├── js/main.js                  release & community loaders, trailer chapters, interactive tabs, lightbox
+├── js/main.js                  generated metadata, changelog & community loaders, trailer, tabs, lightbox
 ├── apk/SCS.apk                 verified signed Android APK served directly at /apk/SCS.apk
-├── data/release.json           ★ release manifest — single source of truth for APK metadata & kill-switch
-│                               (file name, byte size, SHA-256, cert digest, version)
+├── apk/release.json            ★ human-written releaseDate + whatsNew list only (no version/size)
+├── data/apk-metadata.json      generated from apk/SCS.apk by npm run build; committed as a local fallback
+├── data/release.json           generated legacy manifest + human kill-switch/history/cert config
 ├── data/community.json         developer Discord contact URL, coming-soon channels & trailer config
-├── img/                        approved public assets (800w/1600w WebP + PNG/JPG fallbacks, OG, favicon)
-├── media/                      self-contained in-build gameplay showcase reel (MP4)
-├── scripts/check-site.py       dependency-free structural, image, map, manifest & content integrity suite
+├── package.json                build/test/check scripts (no runtime dependencies)
+├── scripts/generate-apk-metadata.mjs dependency-free APK/AXML reader, JSON generator, dist staging
+├── scripts/apk_manifest.py     independent Python AXML reader used by integrity checks
+├── scripts/test-apk-metadata.mjs synthetic-APK metadata regression tests
+├── scripts/check-site.py       dependency-free structural, image, map, APK & content integrity suite
 ├── scripts/check-responsive.cjs optional Playwright multi-viewport browser regression suite
-├── vercel.json                 Vercel static deployment config (security headers, APK headers, cache rules)
+├── dist/                       generated Vercel output directory (gitignored)
+├── vercel.json                 Vercel build + static deployment config (security/APK/cache headers)
 └── docs/                       deployment, release flow, changelog provenance & privacy runbooks
 ```
 
 ## How downloads work
 
-- The download buttons (`#heroDl`, `#dlBtn`, and patch-note release links) point directly to
-  `/apk/SCS.apk` with the `download` attribute so downloads work even without JavaScript.
-- `data/release.json` supplies verified version (`0.22.1`), `versionCode` (`3`), release date,
-  file name (`SCS.apk`), exact byte size (`8,244,435`), package ID (`com.sinsofchaoticshadow.game`),
-  and SHA-256 checksum (`04cf9290…0f6d9cf`) — all measured from the file in `apk/`.
-- Setting `"available": false` in `data/release.json` acts as an instant kill-switch that cleanly
-  disables the download buttons and displays an honest status message.
+- Every download link is a plain `<a href="/apk/SCS.apk" download>` so Android browsers receive
+  the current APK even without JavaScript. `vercel.json` also sends the correct APK MIME type and
+  `Content-Disposition: attachment`.
+- `npm run build` runs `scripts/generate-apk-metadata.mjs` during the Vercel build. It opens
+  `apk/SCS.apk`, decodes its binary `AndroidManifest.xml` for `versionName`, `versionCode`, package
+  and SDK levels, measures the real byte size / human-readable size / SHA-256, and writes
+  `data/apk-metadata.json`. No APK is downloaded by the browser just to read its version.
+- `apk/release.json` contains only `releaseDate` and `whatsNew`. The site fetches it for the
+  current release notes. It never contains a duplicated version, version code, size or checksum.
+- `data/release.json` is refreshed automatically for backward compatibility. Its `available`
+  field remains an optional human kill-switch; setting it to `false` disables links and shows
+  “Latest APK currently unavailable.”
+- Missing APK, missing/invalid `apk/release.json`, or unreadable binary manifest metadata produce
+  safe UI fallbacks rather than a broken page. When the APK itself still exists, the direct download
+  stays active.
+
+## Publishing a new APK
+
+1. Replace `apk/SCS.apk` with the new signed APK (same case-sensitive filename).
+2. Edit only the `whatsNew` list in `apk/release.json`. Update its optional `releaseDate` if you
+   want an explicit date; omit it to fall back to the APK’s Git commit date / build date.
+3. Push the change. Vercel runs `npm run build`, generates fresh metadata, and serves `dist/`.
+
+Never edit version, version code, file size or SHA-256 in HTML, CSS, JS or `apk/release.json`.
 
 ## Configuring social & community links
 
@@ -80,18 +100,24 @@ Edit `data/community.json` to update `developerDiscordUrl` or publish official c
 
 ## Local development & testing
 
-No build step — static by design.
+Still a static site, but it now has one tiny dependency-free build step that generates release
+facts and stages the deployable output. Run it before previewing `dist/` or checking integrity:
 
 ```bash
-python3 scripts/check-site.py          # structural, image, map, checksum & content verification
-node --check js/main.js                # JS syntax check
-python3 -m http.server 8080            # preview locally at http://localhost:8080
+npm run build                           # extract APK metadata + stage dist/
+npm run check                           # build, integrity, JS syntax, metadata regression tests
+python3 -m http.server 8080 --directory dist --bind 0.0.0.0
 ```
+
+`npm run check` runs `python3 scripts/check-site.py`, `node --check` on browser/test JS, and
+`node --test scripts/test-apk-metadata.mjs`. The optional `scripts/check-responsive.cjs`
+Playwright suite checks 11 viewport sizes when a browser is installed.
 
 ## Deployment
 
-Recommended: **Vercel** (zero build command, output directory = repo root; see `docs/DEPLOYMENT.md`).
-There are no environment variables, secrets, or serverless functions required.
+Recommended: **Vercel**. `vercel.json` pins Framework Preset = Other, Build Command = `npm run build`,
+and Output Directory = `dist`. The build has no npm dependencies, environment variables, secrets or
+serverless functions. See `docs/DEPLOYMENT.md` for the dashboard-equivalent settings.
 
 ## License
 

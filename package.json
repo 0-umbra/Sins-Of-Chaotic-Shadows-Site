@@ -1,0 +1,14 @@
+{
+  "name": "sins-of-chaotic-shadows-site",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Static official website for Sins of Chaotic Shadows, with build-time Android APK metadata generation.",
+  "scripts": {
+    "build": "node scripts/generate-apk-metadata.mjs",
+    "test": "node --test scripts/test-apk-metadata.mjs",
+    "check": "npm run build && python3 scripts/check-site.py && node --check js/main.js && node --check scripts/check-responsive.cjs && npm test"
+  },
+  "engines": {
+    "node": "22.x"
+  }
+}

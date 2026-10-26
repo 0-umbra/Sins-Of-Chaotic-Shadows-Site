@@ -1,7 +1,8 @@
 /* SCS official site — release manifest, community config, trailer, interactive showcase,
    accessible gallery/modals, responsive nav, active section tracking, and scroll reveal.
-   APK buttons link directly to /apk/SCS.apk in HTML so downloads work even without JS;
-   data/release.json supplies verified release facts and acts as an availability kill-switch. */
+   APK buttons link directly to /apk/SCS.apk in HTML so downloads work even without JS.
+   data/apk-metadata.json is generated from the APK at build time; apk/release.json supplies
+   the human-written changelog; data/release.json keeps the optional kill-switch/history. */
 (() => {
   'use strict';
 
@@ -112,9 +113,9 @@
     const countEl = $('mapFilterCount');
     if (countEl) {
       if (val === 'all') {
-        countEl.textContent = 'Showing all 5 maps (4 playable in v0.22.1 APK · 1 planned future arena)';
+        countEl.textContent = 'Showing all 5 maps (4 playable in the current APK · 1 planned future arena)';
       } else if (val === 'active') {
-        countEl.textContent = 'Showing 4 arenas playable in signed APK v0.22.1';
+        countEl.textContent = 'Showing 4 arenas playable in the current signed APK';
       } else {
         const title = cards.find(c => !c.hidden)?.querySelector('h3')?.textContent || btn?.textContent || val;
         countEl.textContent = `Showing ${shown} map: ${title}`;
@@ -334,115 +335,284 @@
     setTimeout(() => { copyShaBtn.textContent = orig; }, 2200);
   });
 
-  /* ---------- release manifest ---------- */
+  /* ---------- build-time APK metadata & human-written release notes ---------- */
+  const APK_URL = '/apk/SCS.apk';
+  const METADATA_URL = new URL('data/apk-metadata.json', document.baseURI).href;
+  const RELEASE_NOTES_URL = new URL('apk/release.json', document.baseURI).href;
+  const LEGACY_CONFIG_URL = new URL('data/release.json', document.baseURI).href;
+
+  const validIsoDate = value => {
+    if (typeof value !== 'string' || !/^\d{4}-\d{2}-\d{2}$/.test(value)) return false;
+    const date = new Date(`${value}T00:00:00Z`);
+    return !Number.isNaN(date.getTime()) && date.toISOString().slice(0, 10) === value;
+  };
   const fmtSize = b => {
+    const bytes = Number(b);
+    if (!Number.isFinite(bytes) || bytes < 0) return '—';
     const u = ['B', 'KB', 'MB', 'GB'];
-    let i = 0, n = b;
-    while (n >= 1024 && i < u.length - 1) { n /= 1024; i++; }
+    let i = 0;
+    let n = bytes;
+    while (n >= 1024 && i < u.length - 1) { n /= 1024; i += 1; }
     return `${n.toFixed(i === 0 ? 0 : (n >= 100 ? 0 : 2))} ${u[i]}`;
   };
   const fmtDate = iso => {
+    if (!validIsoDate(iso)) return '—';
     try {
-      const [y, m, d] = String(iso).slice(0, 10).split('-').map(Number);
-      const dt = (y && m && d) ? new Date(Date.UTC(y, m - 1, d)) : new Date(iso);
-      return dt.toLocaleDateString(undefined, { year: 'numeric', month: 'short', day: 'numeric', timeZone: 'UTC' });
+      const [y, m, d] = iso.slice(0, 10).split('-').map(Number);
+      return new Date(Date.UTC(y, m - 1, d)).toLocaleDateString(undefined, {
+        year: 'numeric', month: 'short', day: 'numeric', timeZone: 'UTC'
+      });
     } catch { return iso; }
   };
+  const safeDownloadUrl = value => {
+    if (typeof value !== 'string') return '';
+    const url = value.trim();
+    // Same-origin paths and HTTPS links only; never javascript: or data: URLs.
+    return (/^\/(?!\/)/.test(url) || /^https:\/\/\S+$/i.test(url)) ? url : '';
+  };
+
+  async function fetchJson(url) {
+    try {
+      const response = await fetch(url, { cache: 'no-store' });
+      if (!response.ok) throw new Error(`HTTP ${response.status}`);
+      const data = await response.json();
+      return data && typeof data === 'object' && !Array.isArray(data) ? data : null;
+    } catch (err) {
+      console.warn(`Could not load ${url}:`, err);
+      return null;
+    }
+  }
+
+  const downloadLinks = () => [...new Set([
+    ...document.querySelectorAll('.apk-download'),
+    $('dlBtn'), $('heroDl'), $('archiveCurrentLink'),
+  ])].filter(Boolean);
+
+  function setDownloadLinks(enabled, url = APK_URL) {
+    downloadLinks().forEach(link => {
+      if (enabled) {
+        link.setAttribute('href', url || APK_URL);
+        link.setAttribute('download', '');
+        link.removeAttribute('aria-disabled');
+      } else {
+        link.setAttribute('href', '#download');
+        link.removeAttribute('download');
+        link.setAttribute('aria-disabled', 'true');
+      }
+    });
+  }
+
+  function setReleaseStatus(text, kind = '') {
+    const status = $('dlStatus');
+    if (status) {
+      status.textContent = text;
+      status.className = `dl-status mono ${kind}`.trim();
+    }
+  }
+
+  function setCopyChecksum(sha256) {
+    if (!copyShaBtn) return;
+    if (sha256) copyShaBtn.dataset.copySha = sha256;
+    else delete copyShaBtn.dataset.copySha;
+    copyShaBtn.disabled = !sha256;
+  }
+
+  function makeReleaseFields(metadata, notes) {
+    const versionName = metadata?.versionName || '';
+    const versionCode = metadata?.versionCode ?? '';
+    const bytes = Number(metadata?.fileSizeBytes);
+    const hasBytes = Number.isFinite(bytes) && bytes >= 0;
+    const fileSize = metadata?.fileSize || (hasBytes ? fmtSize(bytes) : '—');
+    const fileSizeBytes = hasBytes ? bytes.toLocaleString() : '—';
+    const dateISO = validIsoDate(metadata?.releaseDate)
+      ? metadata.releaseDate
+      : (validIsoDate(notes?.releaseDate) ? notes.releaseDate : '');
+    const releaseDate = dateISO ? fmtDate(dateISO) : '—';
+    const sha256 = typeof metadata?.sha256 === 'string' && /^[a-f0-9]{64}$/i.test(metadata.sha256)
+      ? metadata.sha256
+      : '';
+    const versionRef = versionName ? `v${versionName}` : 'the current APK';
+    const versionFull = versionName ? `SCS v${versionName}` : 'SCS';
+    const versionWithCode = versionName && versionCode !== ''
+      ? `v${versionName} (Code ${versionCode})`
+      : 'Version unavailable';
+    const versionNameCode = versionName && versionCode !== ''
+      ? `versionName ${versionName} / versionCode ${versionCode}`
+      : 'APK version details unavailable';
+    return {
+      versionName: versionName || 'Unavailable',
+      versionCode: versionCode === '' ? '—' : String(versionCode),
+      versionRef,
+      versionFull,
+      versionWithCode,
+      versionNameCode,
+      fileSize,
+      fileSizeBytes,
+      sizeWithBytes: `${fileSize} (${fileSizeBytes} B)`,
+      sizeWithBytesWord: `${fileSize} (${fileSizeBytes} bytes)`,
+      releaseDate,
+      releaseDateISO: dateISO || '',
+      sha256: sha256 || 'Unavailable',
+      sha256Short: sha256 ? `${sha256.slice(0, 8)}…${sha256.slice(-7)}` : 'Unavailable',
+      fileName: metadata?.fileName || 'SCS.apk',
+      packageName: metadata?.packageName || 'com.sinsofchaoticshadow.game',
+      minSdkVersion: metadata?.minSdkVersion ?? '—',
+      targetSdkVersion: metadata?.targetSdkVersion ?? '—',
+      downloadUrl: safeDownloadUrl(metadata?.downloadUrl) || APK_URL,
+      whatsNewVersion: versionRef.toUpperCase(),
+      footerVersion: `SITE · LATEST RELEASE ${versionName || '—'} (${dateISO || 'date unavailable'})`,
+    };
+  }
+
+  function applyReleaseTemplates(fields) {
+    document.querySelectorAll('[data-apk-template]').forEach(el => {
+      const template = el.getAttribute('data-apk-template') || '';
+      el.textContent = template.replace(/\{([A-Za-z0-9_]+)\}/g, (_, key) => fields[key] ?? '—');
+      if (el.hasAttribute('aria-busy')) el.setAttribute('aria-busy', 'false');
+    });
+    document.querySelectorAll('[data-apk-datetime]').forEach(el => {
+      const value = fields[el.getAttribute('data-apk-datetime')];
+      if (value) el.setAttribute('datetime', value);
+    });
+    if ($('footVer')) $('footVer').textContent = fields.footerVersion;
+    if ($('whatsNewVersion')) $('whatsNewVersion').textContent = fields.whatsNewVersion;
+    const description = document.querySelector('meta[name="description"]');
+    if (description && fields.versionName !== 'Unavailable' && fields.fileSize !== '—') {
+      description.content = 'Sins of Chaotic Shadows (SCS) is a tactical FPS for Android: TDM, ' +
+        'Free-For-All and 5v5 Shadow Core, 15 firearms, 11 melee blades, 3 Resonator kits, ' +
+        `and a verified signed APK download (${fields.fileName}, v${fields.versionName}, ${fields.fileSize}).`;
+    }
+  }
+
+  function renderWhatsNew(notes, fields, downloadAvailable) {
+    const list = $('whatsNewList');
+    const status = $('whatsNewStatus');
+    const items = Array.isArray(notes?.whatsNew)
+      ? notes.whatsNew.filter(item => typeof item === 'string' && item.trim())
+      : [];
+    if (list) {
+      const rows = items.length
+        ? items
+        : ['Release notes will be available here soon.'];
+      list.replaceChildren(...rows.map(text => {
+        const li = document.createElement('li');
+        li.textContent = text;
+        return li;
+      }));
+      list.setAttribute('aria-busy', 'false');
+    }
+    if (status) {
+      status.textContent = items.length
+        ? `LATEST RELEASE NOTES · ${fields.versionRef.toUpperCase()}`
+        : 'RELEASE NOTES UNAVAILABLE — APK DOWNLOAD REMAINS AVAILABLE.';
+      status.className = `wn-current-status mono ${items.length ? 'ok' : 'err'}`.trim();
+      if (!downloadAvailable) status.textContent = 'RELEASE NOTES LOADED — LATEST APK CURRENTLY UNAVAILABLE.';
+    }
+  }
+
+  function renderReleaseHistory(config) {
+    const history = Array.isArray(config?.history)
+      ? config.history.filter(item => item && item.version && safeDownloadUrl(item.downloadUrl))
+      : [];
+    const archive = $('releaseArchiveList');
+    if (archive) {
+      archive.querySelectorAll('[data-apk-history]').forEach(el => el.remove());
+      history.forEach(item => {
+        const li = document.createElement('li');
+        li.setAttribute('data-apk-history', '');
+        const label = document.createElement('span');
+        const version = document.createElement('b');
+        version.textContent = `v${item.version}`;
+        label.append(version, document.createTextNode(
+          ` (${fmtDate(item.releaseDate)} · ${fmtSize(item.fileSizeBytes)})`
+        ));
+        const link = document.createElement('a');
+        link.href = safeDownloadUrl(item.downloadUrl);
+        link.rel = 'noopener';
+        link.setAttribute('download', '');
+        link.textContent = `Download v${item.version}`;
+        li.append(label, link);
+        archive.appendChild(li);
+      });
+    }
+    const previous = $('dlPrev');
+    const previousWrap = $('dlPrevWrap');
+    if (previous && previousWrap) {
+      previousWrap.hidden = history.length === 0;
+      previous.replaceChildren();
+      history.slice(0, 4).forEach((item, index) => {
+        if (index) previous.append(document.createTextNode(' · '));
+        const link = document.createElement('a');
+        link.href = safeDownloadUrl(item.downloadUrl);
+        link.rel = 'noopener';
+        link.textContent = item.version;
+        previous.append(link, document.createTextNode(
+          ` (${fmtSize(item.fileSizeBytes)}, ${fmtDate(item.releaseDate)})`
+        ));
+      });
+    }
+  }
 
   async function loadRelease() {
-    const btn = $('dlBtn'), heroBtn = $('heroDl'), status = $('dlStatus');
-    const extraBtns = [...document.querySelectorAll('.update-apk-btn, #archiveCurrentLink')];
-    let manifest = null;
-    try {
-      const r = await fetch('data/release.json', { cache: 'no-store' });
-      if (!r.ok) throw new Error(`HTTP ${r.status}`);
-      manifest = await r.json();
-    } catch (err) {
-      if (status) {
-        status.textContent = 'RELEASE INFO UNAVAILABLE RIGHT NOW — DIRECT APK LINK REMAINS ACTIVE.';
-        status.className = 'dl-status mono err';
-      }
-      console.warn('release manifest fetch failed:', err);
-      return;
-    }
+    const [metadata, config, notes] = await Promise.all([
+      fetchJson(METADATA_URL),
+      fetchJson(LEGACY_CONFIG_URL),
+      fetchJson(RELEASE_NOTES_URL),
+    ]);
+    const legacyConfig = config || {};
+    const metadataLoaded = metadata !== null;
+    const manualAvailable = legacyConfig.available !== false;
+    const fileAvailable = metadataLoaded ? metadata.available !== false : true;
+    const downloadAvailable = manualAvailable && fileAvailable;
+    const fields = makeReleaseFields(metadata, notes);
 
-    const notYet = 'NO PUBLIC RELEASE YET — THE FIRST SIGNED BUILD IS BEING PREPARED.<br>THE DOWNLOAD GOES LIVE HERE THE MOMENT IT PASSES VERIFICATION.';
-    if (!manifest || !manifest.available || !manifest.downloadUrl) {
-      [btn, heroBtn, ...extraBtns].forEach(el => {
-        if (!el) return;
-        el.setAttribute('href', '#download');
-        el.removeAttribute('download');
-        el.setAttribute('aria-disabled', 'true');
-      });
-      if (status) {
-        status.innerHTML = notYet;
-        status.className = 'dl-status mono';
-      }
+    if (!downloadAvailable) {
+      setDownloadLinks(false);
+      applyReleaseTemplates(fields);
+      setReleaseStatus('Latest APK currently unavailable.', 'err');
+      setCopyChecksum('');
       if ($('dlFacts')) $('dlFacts').hidden = true;
+      if ($('dlQuick')) $('dlQuick').hidden = true;
       if ($('dlReleaseTag')) {
         $('dlReleaseTag').textContent = 'UNAVAILABLE';
         $('dlReleaseTag').className = 'badge badge-planned';
       }
+      renderWhatsNew(notes, fields, false);
+      renderReleaseHistory(legacyConfig);
       return;
     }
 
-    const shortSize = manifest.fileSizeBytes ? fmtSize(manifest.fileSizeBytes) : '—';
-    const fullSize = manifest.fileSizeBytes ? `${shortSize} (${Number(manifest.fileSizeBytes).toLocaleString()} B)` : '—';
-    const formattedDate = manifest.releaseDate ? fmtDate(manifest.releaseDate) : '—';
-
-    [btn, heroBtn, ...extraBtns].forEach(el => {
-      if (!el) return;
-      el.setAttribute('href', manifest.downloadUrl);
-      el.setAttribute('download', '');
-      el.removeAttribute('aria-disabled');
-    });
-
-    if (status) {
-      status.textContent = 'VERIFIED SIGNED RELEASE — SHA-256 CHECKSUM PUBLISHED BELOW.';
-      status.className = 'dl-status mono ok';
+    // If the generated metadata itself cannot be fetched, the static direct
+    // links stay exactly as authored in HTML — no stale facts are injected.
+    if (!metadataLoaded) {
+      setReleaseStatus('RELEASE DETAILS UNAVAILABLE — DIRECT APK LINK REMAINS ACTIVE.', 'err');
+      setCopyChecksum('');
+      if ($('dlReleaseTag')) {
+        $('dlReleaseTag').textContent = 'DIRECT DOWNLOAD';
+        $('dlReleaseTag').className = 'badge badge-ok';
+      }
+      renderWhatsNew(notes, fields, true);
+      renderReleaseHistory(legacyConfig);
+      return;
     }
+
+    setDownloadLinks(true, fields.downloadUrl);
+    applyReleaseTemplates(fields);
+    setCopyChecksum(fields.sha256 === 'Unavailable' ? '' : fields.sha256);
+    setReleaseStatus(
+      metadata.status === 'partial'
+        ? 'APK AVAILABLE — SOME RELEASE DETAILS COULD NOT BE READ.'
+        : 'VERIFIED SIGNED RELEASE — SHA-256 CHECKSUM PUBLISHED BELOW.',
+      metadata.status === 'partial' ? '' : 'ok'
+    );
     if ($('dlFacts')) $('dlFacts').hidden = false;
-    if ($('dlBuildVer')) $('dlBuildVer').textContent = manifest.version ? `v${manifest.version}` : '—';
-    if ($('dlBuildCode')) $('dlBuildCode').textContent = manifest.versionCode || '—';
-    if ($('fVer')) $('fVer').textContent = manifest.version || '—';
-    if ($('fCode')) $('fCode').textContent = manifest.versionCode || '—';
-    if ($('fDate')) $('fDate').textContent = formattedDate;
-    if ($('fSize')) $('fSize').textContent = fullSize;
-    if ($('fPkg')) $('fPkg').textContent = manifest.packageName || 'com.sinsofchaoticshadow.game';
-    if ($('fName')) $('fName').textContent = manifest.fileName || 'SCS.apk';
-    if ($('dlFileLine')) $('dlFileLine').textContent = `FILE // ${manifest.fileName || 'SCS.apk'} · ${fullSize}`;
-    if ($('fSha')) $('fSha').textContent = manifest.sha256 || 'see SHA256SUMS in the release';
-    if (copyShaBtn && manifest.sha256) copyShaBtn.dataset.copySha = manifest.sha256;
-
-    if ($('heroVer')) $('heroVer').textContent = manifest.versionCode ? `v${manifest.version} (Code ${manifest.versionCode})` : `v${manifest.version}`;
-    if ($('heroSize')) $('heroSize').textContent = fullSize;
-    if ($('heroDate')) $('heroDate').textContent = formattedDate;
-    if ($('heroDlLabel')) $('heroDlLabel').textContent = `DOWNLOAD LATEST ANDROID APK · ${manifest.fileName || 'SCS.apk'} (${shortSize})`;
-    if ($('footVer')) {
-      $('footVer').textContent = manifest.version
-        ? `SITE · LATEST RELEASE ${manifest.version} (${(manifest.releaseDate || '').slice(0, 10)})`
-        : '';
+    if ($('dlQuick')) $('dlQuick').hidden = false;
+    if ($('dlReleaseTag')) {
+      $('dlReleaseTag').textContent = 'LATEST RELEASE';
+      $('dlReleaseTag').className = 'badge badge-ok';
     }
-
-    const hist = Array.isArray(manifest.history) ? manifest.history.filter(h => h && h.downloadUrl && h.version) : [];
-    if (hist.length) {
-      if ($('dlPrev') && $('dlPrevWrap')) {
-        $('dlPrev').innerHTML = hist.slice(0, 4).map(h =>
-          `<a href="${h.downloadUrl}" rel="noopener">${h.version}</a> (${fmtSize(h.fileSizeBytes)}, ${fmtDate(h.releaseDate)})`
-        ).join(' · ');
-        $('dlPrevWrap').hidden = false;
-      }
-      const arch = $('releaseArchiveList');
-      if (arch) {
-        const items = [
-          `<li><span><b>v${manifest.version}</b> (versionCode ${manifest.versionCode || '—'} · ${formattedDate} · ${shortSize})</span><a href="${manifest.downloadUrl}" download id="archiveCurrentLink">Download Current APK</a></li>`,
-          ...hist.map(h =>
-            `<li><span><b>v${h.version}</b> (${fmtDate(h.releaseDate)} · ${fmtSize(h.fileSizeBytes)})</span><a href="${h.downloadUrl}" rel="noopener" download>Download v${h.version}</a></li>`
-          )
-        ];
-        arch.innerHTML = items.join('');
-      }
-    }
+    renderWhatsNew(notes, fields, true);
+    renderReleaseHistory(legacyConfig);
   }
 
   /* ---------- configurable community & trailer manifest ---------- */
